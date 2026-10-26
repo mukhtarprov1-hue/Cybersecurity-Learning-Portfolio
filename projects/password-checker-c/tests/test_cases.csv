@@ -1,0 +1,8 @@
+case_id,sample_password,expected_result,reason
+TC-01,Abcdef12,REJECT,Length is 8 and no symbol
+TC-02,Abcdef1!,REJECT,Length is 8
+TC-03,abcdef12!,REJECT,Missing uppercase letter
+TC-04,Abcdef12!,ACCEPT,All five requirements met
+TC-05,ABCDEFGH1!,REJECT,Missing lowercase letter
+TC-06,Abcdefgh!,REJECT,Missing digit
+TC-07,Abcdef123,REJECT,Missing symbol
