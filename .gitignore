@@ -1,0 +1,23 @@
+# Build outputs
+*.exe
+*.o
+*.obj
+/build/
+
+# Editor and operating-system files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Logs and temporary data
+*.log
+*.tmp
+
+# Local environment / secrets
+.env
+.env.*
+!.env.example
+secrets.*
+*.pem
+*.key
