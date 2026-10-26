@@ -1,0 +1,34 @@
+name: Build and Test
+
+on:
+  push:
+    paths:
+      - 'projects/password-checker-c/**'
+      - '.github/workflows/ci.yml'
+      - 'README.md'
+  pull_request:
+    paths:
+      - 'projects/password-checker-c/**'
+      - '.github/workflows/ci.yml'
+      - 'README.md'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  password-checker:
+    name: C17 compile and functional tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Compile with strict warnings
+        run: |
+          gcc -Wall -Wextra -Wpedantic -Werror -std=c17 \
+            projects/password-checker-c/password_checker.c \
+            -o password_checker
+
+      - name: Run functional and boundary tests
+        run: python3 projects/password-checker-c/tests/run_tests.py --binary ./password_checker
