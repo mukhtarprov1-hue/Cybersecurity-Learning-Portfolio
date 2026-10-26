@@ -1,5 +1,7 @@
 <div align="center">
 
+<img src="assets/portfolio-banner.svg" alt="Cybersecurity Learning Portfolio banner" width="100%"/>
+
 # Cybersecurity Learning Portfolio
 
 **Practical coursework · Secure coding fundamentals · Reproducible tests**
@@ -16,6 +18,8 @@ A public, curated portfolio of cybersecurity learning projects. The goal is to s
 
 ### Password Checker in C
 
+<img src="assets/projects/password-checker-card.svg" alt="Password Checker in C project card" width="100%"/>
+
 A small C17 console program that checks five explicit password rules: length greater than eight characters, an uppercase letter, a lowercase letter, a digit, and a punctuation symbol.
 
 - **Source:** [`projects/password-checker-c/password_checker.c`](projects/password-checker-c/password_checker.c)
@@ -31,6 +35,10 @@ The GitHub Actions workflow compiles with strict warnings and exercises accepted
 ```text
 .
 ├── .github/workflows/ci.yml
+├── assets/
+│   ├── cybersecurity-icon.svg
+│   ├── portfolio-banner.svg
+│   └── projects/password-checker-card.svg
 ├── docs/
 │   ├── learning-roadmap.md
 │   └── project-evidence-policy.md
