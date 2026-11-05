@@ -1,0 +1,34 @@
+name: Hexadecimal Viewer C
+
+on:
+  push:
+    paths:
+      - "course-assignments/03-hexadecimal-viewer/**"
+      - ".github/workflows/hex-viewer-c.yml"
+  pull_request:
+    paths:
+      - "course-assignments/03-hexadecimal-viewer/**"
+      - ".github/workflows/hex-viewer-c.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build-and-test:
+    name: Build and integration tests (GCC, C17)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Compile with strict warnings
+        run: |
+          gcc -std=c17 -Wall -Wextra -Wpedantic -Werror -O2 \
+            course-assignments/03-hexadecimal-viewer/hex_viewer.c \
+            -o hex_viewer
+      - name: Generate synthetic binary fixture
+        run: |
+          python3 course-assignments/03-hexadecimal-viewer/samples/create_sample.py
+      - name: Run integration tests
+        run: |
+          python3 course-assignments/03-hexadecimal-viewer/tests/run_tests.py ./hex_viewer
