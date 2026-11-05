@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1540" height="213" viewBox="0 0 1540 213">
+  <defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#101827"/><stop offset="1" stop-color="#0b1220"/></linearGradient></defs>
+  <rect width="100%" height="100%" rx="22" fill="url(#bg)"/><rect x="1" y="1" width="1538" height="211" rx="21" fill="none" stroke="#334155"/>
+  <rect width="1540" height="70" rx="22" fill="#1e293b"/><rect y="48" width="1540" height="22" fill="#1e293b"/>
+  <circle cx="35" cy="36" r="7" fill="#fb7185"/><circle cx="59" cy="36" r="7" fill="#fbbf24"/><circle cx="83" cy="36" r="7" fill="#34d399"/>
+  <text x="118" y="43" class="title">CLI VALIDATION / ACTUAL PROGRAM OUTPUT</text><text x="1508" y="43" text-anchor="end" class="tag">VERBATIM TERMINAL TRANSCRIPT</text>
+  <text x="42" y="91" class="line" xml:space="preserve">$ ./hex_viewer</text><text x="42" y="122" class="line" xml:space="preserve">Usage: ./hex_viewer &lt;filename&gt;</text><text x="42" y="153" class="line" xml:space="preserve">Exit code: 1</text>
+  <style>.title{font:600 17px 'DejaVu Sans',Arial,sans-serif;fill:#e2e8f0;letter-spacing:.5px}.tag{font:12px 'DejaVu Sans',Arial,sans-serif;fill:#94a3b8;letter-spacing:.5px}.line{font:18px 'DejaVu Sans Mono',Consolas,monospace;fill:#d1fae5;white-space:pre}</style>
+</svg>
