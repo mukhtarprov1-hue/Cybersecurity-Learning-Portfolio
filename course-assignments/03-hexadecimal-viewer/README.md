@@ -8,6 +8,10 @@
 > **Hosted CI:** SUCCESS — [GitHub Actions run 42074179804](https://github.com/mukhtarprov1-hue/Cybersecurity-Learning-Portfolio/actions/runs/42074179804)  
 > **Course submission:** Discord thread link is listed below; GitHub publication alone is not proof of a Discord submission.
 
+[![Hexadecimal Viewer CI](https://github.com/mukhtarprov1-hue/Cybersecurity-Learning-Portfolio/actions/workflows/hex-viewer-c.yml/badge.svg)](https://github.com/mukhtarprov1-hue/Cybersecurity-Learning-Portfolio/actions/workflows/hex-viewer-c.yml)
+
+> **Submission status:** Public package ready; Discord posting must still be completed by the learner. **Trainer review/acceptance:** Not recorded. **Due date/rubric:** Not supplied in the available brief.
+
 ## Instructor quick access
 
 | Open this | What it contains |
