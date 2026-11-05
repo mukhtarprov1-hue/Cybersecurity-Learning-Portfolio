@@ -5,7 +5,7 @@
 > **Task:** 01 · **Language:** C17  
 > **Public status:** Source, tests, Arabic report, and instructor notes are publicly accessible.  
 > **Local reference validation:** Strict GCC build succeeded; 8/8 functional and boundary checks passed in Debian 13.  
-**Hosted GitHub Actions:** SUCCESS — [run 42070240017](https://github.com/mukhtarprov1-hue/Cybersecurity-Learning-Portfolio/actions/runs/42070240017).
+**Hosted GitHub Actions:** SUCCESS — [run 42074038390](https://github.com/mukhtarprov1-hue/Cybersecurity-Learning-Portfolio/actions/runs/42074038390).
 
 ## Instructor quick access
 
@@ -22,7 +22,7 @@
 | [Reference build/test log](evidence/build-and-test.log) | Observed local build and test output |
 | [Hosted CI evidence](evidence/hosted-ci-run.md) | Successful GitHub Actions build and test run |
 | [GitHub Actions workflow](../../.github/workflows/ci.yml) | CI definition |
-| [Successful hosted CI run](https://github.com/mukhtarprov1-hue/Cybersecurity-Learning-Portfolio/actions/runs/42070240017) | GCC build and 8/8 checks passed |
+| [Successful hosted CI run](https://github.com/mukhtarprov1-hue/Cybersecurity-Learning-Portfolio/actions/runs/42074038390) | GCC build and 8/8 checks passed |
 
 ## Objective
 
