@@ -1,0 +1,3 @@
+$ ./hex_viewer samples/does-not-exist.bin
+Error opening file: No such file or directory
+Exit code: 1
