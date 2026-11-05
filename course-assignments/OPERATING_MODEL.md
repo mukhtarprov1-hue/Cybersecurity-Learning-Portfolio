@@ -38,7 +38,7 @@ Every assignment should follow this baseline, omitting only sections that truly 
     ├── screenshots/                 # Genuine screenshots / clearly labelled renders
     └── .gitignore
 
-For a small C exercise, src/ may be omitted and the single .c file kept at the root to reduce needless nesting.
+For a small C exercise, src/ may be omitted and the single .c file kept at the root to reduce needless nesting. If the same implementation is also maintained as a featured portfolio project, keep one canonical source tree and link to it from the assignment landing page rather than maintaining two copies that can drift out of sync.
 
 ## 3. What the trainer should see on first click
 
