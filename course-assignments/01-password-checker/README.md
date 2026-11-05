@@ -18,9 +18,11 @@
 | [Automated test runner](../../projects/password-checker-c/tests/run_tests.py) | Functional and 256-character boundary checks |
 | [Arabic test report](../../projects/password-checker-c/docs/test-report-ar.md) | Test design and limitations |
 | [Instructor explanation notes](../../projects/password-checker-c/docs/explain-to-instructor-ar.md) | Short walkthrough and key C functions |
+| [Requirements traceability](../../projects/password-checker-c/docs/TRACEABILITY.md) | Five rules mapped to code, tests, and CI evidence |
 | [Reference build/test log](evidence/build-and-test.log) | Observed local build and test output |
 | [Hosted CI evidence](evidence/hosted-ci-run.md) | Successful GitHub Actions build and test run |
-| [GitHub Actions workflow](../../.github/workflows/ci.yml) | CI definition; check the live Actions page for hosted status |
+| [GitHub Actions workflow](../../.github/workflows/ci.yml) | CI definition |
+| [Successful hosted CI run](https://github.com/mukhtarprov1-hue/Cybersecurity-Learning-Portfolio/actions/runs/42070240017) | GCC build and 8/8 checks passed |
 
 ## Objective
 
