@@ -4,7 +4,8 @@
 > **Learner:** Mukhtar Alawady  
 > **Task:** 01 · **Language:** C17  
 > **Public status:** Source, tests, Arabic report, and instructor notes are publicly accessible.  
-> **Local reference validation:** Strict GCC build succeeded; 8/8 functional and boundary checks passed in a clean Debian 13 validation environment.
+> **Local reference validation:** Strict GCC build succeeded; 8/8 functional and boundary checks passed in Debian 13.  
+**Hosted GitHub Actions:** SUCCESS — [run 42070240017](https://github.com/mukhtarprov1-hue/Cybersecurity-Learning-Portfolio/actions/runs/42070240017).
 
 ## Instructor quick access
 
@@ -18,6 +19,7 @@
 | [Arabic test report](../../projects/password-checker-c/docs/test-report-ar.md) | Test design and limitations |
 | [Instructor explanation notes](../../projects/password-checker-c/docs/explain-to-instructor-ar.md) | Short walkthrough and key C functions |
 | [Reference build/test log](evidence/build-and-test.log) | Observed local build and test output |
+| [Hosted CI evidence](evidence/hosted-ci-run.md) | Successful GitHub Actions build and test run |
 | [GitHub Actions workflow](../../.github/workflows/ci.yml) | CI definition; check the live Actions page for hosted status |
 
 ## Objective
@@ -39,7 +41,7 @@ From the repository root:
 | Overlong input boundary | 1 | PASS |
 | **Total** | **8** | **8/8 PASS** |
 
-The reference build/test log names the toolchain versions used. The public repository also has a GitHub Actions workflow; do not treat the existence of the workflow as proof of a successful hosted run without checking its latest execution.
+The reference build/test log names the toolchain versions used. The GitHub Actions workflow completed successfully for the recorded commit. This is CI evidence, not a trainer grade or acceptance.
 
 ## Important limitations
 
