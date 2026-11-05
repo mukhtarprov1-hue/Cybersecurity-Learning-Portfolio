@@ -1,0 +1,10 @@
+# Compiled binaries
+hex_viewer
+hex_viewer.exe
+
+# Generated test sample only
+samples/signature_sample.bin
+
+# Python cache
+__pycache__/
+*.py[cod]
