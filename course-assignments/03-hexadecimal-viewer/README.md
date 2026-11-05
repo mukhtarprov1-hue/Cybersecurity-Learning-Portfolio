@@ -1,124 +1,121 @@
-# التكليف الثالث: عارض الملفات الثنائية بصيغة Hexadecimal Viewer
+# Assignment 03 — Hexadecimal Viewer (C17)
 
-**معسكر الأمن السيبراني 2026 | C17 | CLI | Binary File Analysis**
+> **Course:** Cybersecurity Camp 2026  
+> **Learner:** Mukhtar Alawady  
+> **Task:** 03 · **Language:** C17 · **Interface:** CLI  
+> **Implementation status:** Implemented  
+> **Local verification:** Build successful · 5/5 integration tests passed  
+> **Hosted CI:** Workflow configured; latest run must be checked before claiming a hosted pass  
+> **Course submission:** Discord thread link is listed below; GitHub publication alone is not proof of a Discord submission.
 
-أداة سطر أوامر بلغة C تقرأ ملفاً ثنائياً دون تحويله إلى نص، ثم تعرض كل بايت بصيغتين متوازيتين: القيمة السداسية عشرية (Hexadecimal) والتمثيل المقابل للأحرف القابلة للطباعة (ASCII). تقرأ الأداة 16 بايت في كل صف، وتعرض إزاحة البايت (Offset) لمعرفة موضعه داخل الملف.
+## Instructor quick access
 
-## محتويات التكليف
-
-```text
-Hexadecimal_Viewer_C/
-├── hex_viewer.c
-├── README.md
-├── .gitignore
-├── samples/
-│   ├── README.md
-│   └── create_sample.py
-├── tests/
-│   └── run_tests.py
-├── docs/
-│   └── REPORT_AR.md
-├── evidence/
-│   ├── build-and-test.log
-│   ├── sample-run.log
-│   ├── missing-file.log
-│   └── argument-validation.log
-├── screenshots/
-│   ├── 01-sample-output.svg
-│   ├── 02-missing-file.svg
-│   ├── 03-argument-validation.svg
-│   └── 04-automated-tests.svg
-└── tools/
-    └── render_evidence.py
-```
-
-## المتطلبات التي ينفذها الحل
-
-| متطلب التكليف | التنفيذ |
+| Open this | What it contains |
 |---|---|
-| استقبال الملف عبر argc وargv | يتحقق البرنامج من وجود وسيط واحد لاسم الملف |
-| فتح الملف في وضع القراءة الثنائية | fopen(argv[1], "rb") |
-| قراءة 16 بايت في كل دورة | fread(buffer, 1, sizeof buffer, file) داخل while |
-| عرض Hex | printf("%02X", ...) لكل بايت |
-| عرض ASCII | الأحرف من 32 إلى 126 كما هي، وما عداها يظهر كنقطة (.) |
-| معالجة عدم وجود الملف | فحص file == NULL واستخدام perror() |
-| إغلاق الملف | fclose() مع فحص نتيجة الإغلاق |
-| التعامل مع الصف الأخير | حشو الخانات الناقصة للمحافظة على المحاذاة دون قراءة بيانات زائدة |
+| [Task specification (Arabic)](TASK_SPEC_AR.md) | Task purpose, exact functional requirements, acceptance points |
+| [C source](hex_viewer.c) | Complete implementation |
+| [Requirements traceability](docs/TRACEABILITY.md) | Requirement → code → test → evidence |
+| [Arabic technical report](docs/REPORT_AR.md) | Design, implementation, test results, limitations |
+| [Reviewer guide (Arabic)](docs/REVIEWER_GUIDE_AR.md) | Rebuild and review in a few minutes |
+| [Integration tests](tests/run_tests.py) | Five repeatable tests |
+| [Execution evidence](evidence/) | Raw terminal logs |
+| [Execution captures](screenshots/) | SVG renders of terminal output, labelled honestly |
+| [GitHub Actions workflow](../../.github/workflows/hex-viewer-c.yml) | Automated build/test definition |
 
-## البناء والتشغيل
+## 1. Objective and result
 
-### Windows — MSYS2 UCRT64
+A C17 command-line program reads a binary file in blocks of up to 16 bytes. For every byte it prints a two-digit uppercase hexadecimal value and a corresponding ASCII character when the byte is within the printable range 32–126; all other values appear as a dot. The program also displays the byte offset and total bytes read.
 
-من داخل مجلد التكليف:
+## 2. Trainer's brief
 
-```bash
-gcc -std=c17 -Wall -Wextra -Wpedantic -Werror -O2 hex_viewer.c -o hex_viewer.exe
-python tests/run_tests.py ./hex_viewer.exe
-python samples/create_sample.py
-./hex_viewer.exe samples/signature_sample.bin
-```
+Read [TASK_SPEC_AR.md](TASK_SPEC_AR.md) for the task description and the acceptance points supplied for this assignment. The matrix in [TRACEABILITY.md](docs/TRACEABILITY.md) ties each requirement to code and verification evidence.
+
+## 3. Build and run
 
 ### Linux / Kali Linux
 
-```bash
-gcc -std=c17 -Wall -Wextra -Wpedantic -Werror -O2 hex_viewer.c -o hex_viewer
-python3 tests/run_tests.py ./hex_viewer
-python3 samples/create_sample.py
-./hex_viewer samples/signature_sample.bin
-```
+    gcc -std=c17 -Wall -Wextra -Wpedantic -Werror -O2 hex_viewer.c -o hex_viewer
+    python3 samples/create_sample.py
+    ./hex_viewer samples/signature_sample.bin
+    python3 tests/run_tests.py ./hex_viewer
 
-> يتطلب البناء مترجم GCC متوافقاً مع C17، ويتطلب تشغيل الاختبارات Python 3. لا يحتاج البرنامج إلى مكتبات خارجية.
+### Windows / MSYS2 UCRT64
 
-## مثال على توقيع ملف PNG
+    gcc -std=c17 -Wall -Wextra -Wpedantic -Werror -O2 hex_viewer.c -o hex_viewer.exe
+    python samples/create_sample.py
+    ./hex_viewer.exe samples/signature_sample.bin
+    python tests/run_tests.py ./hex_viewer.exe
 
-يبدأ ملف PNG المعتاد بالتوقيع:
+GCC and Python are only needed for building/testing; the compiled viewer itself has no third-party runtime dependencies.
 
-```text
-89 50 4E 47 0D 0A 1A 0A
-```
+## 4. Verified output
 
-في عمود ASCII، ستظهر البايتات غير القابلة للطباعة كنقاط؛ وهذا سلوك متوقع ولا يعني أن البيانات قد تغيرت. اكتشاف التوقيع مؤشر أولي على نوع الملف وليس إثباتاً كاملاً لسلامة الملف أو موثوقيته.
+The synthetic sample is 22 bytes long. Its first eight bytes are the PNG signature. The local reference run produced two rows at offsets 00000000 and 00000010, replacing NUL and 0xFF with dots, and reported:
 
-## صور توثيق التنفيذ
+    Total bytes read: 22
 
-الصور أدناه تم إنشاؤها من مخرجات تشغيل حقيقية للبرنامج ومجموعة الاختبارات في بيئة البناء المستخدمة لهذا التسليم. وهي لقطات توثيقية مرسومة من سجل الطرفية، وليست صوراً ملتقطة من شاشة جهاز Windows المحلي. سجلات التنفيذ النصية الأصلية موجودة في evidence/، ويمكن إعادة توليد صور SVG باستخدام python tools/render_evidence.py.
+![Hex Viewer sample terminal output](screenshots/01-sample-output.svg)
 
-### فحص العينة الثنائية
+## 5. Test results
+
+| Test | Expected behavior | Recorded result |
+|---|---|---|
+| Binary Hex/ASCII + partial row | correct 16-byte grouping, ASCII, and total | PASS |
+| Missing file | error and non-zero exit | PASS |
+| Missing argument | Usage and non-zero exit | PASS |
+| Empty file | successful run, total 0 | PASS |
+| Exact 16-byte file | one row only, total 16 | PASS |
+
+**Local reference result:** build passed, 5 passed / 0 failed. See [build-and-test.log](evidence/build-and-test.log) for compiler/runtime versions and output. See [TRACEABILITY.md](docs/TRACEABILITY.md) for test-to-requirement mapping.
+
+## 6. Evidence gallery
+
+### Sample binary output
 
 ![Sample output](screenshots/01-sample-output.svg)
 
-### التعامل مع ملف غير موجود
+### Missing file handling
 
 ![Missing file](screenshots/02-missing-file.svg)
 
-### التحقق من الوسائط
+### Argument validation
 
 ![Argument validation](screenshots/03-argument-validation.svg)
 
-### نتائج الاختبارات الآلية
+### Automated tests
 
 ![Automated tests](screenshots/04-automated-tests.svg)
 
-## الاختبارات
+**Evidence note:** These SVG files are rendered terminal transcripts derived from the corresponding text logs, not raw screenshots captured from the learner's Windows desktop. The raw logs are linked in the evidence folder and can be reproduced with the commands above.
 
-تنفذ tests/run_tests.py خمسة اختبارات تكاملية:
+## 7. Project structure
 
-1. ملف ثنائي يحتوي على توقيع PNG، ومحارف ASCII، وبايتات غير قابلة للطباعة، وصف أخير غير مكتمل.
-2. ملف غير موجود.
-3. تشغيل البرنامج دون تمرير اسم ملف.
-4. ملف فارغ.
-5. ملف حجمه 16 بايتاً تماماً.
+    03-hexadecimal-viewer/
+    ├── README.md
+    ├── TASK_SPEC_AR.md
+    ├── hex_viewer.c
+    ├── samples/
+    ├── tests/
+    ├── docs/
+    │   ├── REPORT_AR.md
+    │   ├── TRACEABILITY.md
+    │   └── REVIEWER_GUIDE_AR.md
+    ├── evidence/
+    ├── screenshots/
+    └── tools/
 
-النتيجة الفعلية المسجلة عند إعداد هذا التسليم: **5/5 اختبارات ناجحة**، مع تجميع ناجح باستخدام تحذيرات GCC الصارمة. يمكن إعادة تشغيل الاختبارات محلياً بالأوامر أعلاه، كما يوجد GitHub Actions للتحقق عند الدفع أو فتح Pull Request.
+## 8. Limitations and safe use
 
-## ملاحظات أمنية وحدود الأداة
+- Read-only: the program does not modify the inspected file.
+- It does not execute or parse the contents of files.
+- A magic-byte signature is a useful clue, not proof of file integrity or safety.
+- ASCII rendering follows the task's 32–126 range; it does not decode UTF-8 or other character encodings.
+- The sample file is synthetic. Do not publish private, sensitive, or unauthorized files as examples.
 
-- الأداة قارئ وعارض فقط؛ لا تعدّل الملف ولا تكتب إليه.
-- لا تنفذ البرنامج أو تفسر محتوى الملف.
-- لا تستنتج أن الملف آمن بناءً على التوقيع وحده؛ يمكن تزوير الامتداد أو التوقيع.
-- لا ترفع ملفات شخصية أو حساسة للاختبار. استخدم العينة الاصطناعية المرفقة.
-- لا توجد معالجة متخصصة لصيغ الملفات الضخمة؛ تتم القراءة المتتابعة مع استخدام مخزن بيانات ثابت تقريباً (16 بايت).
+## 9. Submission channel
 
-## موقع التكليف
+The assignment-specific Discord thread supplied for this task is:
 
-course-assignments/03-hexadecimal-viewer/
+[Open Assignment 03 submission thread](https://discord.com/channels/838962253855588402/1567925953827573790)
+
+**Submission state:** Public GitHub package prepared. The learner must still post this link in the Discord thread; no Discord submission or trainer acceptance is claimed by this repository.
