@@ -1,0 +1,11 @@
+$ gcc -std=c17 -Wall -Wextra -Wpedantic -Werror -O2 hex_viewer.c -o hex_viewer
+GCC: gcc (Debian 14.2.0-19) 14.2.0
+Python: Python 3.13.5
+[BUILD PASS]
+[PASS] Binary Hex + ASCII output and 16-byte offsets
+[PASS] Missing file is handled
+[PASS] Missing command-line argument is handled
+[PASS] Empty file is handled
+[PASS] Exact 16-byte boundary is handled
+
+Test summary: 5 passed, 0 failed
