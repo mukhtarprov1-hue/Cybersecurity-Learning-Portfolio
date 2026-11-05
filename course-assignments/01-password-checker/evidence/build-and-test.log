@@ -1,0 +1,21 @@
+Reference validation run recorded while reviewing the public assignment package.
+Environment: Debian GNU/Linux 13 (trixie)
+Compiler: gcc (Debian 14.2.0-19) 14.2.0
+Python: Python 3.13.5
+
+$ gcc -Wall -Wextra -Wpedantic -Werror -std=c17 projects/password-checker-c/password_checker.c -o password_checker
+[BUILD PASS]
+
+$ python3 projects/password-checker-c/tests/run_tests.py --binary ./password_checker
+PASS: TC-01 — Length is 8 and no symbol
+PASS: TC-02 — Length is 8
+PASS: TC-03 — Missing uppercase letter
+PASS: TC-04 — All five requirements met
+PASS: TC-05 — Missing lowercase letter
+PASS: TC-06 — Missing digit
+PASS: TC-07 — Missing symbol
+PASS: boundary — overlong input rejected
+
+All 8 functional/boundary checks passed.
+
+Note: This is a local reference validation log. It is not a GitHub Actions run and is not a trainer grade or acceptance.
