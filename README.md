@@ -14,6 +14,14 @@
 
 A public, curated portfolio of cybersecurity learning projects. The goal is to show **what was built, how it is tested, what the result means, and what the limitations are**—without publishing private course materials, credentials, or lab access details.
 
+## Public course assignments
+
+The instructor-accessible collection is organized under [course-assignments/](course-assignments/README.md). It includes the completed **Assignment 01 — Password Checker in C** and **Assignment 03 — Hexadecimal Viewer in C**, with source code, build instructions, tests, Arabic documentation, and execution evidence.
+
+[Open all public assignments](course-assignments/README.md)
+
+[Hex Viewer source](course-assignments/03-hexadecimal-viewer/hex_viewer.c) · [Arabic report](course-assignments/03-hexadecimal-viewer/docs/REPORT_AR.md) · [Execution screenshots](course-assignments/03-hexadecimal-viewer/screenshots/)
+
 ## Featured project
 
 ### Password Checker in C
@@ -42,6 +50,16 @@ The GitHub Actions workflow compiles with strict warnings and exercises accepted
 ├── docs/
 │   ├── learning-roadmap.md
 │   └── project-evidence-policy.md
+├── course-assignments/
+│   ├── 01-password-checker/
+│   ├── 03-hexadecimal-viewer/
+│   │   ├── docs/
+│   │   ├── evidence/
+│   │   ├── samples/
+│   │   ├── screenshots/
+│   │   ├── tests/
+│   │   └── hex_viewer.c
+│   └── README.md
 ├── projects/
 │   └── password-checker-c/
 │       ├── docs/
