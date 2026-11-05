@@ -1,0 +1,3 @@
+$ ./hex_viewer
+Usage: ./hex_viewer <filename>
+Exit code: 1
