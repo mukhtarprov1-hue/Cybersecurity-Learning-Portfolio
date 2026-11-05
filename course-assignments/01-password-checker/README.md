@@ -39,6 +39,24 @@ From the repository root:
     gcc -Wall -Wextra -Wpedantic -Werror -std=c17 projects/password-checker-c/password_checker.c -o password_checker
     python3 projects/password-checker-c/tests/run_tests.py --binary ./password_checker
 
+## Execution evidence
+
+The following terminal captures are rendered from the actual output log produced by running the C17 binary with synthetic examples. They are **rendered terminal transcripts**, not raw photographs or desktop screenshots.
+
+### Accepted synthetic example
+
+![Accepted password demonstration](screenshots/01-accepted-password.svg)
+
+### Rejected synthetic example
+
+![Rejected password demonstration](screenshots/02-rejected-password.svg)
+
+### Overlong input boundary
+
+![Overlong input rejection](screenshots/03-overlong-input.svg)
+
+Raw terminal transcript: [evidence/demo-output.log](evidence/demo-output.log).
+
 ## Recorded local validation
 
 | Test group | Cases | Result |
