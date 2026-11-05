@@ -1,0 +1,33 @@
+$ gcc -Wall -Wextra -Wpedantic -Werror -std=c17 password_checker.c -o password_checker
+GCC: gcc (Debian 14.2.0-19) 14.2.0
+Python: Python 3.13.5
+
+$ printf '%s\n' 'Abcdef12!' | ./password_checker
+=== Password Strength Checker ===
+Enter a password (maximum 255 characters):
+
+--- Password Requirements ---
+Length greater than 8: PASS (length: 9)
+Contains uppercase letter: PASS
+Contains lowercase letter: PASS
+Contains a number: PASS
+Contains a symbol: PASS
+
+Result: The password meets all requirements.
+
+$ printf '%s\n' 'Abcdef123' | ./password_checker
+=== Password Strength Checker ===
+Enter a password (maximum 255 characters):
+
+--- Password Requirements ---
+Length greater than 8: PASS (length: 9)
+Contains uppercase letter: PASS
+Contains lowercase letter: PASS
+Contains a number: PASS
+Contains a symbol: FAIL
+
+Result: The password does not meet all requirements.
+
+$ ./password_checker < 256-character-input.txt
+Error: password is too long. Maximum is 255 characters.
+Exit code: 1
