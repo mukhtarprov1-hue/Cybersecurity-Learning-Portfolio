@@ -7,6 +7,10 @@
 > **Local reference validation:** Strict GCC build succeeded; 8/8 functional and boundary checks passed in Debian 13.  
 **Hosted GitHub Actions:** SUCCESS — [run 42074144672](https://github.com/mukhtarprov1-hue/Cybersecurity-Learning-Portfolio/actions/runs/42074144672).
 
+[![Password Checker CI](https://github.com/mukhtarprov1-hue/Cybersecurity-Learning-Portfolio/actions/workflows/ci.yml/badge.svg)](https://github.com/mukhtarprov1-hue/Cybersecurity-Learning-Portfolio/actions/workflows/ci.yml)
+
+> **Submission status:** Public package ready; course-channel submission not recorded. **Trainer review:** Not recorded. **Due date/rubric:** Not supplied in the available brief.
+
 ## Instructor quick access
 
 | Open this | What it contains |
