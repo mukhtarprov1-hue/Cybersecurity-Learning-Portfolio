@@ -1,0 +1,12 @@
+
+$ ./hex_viewer samples/signature_sample.bin
+
+Hexadecimal Viewer
+File: samples/signature_sample.bin
+
+Offset   Hexadecimal                                      ASCII
+-------- ------------------------------------------------ ----------------
+00000000  89 50 4E 47 0D 0A 1A 0A  48 45 41 44 45 52 00 41  |.PNG....HEADER.A|
+00000010  53 43 49 49 FF 21                                 |SCII.!          |
+
+Total bytes read: 22
