@@ -48,6 +48,7 @@ This is the public, instructor-accessible index for the assignments documented i
 | IMPLEMENTED | Source code is present. |
 | LOCALLY-VERIFIED | Build/tests were run in a named environment and evidence is retained. |
 | CI-PENDING | Workflow exists, but no successful hosted run has been verified. |
+| CI-VERIFIED | A named hosted workflow run completed successfully; the run URL and tested commit are recorded. |
 | SUBMITTED | The required course submission channel has received the link/files. |
 | REVIEWED | Trainer feedback or grading is recorded. |
 | ACCEPTED | Trainer has explicitly confirmed acceptance. |
