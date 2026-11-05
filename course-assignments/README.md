@@ -1,20 +1,63 @@
-# Cybersecurity Camp — Public Assignment Submissions
+# Cybersecurity Camp 2026 — Public Assignment & Evidence Index
 
-This directory is the public, instructor-accessible copy of selected practical assignments completed for Cybersecurity Camp 2026. It contains only assignment code, task-focused documentation, reproducible tests, and non-sensitive execution evidence. Private course administration, invitation links, personal setup notes, and restricted training materials are intentionally excluded.
+<div align="center">
 
-## Assignment index
+**Instructor-facing submission portal**  
+**Learner:** Mukhtar Alawady · **Track:** Cybersecurity Camp 2026
 
-| Assignment | Description | Public materials |
-|---|---|---|
-| 01 — Password Checker in C | C17 command-line password rule checker | [Source, tests, report, and instructor notes](../projects/password-checker-c/README.md) |
-| 03 — Hexadecimal Viewer in C | C17 binary file viewer with Hex and ASCII output | [Open complete assignment](03-hexadecimal-viewer/README.md) |
+[![Repository](https://img.shields.io/badge/GitHub-Public%20Repository-181717?logo=github)](https://github.com/mukhtarprov1-hue/Cybersecurity-Learning-Portfolio)
+[![Language](https://img.shields.io/badge/Primary%20Language-C17-00599C)](https://en.cppreference.com/w/c/17)
 
-## Reproducibility
+</div>
 
-Each assignment includes build instructions and tests. Test results should be checked against the corresponding source and can be reproduced locally. GitHub Actions workflows are included where configured; their current run status is visible from the repository's Actions tab.
+This is the public, instructor-accessible index for the assignments documented in this repository. Each assignment has a dedicated landing page. Opening an assignment should provide the task brief, requirements-to-code traceability, source files, build/run instructions, test plan, observed evidence, report, limitations, and the submission route where known.
 
-## Academic and security notes
+> **Review principle:** The trainer should be able to understand the task, locate the implementation, reproduce the result, and distinguish verified evidence from items that are still pending—without searching through unrelated portfolio projects.
 
-- Use synthetic sample data only; never publish real passwords or private files.
-- Do not include private trainer materials, answer keys, invite links, or credentials.
-- These are educational exercises, not production security products.
+## Assignment register
+
+| ID | Assignment | Public status | Open |
+|---|---|---|---|
+| 01 | Password Checker in C | Source, tests, Arabic report, and instructor notes are publicly available. The public landing page links to the canonical project files. | [Review Assignment 01](01-password-checker/README.md) |
+| 02 | Not recorded in the currently available task briefs | **Awaiting the original task description.** No assignment has been invented or marked complete. | Not published |
+| 03 | Hexadecimal Viewer in C | Source, test runner, sample generator, Arabic report, execution logs, terminal-output captures, and CI workflow are public. Local reference validation: 5/5 tests passed. GitHub Actions status must be checked live. | [Review Assignment 03](03-hexadecimal-viewer/README.md) |
+
+## How to review a submission
+
+1. Open the assignment landing page from the register above.
+2. Read its **task brief** and **acceptance-criteria matrix** first.
+3. Open the linked source code and build it using the documented command.
+4. Run the test suite and compare the observed output with the evidence and expected behavior.
+5. Read the report and limitations. Do not treat a configured CI workflow as a successful run until its run page shows success.
+6. Use the assignment's Discord/thread route when the camp requires a separate submission post.
+
+## What each assignment package should contain
+
+- **Task definition:** original brief or a clearly marked faithful transcription, objectives, constraints, and acceptance criteria.
+- **Implementation:** source files, directory structure, dependencies, and reproducible build/run instructions.
+- **Verification:** test plan, test runner, expected versus observed results, and reproducible logs.
+- **Evidence:** readable screenshots or terminal captures with honest labels and no secrets or personal data.
+- **Report:** Arabic/English technical explanation, decisions, results, limitations, and conclusion.
+- **Submission record:** repository path, commit/reference, delivery thread when known, and review status.
+
+## Submission status vocabulary
+
+| Status | Meaning |
+|---|---|
+| BRIEF-RECORDED | Task requirements have been documented. |
+| IMPLEMENTED | Source code is present. |
+| LOCALLY-VERIFIED | Build/tests were run in a named environment and evidence is retained. |
+| CI-PENDING | Workflow exists, but no successful hosted run has been verified. |
+| SUBMITTED | The required course submission channel has received the link/files. |
+| REVIEWED | Trainer feedback or grading is recorded. |
+| ACCEPTED | Trainer has explicitly confirmed acceptance. |
+
+A public GitHub link alone does **not** prove that the assignment has been submitted to the camp, graded, or accepted.
+
+## Public/private boundary
+
+This public repository contains learner-created code, task-specific documentation, synthetic test data, and non-sensitive evidence intended for instructor review. It does not contain private course rosters, personal documents, credentials, private lab targets, access tokens, or restricted trainer materials. The private course workspace remains separate.
+
+## Reusable preparation standard
+
+See [Operating Model & Quality Gate](OPERATING_MODEL.md) for the lifecycle and required structure used to prepare future assignments. The goal is consistent, auditable submissions—not simply a folder containing source code.
