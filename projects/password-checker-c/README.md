@@ -63,3 +63,4 @@ The rules check character composition only. They do not evaluate how guessable a
 - [Test cases CSV](tests/test_cases.csv)
 - [Arabic test report](docs/test-report-ar.md)
 - [Arabic instructor notes](docs/explain-to-instructor-ar.md)
+- [Requirements-to-code traceability](docs/TRACEABILITY.md)
