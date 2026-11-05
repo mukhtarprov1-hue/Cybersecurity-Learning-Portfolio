@@ -1,11 +1,46 @@
-# Assignment 01 — Password Checker in C
+# Assignment 01 — Password Checker in C17
 
-The public, complete implementation for this assignment is maintained in the portfolio's project directory to avoid duplicate source copies.
+> **Course:** Cybersecurity Camp 2026  
+> **Learner:** Mukhtar Alawady  
+> **Task:** 01 · **Language:** C17  
+> **Public status:** Source, tests, Arabic report, and instructor notes are publicly accessible.  
+> **Local reference validation:** Strict GCC build succeeded; 8/8 functional and boundary checks passed in a clean Debian 13 validation environment.
 
-- [Project README and build instructions](../../projects/password-checker-c/README.md)
-- [C source](../../projects/password-checker-c/password_checker.c)
-- [Test cases](../../projects/password-checker-c/tests/test_cases.csv)
-- [Arabic test report](../../projects/password-checker-c/docs/test-report-ar.md)
-- [Arabic instructor notes](../../projects/password-checker-c/docs/explain-to-instructor-ar.md)
+## Instructor quick access
 
-The implementation checks the five task rules: more than eight characters, uppercase letter, lowercase letter, digit, and punctuation symbol. See the linked project for the exact acceptance rules and limitations.
+| Open this | What it contains |
+|---|---|
+| [Task requirements (Arabic)](TASK_SPEC_AR.md) | The five recorded password rules and input boundary |
+| [C source](../../projects/password-checker-c/password_checker.c) | Complete implementation |
+| [Project README](../../projects/password-checker-c/README.md) | Build and run instructions, concepts, and limitations |
+| [Test case table](../../projects/password-checker-c/tests/test_cases.csv) | Seven synthetic functional examples |
+| [Automated test runner](../../projects/password-checker-c/tests/run_tests.py) | Functional and 256-character boundary checks |
+| [Arabic test report](../../projects/password-checker-c/docs/test-report-ar.md) | Test design and limitations |
+| [Instructor explanation notes](../../projects/password-checker-c/docs/explain-to-instructor-ar.md) | Short walkthrough and key C functions |
+| [Reference build/test log](evidence/build-and-test.log) | Observed local build and test output |
+| [GitHub Actions workflow](../../.github/workflows/ci.yml) | CI definition; check the live Actions page for hosted status |
+
+## Objective
+
+Create a C17 console program that checks the five password composition rules recorded in [TASK_SPEC_AR.md](TASK_SPEC_AR.md). The program reports each rule separately and accepts only when all required rules pass.
+
+## Reproduce
+
+From the repository root:
+
+    gcc -Wall -Wextra -Wpedantic -Werror -std=c17 projects/password-checker-c/password_checker.c -o password_checker
+    python3 projects/password-checker-c/tests/run_tests.py --binary ./password_checker
+
+## Recorded local validation
+
+| Test group | Cases | Result |
+|---|---:|---|
+| Functional examples | 7 | PASS |
+| Overlong input boundary | 1 | PASS |
+| **Total** | **8** | **8/8 PASS** |
+
+The reference build/test log names the toolchain versions used. The public repository also has a GitHub Actions workflow; do not treat the existence of the workflow as proof of a successful hosted run without checking its latest execution.
+
+## Important limitations
+
+This is a rule-based learning exercise, not a comprehensive password-strength estimator. It does not measure guessability or entropy, check breached-password databases, or store/transmit entered passwords. Only synthetic example values should be used in demonstrations.
