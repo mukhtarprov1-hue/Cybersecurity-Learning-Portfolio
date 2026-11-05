@@ -5,7 +5,7 @@
 > **Task:** 03 · **Language:** C17 · **Interface:** CLI  
 > **Implementation status:** Implemented  
 > **Local verification:** Build successful · 5/5 integration tests passed  
-> **Hosted CI:** SUCCESS — [GitHub Actions run 42074047078](https://github.com/mukhtarprov1-hue/Cybersecurity-Learning-Portfolio/actions/runs/42074047078)  
+> **Hosted CI:** SUCCESS — [GitHub Actions run 42074179804](https://github.com/mukhtarprov1-hue/Cybersecurity-Learning-Portfolio/actions/runs/42074179804)  
 > **Course submission:** Discord thread link is listed below; GitHub publication alone is not proof of a Discord submission.
 
 ## Instructor quick access
@@ -67,7 +67,7 @@ The synthetic sample is 22 bytes long. Its first eight bytes are the PNG signatu
 | Empty file | successful run, total 0 | PASS |
 | Exact 16-byte file | one row only, total 16 | PASS |
 
-**Local reference result:** build passed, 5 passed / 0 failed. See [build-and-test.log](evidence/build-and-test.log) for compiler/runtime versions and output. See [TRACEABILITY.md](docs/TRACEABILITY.md) for test-to-requirement mapping. The GitHub-hosted CI run also completed successfully: [run 42074047078](https://github.com/mukhtarprov1-hue/Cybersecurity-Learning-Portfolio/actions/runs/42074047078).
+**Local reference result:** build passed, 5 passed / 0 failed. See [build-and-test.log](evidence/build-and-test.log) for compiler/runtime versions and output. See [TRACEABILITY.md](docs/TRACEABILITY.md) for test-to-requirement mapping. The GitHub-hosted CI run also completed successfully: [run 42074179804](https://github.com/mukhtarprov1-hue/Cybersecurity-Learning-Portfolio/actions/runs/42074179804).
 
 ## 6. Evidence gallery
 
