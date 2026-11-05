@@ -86,3 +86,14 @@ The Git repository is the canonical public artifact archive. The trainer's reque
 ## 7. Future assignment template
 
 Use the assignment template at TEMPLATE/README.md when a new task is received. Do not create a completed assignment page until the official task brief and required deliverables are known.
+
+## 8. External standards and platform references
+
+These references inform the documentation and evidence process; they are not presented as the camp's own grading policy.
+
+- **NIST NICE Framework:** use task, knowledge, and skill language to describe the capability being demonstrated. Map only the capabilities that genuinely apply to the assignment: [NIST SP 800-181 Rev. 1](https://www.nist.gov/publications/workforce-framework-cybersecurity-nice-framework).
+- **GitHub README guidance:** a README is often the first information a visitor sees and should explain purpose, usefulness, getting started, help, and maintainership: [GitHub — About READMEs](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-readmes).
+- **Moodle assignment workflow:** the learner-facing assignment page can show submission status, grading status, due date, time remaining, last modified, and submission details; instructors can use rubrics and feedback: [Moodle — Using Assignment](https://docs.moodle.org/405/en/Assignment_submissions) and [Moodle — Assignment activity](https://docs.moodle.org/503/en/mod/assignment/index).
+- **GitHub Classroom is not a current option:** GitHub officially retired the Classroom service on August 28, 2026. Do not rely on Classroom workflows for a new camp process; existing repositories remain unaffected: [GitHub Changelog — Classroom deprecated](https://github.blog/changelog/2026-08-27-github-classroom-deprecated/).
+
+For this learner's current camp handoff, GitHub is the public code/evidence archive, while the trainer's specified Discord thread remains the submission notification route. If the camp later provides an LMS, use that LMS for formal submission and grading status rather than treating GitHub commits as a grade.
