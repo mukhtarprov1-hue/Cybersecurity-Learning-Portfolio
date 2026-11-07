@@ -1,0 +1,9 @@
+Log File Parser
+File: samples/sample.log
+Keyword: FAILED
+
+Matching records:
+Line 2: 2026-11-07T08:11:12Z WARN service=auth event=login user=demo FAILED source=192.0.2.10
+Line 5: 2026-11-07T08:12:49Z ERROR service=auth event=login user=guest FAILED source=192.0.2.25
+
+Total alerts: 2
