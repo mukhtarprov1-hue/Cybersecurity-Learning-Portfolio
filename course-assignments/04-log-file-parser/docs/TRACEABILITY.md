@@ -19,4 +19,5 @@ This matrix maps the received task brief to the C implementation, repeatable ver
 - The input is a text log. Embedded NUL bytes are outside the supported input model.
 - Memory consumption is proportional to the longest single logical line, not the complete file size. A single extremely long line can require a large allocation.
 - The ten automated tests cover the scenarios listed in the Arabic report. They are not exhaustive fault-injection or SIEM detection validation.
-- Do not record CI as successful until the live workflow run has been inspected and its tested commit recorded here.
+- Hosted CI was inspected: [run 42397397647](https://github.com/mukhtarprov1-hue/Cybersecurity-Learning-Portfolio/actions/runs/42397397647), tested commit `21540fd96e3616b13ed191a49e73b8df6a342dbf`, Ubuntu 24.04, strict GCC C17 build successful, 10/10 tests passed, and both sample keyword searches completed successfully. See `../evidence/hosted-ci-run.md` for the recorded details.
+- CI success verifies this code snapshot only; it does not constitute trainer review, a course submission receipt, or acceptance.
