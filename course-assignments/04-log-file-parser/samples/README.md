@@ -1,5 +1,11 @@
 # Synthetic SOC log fixture
 
-Run `python3 samples/create_sample.py` from the assignment directory to generate `sample.log`. The fixture contains six synthetic text-log records, including two `FAILED` events and one `404` response.
+This directory includes the committed, six-line `sample.log` fixture so a reviewer can inspect the input directly. It contains two synthetic `FAILED` events and one `404` response.
 
-The sample uses the documentation-only IPv4 range `192.0.2.0/24`; it is not a capture from a real network or user system. The generated file is ignored by Git because the generator is the canonical, reproducible source for this fixture.
+Regenerate the exact fixture at any time with:
+
+```bash
+python3 samples/create_sample.py
+```
+
+The sample uses the documentation-only IPv4 range `192.0.2.0/24`; it is not a capture from a real network or user system. The fixture contains no real account names, user data, or production telemetry.
