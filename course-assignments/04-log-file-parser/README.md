@@ -5,7 +5,7 @@
 > **Task:** 04 · **Language:** C17 · **Interface:** CLI  
 > **Implementation:** Complete source code and repeatable integration tests are included.  
 > **Local verification:** Strict GCC build passed; 10/10 integration tests passed.  
-> **Hosted CI:** Pending first hosted verification; do not infer success from the workflow file alone.  
+> **Hosted CI:** SUCCESS — [GitHub Actions run 42397397647](https://github.com/mukhtarprov1-hue/Cybersecurity-Learning-Portfolio/actions/runs/42397397647) · Ubuntu 24.04 · 10/10 integration tests passed.  
 > **Submission:** The assignment-specific Discord thread is listed in Section 9. GitHub publication alone is not proof of course submission.
 
 > **Submission state:** Public package prepared; the learner must still post the assignment link in the Discord thread. **Trainer review/acceptance:** Not recorded. **Due date/rubric:** Not supplied in the task brief received.
@@ -22,6 +22,8 @@
 | [Integration tests](tests/run_tests.py) | Ten repeatable functional, negative, boundary, and scale tests |
 | [Synthetic log generator](samples/create_sample.py) | Creates a harmless six-line SOC-style log |
 | [Execution evidence](evidence/) | Captured terminal output and build/test logs |
+| [Hosted CI evidence](evidence/hosted-ci-run.md) | Successful hosted build and test run, tested commit, and observed results |
+| [Execution captures](screenshots/) | Five labelled SVG renders of actual terminal logs |
 | [GitHub Actions workflow](../../.github/workflows/log-parser-c.yml) | Automated strict C17 build and integration tests |
 
 ## 1. Objective and result
@@ -60,7 +62,7 @@ For the included synthetic fixture and keyword `FAILED`, the tool reports the tw
 
 ## 4. Verification coverage
 
-The test suite checks keyword extraction and line numbering, `404` searching, case sensitivity, counting once per matching line, zero matches, empty files, missing files, invalid arguments, long lines whose keyword crosses an internal `fgets()` chunk boundary, and a 6,000-line input.
+The test suite checks keyword extraction and line numbering, `404` searching, case sensitivity, counting once per matching line, zero matches, empty files, missing files, invalid arguments, long lines whose keyword crosses an internal `fgets()` chunk boundary, and a 6,000-line input. The local reference build passed all ten tests, and the hosted GitHub Actions job independently passed all ten tests.
 
 The long-line test verifies that one logical log line is not mistakenly counted as multiple lines merely because it exceeds the 512-byte input chunk. The large-file test checks line-number accuracy without loading the entire log file into memory.
 
@@ -87,6 +89,9 @@ For a file of size **N** and longest logical line of length **L**, scanning is l
 │   ├── REVIEWER_GUIDE_AR.md
 │   └── TRACEABILITY.md
 ├── evidence/
+├── screenshots/
+├── tools/
+│   └── render_evidence.py
 └── .gitignore
 ```
 
