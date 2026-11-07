@@ -47,6 +47,7 @@ python3 tests/run_tests.py ./log_parser
 ## 6. أدلة التنفيذ
 
 - [بناء واختبارات محلية](../evidence/build-and-test.log)
+- [نتيجة GitHub Actions المستضافة](../evidence/hosted-ci-run.md)
 - [البحث عن FAILED](../evidence/sample-failed.log)
 - [البحث عن 404](../evidence/sample-404.log)
 - [حالة عدم وجود تطابق](../evidence/no-match.log)
