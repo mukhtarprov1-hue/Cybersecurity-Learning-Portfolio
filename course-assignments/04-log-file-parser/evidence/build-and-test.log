@@ -1,0 +1,17 @@
+$ gcc -std=c17 -Wall -Wextra -Wpedantic -Werror -O2 log_parser.c -o log_parser
+Compiler: gcc (Debian 14.2.0-19) 14.2.0
+Python: Python 3.13.5
+[BUILD PASS]
+$ python3 tests/run_tests.py ./log_parser
+[PASS] Keyword extraction and exact line numbers
+[PASS] 404 keyword extraction
+[PASS] Case-sensitive strstr behavior
+[PASS] Count once per matching line
+[PASS] No matching records
+[PASS] Empty log file
+[PASS] Missing log file error
+[PASS] Missing and empty arguments
+[PASS] Long line and keyword across fgets chunks
+[PASS] Large log file and line-number accuracy
+
+Test summary: 10 passed, 0 failed
