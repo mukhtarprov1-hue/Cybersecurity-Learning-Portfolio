@@ -1,0 +1,38 @@
+name: Log File Parser C
+
+on:
+  push:
+    paths:
+      - "course-assignments/04-log-file-parser/**"
+      - ".github/workflows/log-parser-c.yml"
+  pull_request:
+    paths:
+      - "course-assignments/04-log-file-parser/**"
+      - ".github/workflows/log-parser-c.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build-and-test:
+    name: Build and integration tests (GCC, C17)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Compile with strict warnings
+        run: |
+          gcc -std=c17 -Wall -Wextra -Wpedantic -Werror -O2 \
+            course-assignments/04-log-file-parser/log_parser.c \
+            -o log_parser
+      - name: Generate synthetic SOC log
+        run: |
+          python3 course-assignments/04-log-file-parser/samples/create_sample.py
+      - name: Run integration tests
+        run: |
+          python3 course-assignments/04-log-file-parser/tests/run_tests.py ./log_parser
+      - name: Verify sample output for FAILED and 404
+        run: |
+          ./log_parser course-assignments/04-log-file-parser/samples/sample.log FAILED
+          ./log_parser course-assignments/04-log-file-parser/samples/sample.log 404
