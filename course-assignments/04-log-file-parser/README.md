@@ -20,7 +20,8 @@
 | [Requirements traceability](docs/TRACEABILITY.md) | Requirement → source → test → evidence |
 | [Reviewer guide (Arabic)](docs/REVIEWER_GUIDE_AR.md) | Rebuild and verify the program |
 | [Integration tests](tests/run_tests.py) | Ten repeatable functional, negative, boundary, and scale tests |
-| [Synthetic log generator](samples/create_sample.py) | Creates a harmless six-line SOC-style log |
+| [Synthetic log fixture](samples/sample.log) | Six harmless synthetic text-log records to inspect and test |
+| [Synthetic log generator](samples/create_sample.py) | Recreates the same six-line SOC-style fixture |
 | [Execution evidence](evidence/) | Captured terminal output and build/test logs |
 | [Hosted CI evidence](evidence/hosted-ci-run.md) | Successful hosted build and test run, tested commit, and observed results |
 | [Execution captures](screenshots/) | Five labelled SVG renders of actual terminal logs |
@@ -81,7 +82,8 @@ For a file of size **N** and longest logical line of length **L**, scanning is l
 ├── log_parser.c
 ├── samples/
 │   ├── README.md
-│   └── create_sample.py
+│   ├── create_sample.py
+│   └── sample.log
 ├── tests/
 │   └── run_tests.py
 ├── docs/
