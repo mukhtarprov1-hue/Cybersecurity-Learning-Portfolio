@@ -21,6 +21,7 @@ This is the public, instructor-accessible index for the assignments documented i
 | 01 | Password Checker in C | Source, tests, Arabic report, instructor notes, local logs, rendered execution evidence, traceability, and a successful hosted CI run are publicly available. Strict GCC build and 8/8 functional/boundary checks passed; GitHub Actions succeeded. | [Review Assignment 01](01-password-checker/README.md) |
 | 02 | Not recorded in the currently available task briefs | **Awaiting the original task description.** No assignment has been invented or marked complete. | Not published |
 | 03 | Hexadecimal Viewer in C | Source, test runner, sample generator, Arabic report, execution logs, terminal-output captures, and CI workflow are public. Local reference validation: 5/5 tests passed. GitHub Actions run 42075036584: SUCCESS (Ubuntu 24.04.5; 5/5 tests passed). | [Review Assignment 03](03-hexadecimal-viewer/README.md) |
+| 04 | Log File Parser in C | C source, Arabic task specification/report, traceability matrix, reviewer guide, synthetic log generator, local execution logs, five labelled SVG terminal renders, and GitHub Actions evidence are public. Strict C17 build passed locally and in hosted CI; 10/10 integration tests passed. Hosted run 42397397647: SUCCESS. | [Review Assignment 04](04-log-file-parser/README.md) |
 
 
 ## Submit to the trainer
