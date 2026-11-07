@@ -1,0 +1,8 @@
+Log File Parser
+File: samples/sample.log
+Keyword: 404
+
+Matching records:
+Line 4: 2026-11-07T08:12:02Z WARN service=web method=GET path=/admin status=404 source=192.0.2.15
+
+Total alerts: 1
