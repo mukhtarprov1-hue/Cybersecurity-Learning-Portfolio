@@ -1,0 +1,10 @@
+# Compiled executable
+log_parser
+log_parser.exe
+
+# Generated synthetic log fixture
+samples/sample.log
+
+# Python cache
+__pycache__/
+*.py[cod]
