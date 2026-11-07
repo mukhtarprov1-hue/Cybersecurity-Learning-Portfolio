@@ -1,0 +1,4 @@
+$ ./log_parser
+Usage: ./log_parser <log_file> <keyword>
+Example: ./log_parser samples/sample.log FAILED
+Exit code: 1
