@@ -79,7 +79,7 @@ This intentionally replaces the stored reference with the file's current content
     python -m py_compile fim_tool.py tests\test_fim_tool.py
     python -m unittest discover -s tests -v
 
-See docs/TEST_RESULTS.md for the learner's observed results after local execution.
+**Learner's Windows verification (Python 3.10.0):** compilation passed, all 14 unit tests passed (0 failed, 0 skipped), and the continuous demonstration created a baseline, reported unchanged scans, then emitted a critical alert after a simulated file modification. See docs/TEST_RESULTS.md and docs/REPORT_AR.md for the observed results.
 
 ## Security notes and limitations
 
