@@ -1,0 +1,8 @@
+[PASS] PDO is configured to throw exceptions
+[PASS] Safe exact lookup returns only the alice record
+[PASS] Prepared statement treats the injection payload as literal data
+[PASS] Unsafe concatenation demonstrates the injection against all seeded rows
+[PASS] A legitimate username containing an apostrophe is handled as data
+[PASS] Safe query returns only the explicitly selected columns
+
+SUMMARY: 6 passed, 0 failed

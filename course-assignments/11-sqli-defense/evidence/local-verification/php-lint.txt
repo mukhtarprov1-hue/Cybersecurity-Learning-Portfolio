@@ -1,0 +1,8 @@
+[index.php]
+No syntax errors detected in F:\Cybersecurity-Learning-Portfolio\course-assignments\11-sqli-defense\index.php
+[src\Database.php]
+No syntax errors detected in F:\Cybersecurity-Learning-Portfolio\course-assignments\11-sqli-defense\src\Database.php
+[src\UserSearch.php]
+No syntax errors detected in F:\Cybersecurity-Learning-Portfolio\course-assignments\11-sqli-defense\src\UserSearch.php
+[tests\run.php]
+No syntax errors detected in F:\Cybersecurity-Learning-Portfolio\course-assignments\11-sqli-defense\tests\run.php

@@ -1,0 +1,8 @@
+{
+    "version": "8.5.12",
+    "drivers": [
+        "sqlite"
+    ],
+    "pdo_sqlite": true,
+    "sqlite3": true
+}
