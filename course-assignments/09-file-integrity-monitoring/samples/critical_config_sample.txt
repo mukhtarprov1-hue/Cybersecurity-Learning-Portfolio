@@ -1,0 +1,5 @@
+# Synthetic sample file for the FIM assignment.
+# This file is for local testing only; it is not a real system configuration.
+SERVICE_NAME=training-demo
+ALLOW_REMOTE_ADMIN=false
+LOG_LEVEL=INFO

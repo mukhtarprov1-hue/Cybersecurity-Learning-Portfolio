@@ -1,0 +1,5 @@
+__pycache__/
+*.py[cod]
+fim_baseline.json
+*.baseline.json
+.*.tmp
