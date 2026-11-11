@@ -1,0 +1,40 @@
+{
+  "file_path": "samples\\sample_access.log",
+  "lines_scanned": 6,
+  "suspicious_lines": 4,
+  "total_alerts": 4,
+  "counts_by_type": {
+    "Path Traversal": 2,
+    "SQL Injection": 2
+  },
+  "alerts": [
+    {
+      "attack_type": "SQL Injection",
+      "line_number": 2,
+      "source_ip": "198.51.100.23",
+      "matched_text": "UNION SELECT",
+      "log_excerpt": "198.51.100.23 - - [12/Nov/2026:00:00:02 +0300] \"GET /search?q=1%20UNION%20SELECT%20username,password%20FROM%20users HTTP/1.1\" 200 512"
+    },
+    {
+      "attack_type": "Path Traversal",
+      "line_number": 3,
+      "source_ip": "203.0.113.7",
+      "matched_text": "../../",
+      "log_excerpt": "203.0.113.7 - - [12/Nov/2026:00:00:03 +0300] \"GET /download?file=../../etc/passwd HTTP/1.1\" 403 321"
+    },
+    {
+      "attack_type": "SQL Injection",
+      "line_number": 4,
+      "source_ip": "198.51.100.81",
+      "matched_text": "' OR '1'='1",
+      "log_excerpt": "198.51.100.81 - - [12/Nov/2026:00:00:04 +0300] \"GET /login?user=admin%27%20OR%20%271%27=%271 HTTP/1.1\" 403 231"
+    },
+    {
+      "attack_type": "Path Traversal",
+      "line_number": 6,
+      "source_ip": "192.0.2.45",
+      "matched_text": "%2e%2e%2f",
+      "log_excerpt": "192.0.2.45 - - [12/Nov/2026:00:00:06 +0300] \"GET /download?file=%2e%2e%2fetc%2fpasswd HTTP/1.1\" 404 120"
+    }
+  ]
+}
