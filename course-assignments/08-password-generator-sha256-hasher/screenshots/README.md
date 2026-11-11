@@ -1,15 +1,15 @@
 # Screenshot Evidence — Assignment 08
 
-Capture original PowerShell screenshots after running the commands on the learner's Windows PC. Do not capture or publish a password that is used for a real account.
+Capture original PowerShell screenshots from the learner's Windows execution. Do not include a password that is used or intended for a real account.
 
-Recommended screenshots:
+Recommended evidence files:
 
 1. 01-help.png — python password_tool.py --help.
-2. 02-generate-default.png — generate a sample password using the default length. Use it only as a disposable demo value.
-3. 03-generate-custom.png — generate multiple passwords with a custom length, such as 20 characters. Do not reuse the displayed values.
+2. 02-generate-default.png — default generation, showing only a disposable demonstration value.
+3. 03-generate-custom.png — three demonstration passwords with length 20 each.
 4. 04-sha256-abc.png — hash abc and show the known digest.
-5. 05-sha256-unicode.png — hash a non-sensitive Arabic or English test phrase.
+5. 05-sha256-unicode.png — SHA-256 of the Arabic demonstration phrase.
 6. 06-pycompile.png — successful compilation.
-7. 07-unit-tests.png — complete unit test output and final OK.
+7. 07-unit-tests.png — all 16 tests and final OK.
 
-Never save actual account passwords in screenshots, sample files, reports, or Git history.
+Never reuse generated demo values for real accounts. Avoid publishing terminal output containing real credentials or passwords. The filenames shown above are recommended names; check the actual local filenames with git status --short before committing.
