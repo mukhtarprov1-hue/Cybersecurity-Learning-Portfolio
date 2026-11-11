@@ -1,0 +1,8 @@
+/vendor/
+.env
+storage/items.json
+storage/items.lock
+storage/audit.jsonl
+storage/*.bak
+storage/.items-*
+.phpunit.cache/

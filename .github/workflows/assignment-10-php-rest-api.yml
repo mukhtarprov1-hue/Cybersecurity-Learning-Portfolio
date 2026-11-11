@@ -1,0 +1,43 @@
+name: Assignment 10 - PHP REST API
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'course-assignments/10-php-rest-api/**'
+      - '.github/workflows/assignment-10-php-rest-api.yml'
+  pull_request:
+    paths:
+      - 'course-assignments/10-php-rest-api/**'
+      - '.github/workflows/assignment-10-php-rest-api.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: PHP ${{ matrix.php-version }} / ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        php-version: ['8.2', '8.5']
+    defaults:
+      run:
+        working-directory: course-assignments/10-php-rest-api
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-version }}
+          extensions: json, mbstring
+          coverage: none
+      - name: Lint PHP files
+        shell: bash
+        run: find . -name '*.php' -print0 | xargs -0 -n1 php -l
+      - name: Run API tests
+        run: php tests/run.php

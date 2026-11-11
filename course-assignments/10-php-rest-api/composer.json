@@ -1,0 +1,13 @@
+{
+  "name": "cybersecurity-learning/assignment-10-php-rest-api",
+  "description": "Security-focused educational REST API for HTTP methods and JSON request handling.",
+  "type": "project",
+  "require": {
+    "php": ">=8.2",
+    "ext-json": "*"
+  },
+  "scripts": {
+    "test": "php tests/run.php",
+    "serve": "php -S 127.0.0.1:8080 router.php"
+  }
+}
