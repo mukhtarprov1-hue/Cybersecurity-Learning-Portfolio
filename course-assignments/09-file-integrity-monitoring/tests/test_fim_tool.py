@@ -13,7 +13,7 @@ class FileIntegrityMonitoringTests(unittest.TestCase):
         self.root = Path(self.temp_dir.name)
         self.target = self.root / "important_config.txt"
         self.baseline_path = self.root / "baseline.json"
-        self.target.write_text("original configuration\n", encoding="utf-8")
+        self.target.write_bytes(b"original configuration\n")
 
     def tearDown(self):
         self.temp_dir.cleanup()
