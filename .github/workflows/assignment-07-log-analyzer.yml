@@ -1,0 +1,41 @@
+name: Assignment 07 - Automated Log Analyzer
+
+on:
+  push:
+    paths:
+      - 'course-assignments/07-automated-log-analyzer/**'
+      - '.github/workflows/assignment-07-log-analyzer.yml'
+  pull_request:
+    paths:
+      - 'course-assignments/07-automated-log-analyzer/**'
+      - '.github/workflows/assignment-07-log-analyzer.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Python \${{ matrix.python-version }} / \${{ matrix.os }}
+    runs-on: \${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        python-version: ['3.10', '3.13']
+    defaults:
+      run:
+        working-directory: course-assignments/07-automated-log-analyzer
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: \${{ matrix.python-version }}
+      - name: Compile Python files
+        run: python -m py_compile log_analyzer.py tests/test_log_analyzer.py
+      - name: Run unit tests
+        run: python -m unittest discover -s tests -v
+      - name: Analyze synthetic sample
+        run: python log_analyzer.py samples/sample_access.log
