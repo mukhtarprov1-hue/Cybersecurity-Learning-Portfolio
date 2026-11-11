@@ -81,6 +81,20 @@ This intentionally replaces the stored reference with the file's current content
 
 **Learner's Windows verification (Python 3.10.0):** compilation passed, all 14 unit tests passed (0 failed, 0 skipped), and the continuous demonstration created a baseline, reported unchanged scans, then emitted a critical alert after a simulated file modification. See docs/TEST_RESULTS.md and docs/REPORT_AR.md for the observed results.
 
+## Execution evidence
+
+The five learner-captured Windows PowerShell screenshots are committed in [screenshots/](screenshots/):
+
+| Evidence | Screenshot |
+|---|---|
+| Python version and CLI help | [01-help-and-python-version.png](screenshots/01-help-and-python-version.png) |
+| Compilation and all unit tests | [02-compilation-and-unit-tests.png](screenshots/02-compilation-and-unit-tests.png) |
+| Initial SHA-256 baseline | [03-baseline-created.png](screenshots/03-baseline-created.png) |
+| Critical alert after content modification | [04-critical-change-alert.png](screenshots/04-critical-change-alert.png) |
+| Safe stop of continuous monitoring | [05-stop-monitoring.png](screenshots/05-stop-monitoring.png) |
+
+Hosted verification: [GitHub Actions run 43112755840 — all four Windows/Ubuntu and Python 3.10/3.13 jobs passed](https://github.com/mukhtarprov1-hue/Cybersecurity-Learning-Portfolio/actions/runs/43112755840).
+
 ## Security notes and limitations
 
 - SHA-256 detects content changes; it does not identify who changed the file or whether the change was authorized.
