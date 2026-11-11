@@ -7,9 +7,9 @@ Python tool for defensive, line-by-line analysis of web-server access logs using
 - Reads text logs incrementally with a context manager; it does not load the entire file at once.
 - Compiles detection expressions with re.IGNORECASE and uses Pattern.search().
 - Detects selected SQL injection indicators: UNION SELECT, Boolean OR/AND comparisons, SLEEP(), BENCHMARK(), LOAD_FILE(), and INTO OUTFILE.
-- Detects plain and URL-encoded path traversal sequences, including ../../etc/passwd and %2e%2e%2fetc%2fpasswd.
+- Detects plain and URL-encoded path traversal sequences.
 - Checks both raw log text and a URL-decoded view to catch common percent-encoded payloads.
-- Extracts a valid IPv4 or IPv6 address from the first field of common access logs; otherwise reports UNKNOWN.
+- Extracts IPv4/IPv6 from the first field of common access logs; otherwise reports UNKNOWN.
 - Prints attack type, line number, source IP, matched evidence, and a shortened log excerpt.
 - Summarizes scanned lines, suspicious lines, total alerts, and counts by category.
 - Supports text and JSON reports. No third-party dependencies are required.
@@ -26,7 +26,8 @@ Python tool for defensive, line-by-line analysis of web-server access logs using
     ├── docs/REPORT_AR.md
     ├── docs/TEST_RESULTS.md
     ├── docs/TRACEABILITY.md
-    └── screenshots/README.md
+    ├── docs/sample_report.json
+    └── screenshots/
 
 ## Requirements
 
@@ -37,7 +38,7 @@ Python tool for defensive, line-by-line analysis of web-server access logs using
 
     python log_analyzer.py samples/sample_access.log
 
-Expected sample totals:
+Expected and learner-verified totals:
 - 6 lines scanned.
 - 4 suspicious lines.
 - 4 alerts: 2 SQL Injection and 2 Path Traversal.
@@ -45,22 +46,23 @@ Expected sample totals:
 
 The sample uses documentation-only IP ranges. It contains no real incident data.
 
+## Save JSON output
+
+    python log_analyzer.py samples/sample_access.log --format json
+    python log_analyzer.py samples/sample_access.log --format json --output docs/sample_report.json
+
+The second command creates a structured report in the docs directory.
+
 ## Analyze an authorized log
 
     python log_analyzer.py "C:\Logs\access.log"
-
-Save JSON output to a file:
-
-    python log_analyzer.py "C:\Logs\access.log" --format json --output report.json
-
-Print JSON to the terminal:
-
-    python log_analyzer.py samples/sample_access.log --format json
 
 ## Compile and test
 
     python -m py_compile log_analyzer.py tests/test_log_analyzer.py
     python -m unittest discover -s tests -v
+
+Learner's Windows verification: 15 tests passed, 0 failed, 0 skipped. See docs/TEST_RESULTS.md for the observed output.
 
 ## Detection scope and limitations
 
