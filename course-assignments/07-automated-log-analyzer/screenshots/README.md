@@ -1,14 +1,15 @@
 # Screenshot Evidence — Assignment 07
 
-Capture original PowerShell screenshots after running the commands on the learner's Windows PC. Do not fabricate or edit terminal output.
+Capture original PowerShell screenshots from the learner's Windows execution. Keep the command and its actual output visible. Do not fabricate or edit terminal output.
 
 Recommended evidence files:
 
-1. 01-help.png — python log_analyzer.py --help
-2. 02-sample-analysis.png — scan of samples/sample_access.log, showing line-numbered SQL Injection and Path Traversal alerts.
-3. 03-summary.png — final scan summary, including total alerts and counts by attack type.
-4. 04-json-output.png — JSON output and saved report demonstration.
-5. 05-pycompile.png — successful Python compilation.
-6. 06-unit-tests.png — complete unittest output and final OK.
+1. 01-help.png — python log_analyzer.py --help.
+2. 02-pycompile.png — successful Python compilation.
+3. 03-unit-tests.png — all 15 unit tests and final OK.
+4. 04-sample-analysis.png — text report with the four alerts, source IPs, and line numbers.
+5. 05-sample-summary.png — final summary: 6 scanned lines, 4 suspicious lines, 4 alerts.
+6. 06-json-output.png — JSON report printed to the terminal.
+7. 07-json-saved.png — confirmation that docs\sample_report.json was saved.
 
-All demonstrated input logs should be synthetic or logs the learner is authorized to analyze. Redact personal data and real client IP addresses before publishing screenshots or sample files.
+The learner has confirmed that screenshots have been placed in this directory locally. Their exact filenames should be checked with git status --short before committing. All sample input is synthetic and uses documentation IP ranges. Redact real client data before publishing any logs.
