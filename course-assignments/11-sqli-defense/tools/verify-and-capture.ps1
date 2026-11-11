@@ -94,6 +94,8 @@ function Save-TextShot([string]$Title, [string]$Text, [string]$Path) {
 try {
     if (-not (Test-Path -LiteralPath $PhpPath -PathType Leaf)) { throw "PHP executable not found: $PhpPath" }
     New-Item -ItemType Directory -Force -Path $Screenshots,$Evidence,(Split-Path -Parent $ReportPath) | Out-Null
+    # Remove a stale failure log from an earlier unsuccessful run.
+    Remove-Item (Join-Path $Evidence 'failure.txt') -Force -ErrorAction SilentlyContinue
     $ext = Join-Path (Split-Path -Parent $PhpPath) 'ext'
     foreach ($dll in @('php_sqlite3.dll','php_pdo_sqlite.dll')) {
         if (-not (Test-Path (Join-Path $ext $dll))) { throw "Missing PHP extension: $dll" }
