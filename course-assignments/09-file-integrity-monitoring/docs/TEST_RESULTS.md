@@ -2,8 +2,9 @@
 
 ## Environment
 
-- Required Python: 3.10 or newer.
-- Operating system: record the learner's actual OS and Python version after local execution.
+- Actual learner verification: Windows PowerShell.
+- Python version: 3.10.0.
+- Verification date: 12 November 2026.
 - Dependencies: Python standard library only.
 
 ## Automated unit tests
@@ -40,8 +41,19 @@ The current test suite contains 14 test methods covering:
 - Missing file: [ALERT] [CRITICAL] Monitored file is missing.
 - Continuous run: remains active until Ctrl+C; the original baseline is preserved.
 
-## Learner execution record
+## Learner execution record — Windows PowerShell
 
-**Status: PENDING LOCAL VERIFICATION.**
+**Status: LOCALLY VERIFIED — 12 November 2026.**
 
-Do not mark the expected results above as observed until the commands have actually been executed on the learner's workstation. Add the actual Python version, test count, elapsed time, and screenshots after local verification.
+Observed results supplied from the learner's Windows workstation:
+
+- `python --version`: Python 3.10.0.
+- CLI help displayed successfully.
+- `py_compile`: completed with no syntax errors.
+- Unit tests: 14 passed, 0 failed, 0 skipped.
+- Test duration: 0.144 seconds.
+- Continuous monitoring created the initial baseline and printed repeated `[OK]` integrity checks.
+- After appending the simulated test change to the disposable TEMP copy, the tool displayed the critical file-integrity alert and showed different expected/current SHA-256 values.
+- The alert remained active while the file differed from the original baseline.
+
+The original sample file was not the modification target. Screenshots are maintained separately in `screenshots/`; their presence in the public repository must be verified after the learner pushes them.
