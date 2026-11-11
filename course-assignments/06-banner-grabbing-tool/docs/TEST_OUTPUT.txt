@@ -1,0 +1,16 @@
+test_classifies_connection_timeout ... ok
+test_classifies_refused_connection ... ok
+test_decodes_invalid_utf8_and_extracts_first_line ... ok
+test_grabs_immediate_ftp_greeting ... ok
+test_grabs_immediate_ssh_banner ... ok
+test_parses_comma_separated_ports_and_ranges ... ok
+test_rejects_invalid_port_range ... ok
+test_reports_no_banner_when_peer_closes_without_data ... ok
+test_reports_no_banner_when_read_times_out_after_connect ... ok
+test_sends_http_head_and_reads_server_header ... ok
+test_validates_target_and_rejects_header_injection ... ok
+
+----------------------------------------------------------------------
+Ran 11 tests in 0.305s
+
+OK

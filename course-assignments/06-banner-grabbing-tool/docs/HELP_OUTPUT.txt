@@ -1,0 +1,23 @@
+usage: banner_grabber.py [-h] [--ports PORTS] [--timeout TIMEOUT]
+                         [--http-ports HTTP_PORTS] [--https-ports HTTPS_PORTS]
+                         [--path PATH] [--no-verify-tls]
+                         target
+
+Retrieve TCP service banners from authorized targets.
+
+positional arguments:
+  target                Target IPv4/IPv6 address or hostname
+
+options:
+  -h, --help            show this help message and exit
+  --ports PORTS         Comma-separated ports/ranges (default:
+                        7,9,13,17,19,21,22,25,80,110,143,443,587,8080,8443)
+  --timeout TIMEOUT     Connection/read timeout in seconds (default: 2.0)
+  --http-ports HTTP_PORTS
+                        Ports that receive an HTTP HEAD request (default:
+                        80,8080)
+  --https-ports HTTPS_PORTS
+                        Ports that use TLS then HTTP HEAD (default: 443,8443)
+  --path PATH           HTTP HEAD request path (default: /)
+  --no-verify-tls       Disable TLS certificate verification for authorized
+                        lab targets only
