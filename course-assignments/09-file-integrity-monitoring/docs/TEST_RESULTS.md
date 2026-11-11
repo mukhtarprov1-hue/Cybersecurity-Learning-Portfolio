@@ -56,4 +56,26 @@ Observed results supplied from the learner's Windows workstation:
 - After appending the simulated test change to the disposable TEMP copy, the tool displayed the critical file-integrity alert and showed different expected/current SHA-256 values.
 - The alert remained active while the file differed from the original baseline.
 
-The original sample file was not the modification target. Screenshots are maintained separately in `screenshots/`; their presence in the public repository must be verified after the learner pushes them.
+The original sample file was not the modification target.
+
+## Published screenshots
+
+Five learner-captured screenshots have been confirmed on the public main branch:
+
+- `screenshots/01-help-and-python-version.png`
+- `screenshots/02-compilation-and-unit-tests.png`
+- `screenshots/03-baseline-created.png`
+- `screenshots/04-critical-change-alert.png`
+- `screenshots/05-stop-monitoring.png`
+
+## Hosted CI verification
+
+**GitHub Actions run:** [43112755840](https://github.com/mukhtarprov1-hue/Cybersecurity-Learning-Portfolio/actions/runs/43112755840)  
+**Status:** SUCCESS — all four matrix jobs completed successfully.
+
+| Operating system | Python | Result |
+|---|---:|---|
+| Ubuntu | 3.10 | Passed |
+| Ubuntu | 3.13 | Passed |
+| Windows | 3.10 | Passed |
+| Windows | 3.13 | Passed |
