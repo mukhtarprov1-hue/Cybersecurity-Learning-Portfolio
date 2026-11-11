@@ -25,7 +25,7 @@ A Python command-line utility with two educational security functions:
     ├── docs/REPORT_AR.md
     ├── docs/TEST_RESULTS.md
     ├── docs/TRACEABILITY.md
-    └── screenshots/README.md
+    └── screenshots/
 
 ## Generate passwords
 
@@ -43,10 +43,16 @@ Expected digest:
 
     ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad
 
+Unicode example:
+
+    python password_tool.py hash "الأمن السيبراني"
+
 ## Compile and test
 
     python -m py_compile password_tool.py tests\test_password_tool.py
     python -m unittest discover -s tests -v
+
+Learner Windows verification: compilation passed and all 16 unit tests passed (0 failed, 0 skipped). See docs/TEST_RESULTS.md for the recorded results.
 
 ## Security notes
 
