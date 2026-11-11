@@ -73,7 +73,7 @@ Observed result: valid structured JSON was printed to the terminal. The output-f
 
     Report saved to: docs\sample_report.json
 
-The generated file should be included in the final Git commit.
+The generated file is present in docs/sample_report.json on the main branch and was included in the learner's final commit.
 
 ## 5. CLI help
 
