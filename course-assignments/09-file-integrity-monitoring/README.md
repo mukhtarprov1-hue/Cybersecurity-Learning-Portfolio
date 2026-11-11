@@ -31,7 +31,7 @@ A defensive Python command-line tool that creates a SHA-256 baseline for one fil
     ├── docs/TEST_RESULTS.md
     ├── docs/TRACEABILITY.md
     ├── screenshots/
-    └── .github/workflows/assignment-09-fim.yml
+    (CI workflow: repository-root .github/workflows/assignment-09-fim.yml)
 
 ## Run the monitor
 
