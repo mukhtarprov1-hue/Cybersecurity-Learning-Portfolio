@@ -1,0 +1,3 @@
+/evidence/local-verification/*
+*.log
+.phpunit.cache/
