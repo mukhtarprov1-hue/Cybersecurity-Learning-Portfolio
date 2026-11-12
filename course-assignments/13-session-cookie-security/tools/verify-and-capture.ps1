@@ -66,7 +66,7 @@ function Get-CsrfToken {
     return $match.Groups[1].Value
 }
 function Get-SetCookieValues {
-    param([System.Net.Http.HttpResponseMessage]$Response)
+    param([object]$Response)
     $values = @()
     $raw = $null
     if ($Response.Headers.TryGetValues("Set-Cookie", [ref]$raw)) { $values = @($raw) }
@@ -101,7 +101,7 @@ function Get-CookieAttributesSafe {
 }
 function Invoke-HttpRequest {
     param(
-        [System.Net.Http.HttpClient]$Client,
+        [object]$Client,
         [string]$Uri,
         [string]$Method = "GET",
         [string]$CookieHeader = "",
