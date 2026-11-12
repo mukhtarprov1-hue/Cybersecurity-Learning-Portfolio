@@ -9,8 +9,8 @@ $serverSocket=stream_socket_server('tcp://127.0.0.1:0',$errno,$errstr);
 if($serverSocket===false){fwrite(STDERR,"Unable to reserve local test port: {$errstr} ({$errno})\n");exit(2);}
 $address=stream_socket_get_name($serverSocket,false);fclose($serverSocket);
 $port=(int)substr(strrchr((string)$address,':'),1);$baseUrl="http://127.0.0.1:{$port}";
-$environment=getenv();$environment['APP_SESSION_SECURE']='1';
-$command=[PHP_BINARY,'-d','session.save_path='.$sessionPath,'-d','session.cookie_secure=1','-S','127.0.0.1:'.$port,'-t',$publicRoot];
+$environment=getenv();$environment['APP_SESSION_SECURE']='1';$environment['APP_SESSION_SAVE_PATH']=$sessionPath;
+$command=[PHP_BINARY,'-d','session.cookie_secure=1','-S','127.0.0.1:'.$port,'-t',$publicRoot];
 $serverStdoutLog=$sessionPath.DIRECTORY_SEPARATOR.'server-stdout.log';
 $serverStderrLog=$sessionPath.DIRECTORY_SEPARATOR.'server-stderr.log';
 $descriptorSpec=[0=>['pipe','r'],1=>['file',$serverStdoutLog,'a'],2=>['file',$serverStderrLog,'a']];
