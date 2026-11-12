@@ -11,7 +11,9 @@ $address=stream_socket_get_name($serverSocket,false);fclose($serverSocket);
 $port=(int)substr(strrchr((string)$address,':'),1);$baseUrl="http://127.0.0.1:{$port}";
 $environment=getenv();$environment['APP_SESSION_SECURE']='1';
 $command=[PHP_BINARY,'-d','session.save_path='.$sessionPath,'-d','session.cookie_secure=1','-S','127.0.0.1:'.$port,'-t',$publicRoot];
-$descriptorSpec=[0=>['pipe','r'],1=>['pipe','w'],2=>['pipe','w']];
+$serverStdoutLog=$sessionPath.DIRECTORY_SEPARATOR.'server-stdout.log';
+$serverStderrLog=$sessionPath.DIRECTORY_SEPARATOR.'server-stderr.log';
+$descriptorSpec=[0=>['pipe','r'],1=>['file',$serverStdoutLog,'a'],2=>['file',$serverStderrLog,'a']];
 $process=proc_open($command,$descriptorSpec,$pipes,$projectRoot,$environment);
 if(!is_resource($process)){fwrite(STDERR,"Unable to start PHP HTTP test server.\n");exit(2);}
 $passed=0;$failed=0;$cookies=[];
@@ -35,10 +37,18 @@ function hasCookieFlag(string $header,string $flag):bool{return(bool)preg_match(
 
 try{
 $ready=false;for($i=0;$i<40;$i++){$socket=@fsockopen('127.0.0.1',$port,$connectErrno,$connectError,0.2);if(is_resource($socket)){fclose($socket);$ready=true;break;}usleep(150000);}
-if(!$ready)throw new RuntimeException('PHP development server did not become ready.');
+if(!$ready){
+$serverDiagnostic=is_file($serverStderrLog)?(string)file_get_contents($serverStderrLog):'no server stderr log';
+throw new RuntimeException('PHP development server did not become ready: '.$serverDiagnostic);
+}
 
 $home=httpRequest($baseUrl.'/');
-integrationTest('Home page responds with HTTP 200',static function()use($home):void{expect($home['status']===200,'Expected HTTP 200, got '.$home['status']);});
+integrationTest('Home page responds with HTTP 200',static function()use($home,$serverStderrLog):void{
+if($home['status']!==200){
+$diagnostic=is_file($serverStderrLog)?(string)file_get_contents($serverStderrLog):'no server stderr log';
+throw new RuntimeException('Expected HTTP 200, got '.$home['status'].'; body='.substr($home['body'],0,1200).'; server stderr='.$diagnostic);
+}
+});
 $sessionCookie=cookieHeader($home['setCookies'],'CYBERSESSID');
 integrationTest('Session Set-Cookie contains HttpOnly, Secure, and SameSite=Strict',static function()use($sessionCookie):void{expect(is_string($sessionCookie),'Session Set-Cookie missing');expect(hasCookieFlag($sessionCookie,'HttpOnly'),'HttpOnly missing');expect(hasCookieFlag($sessionCookie,'Secure'),'Secure missing');expect((bool)preg_match('/SameSite=Strict/i',$sessionCookie),'SameSite=Strict missing');});
 $safeCookie=cookieHeader($home['setCookies'],'DEMO_SAFE');
@@ -61,7 +71,7 @@ integrationTest('Dashboard refuses access after logout',static function()use($af
 echo sprintf("\nHTTP integration tests: %d | Passed: %d | Failed: %d\n",$passed+$failed,$passed,$failed);
 }catch(Throwable $exception){$failed++;echo '[FAIL] HTTP integration harness: '.$exception->getMessage()."\n";}
 finally{
-if(is_resource($process)){proc_terminate($process);foreach($pipes as $pipe){if(is_resource($pipe))fclose($pipe);}proc_close($process);}
+if(is_resource($process)){if(isset($pipes[0])&&is_resource($pipes[0]))fclose($pipes[0]);proc_terminate($process);proc_close($process);}
 foreach(glob($sessionPath.DIRECTORY_SEPARATOR.'*')?:[] as $file){if(is_file($file))@unlink($file);}
 @rmdir($sessionPath);
 }
