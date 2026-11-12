@@ -38,6 +38,7 @@ if ($contentLength > $maxBodyBytes) {
 $storagePath = dirname(__DIR__) . '/storage';
 $apiToken = getenv('API_TOKEN') ?: '';
 $allowedOrigin = getenv('API_ALLOWED_ORIGIN') ?: 'http://localhost:3000';
+$auditHmacKey = getenv('AUDIT_HMAC_KEY') ?: '';
 
 try {
     $repository = new ItemRepository($storagePath);
@@ -61,10 +62,12 @@ try {
 }
 
 try {
-    $audit = new AuditLogger($storagePath . '/audit.jsonl');
+    // Use a new HMAC-chained file so existing legacy audit.jsonl records remain untouched.
+    $audit = new AuditLogger($storagePath . '/audit-chain.jsonl', $auditHmacKey);
     $audit->record($requestId, $method, is_string($path) ? $path : '/', $response->status, $clientIp);
 } catch (Throwable $exception) {
-    error_log(sprintf('[%s] Audit logging failure: %s', $requestId, $exception->getMessage()));
+    // API responses remain available, but failed audit writes are visible in the server log.
+    error_log(sprintf('[%s] Audit-chain failure: %s', $requestId, $exception->getMessage()));
 }
 
 http_response_code($response->status);
