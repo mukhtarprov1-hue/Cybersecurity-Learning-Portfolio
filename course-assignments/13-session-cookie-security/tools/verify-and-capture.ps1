@@ -1,4 +1,4 @@
-[CmdletBinding()]
+﻿[CmdletBinding()]
 param(
     [string]$PhpPath = "F:\Tools\PHP\8.5.12\php.exe",
     [int]$Port = 8083,
