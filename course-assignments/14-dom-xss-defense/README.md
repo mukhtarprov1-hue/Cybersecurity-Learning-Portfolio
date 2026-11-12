@@ -2,7 +2,9 @@
 
 **Course:** Cybersecurity Programming — Web & JavaScript  
 **Implementation:** HTML5 · CSS · Vanilla JavaScript · Playwright  
-**Branch:** feat/assignment-14-dom-xss-defense
+**Branch:** feat/assignment-14-dom-xss-defense  
+**Hosted CI:** verified — 4/4 jobs passed on Windows and Ubuntu with Node.js 20 and 22. [Run 43151669403](https://github.com/mukhtarprov1-hue/Cybersecurity-Learning-Portfolio/actions/runs/43151669403).  
+**Learner workstation evidence:** deferred until the GitHub-first submission phase is complete.
 
 ## Objective
 
@@ -23,7 +25,7 @@ The safe branch creates a PRE element, assigns the untrusted value through textC
 - Separate controls for unsafe innerHTML and safe textContent rendering.
 - Sandboxed unsafe demonstration with a constrained CSP.
 - Live status messages for the safe and unsafe results.
-- CreateElement(), textContent, appendChild(), and clear/reset behavior.
+- createElement(), textContent, appendChild(), and clear/reset behavior.
 - No external runtime dependency in the application itself.
 
 ## Project layout
@@ -56,11 +58,17 @@ The test suite uses Playwright and Chromium. It covers page startup, safe litera
     npx playwright install chromium
     npm test
 
-The GitHub Actions workflow runs the browser suite on Windows and Ubuntu with Node.js 20 and 22.
+**Hosted verification — GitHub Actions run 43151669403:**
+- Windows + Node.js 20 — PASS (6/6 browser tests).
+- Windows + Node.js 22 — PASS (6/6 browser tests).
+- Ubuntu 24.04 + Node.js 20 — PASS (6/6 browser tests).
+- Ubuntu 24.04 + Node.js 22 — PASS (6/6 browser tests).
 
-## Local browser run
+Total: 4/4 CI jobs and 24/24 browser-test executions passed. The test suite runs Chromium in headless mode and checks the isolated event proof and safe rendering.
 
-From this directory, a simple static server can be used. The repository's test server is loopback-only and can also serve the lab:
+## Local browser run (deferred)
+
+From this directory:
 
     node tests/server.js
 
@@ -89,4 +97,6 @@ Open http://127.0.0.1:4173. Do not expose this training server to a network.
 
 ## Submission
 
-Submit this project in the trainer's Assignment 14 thread.
+- Pull Request #5: https://github.com/mukhtarprov1-hue/Cybersecurity-Learning-Portfolio/pull/5
+- Project page: https://github.com/mukhtarprov1-hue/Cybersecurity-Learning-Portfolio/tree/feat/assignment-14-dom-xss-defense/course-assignments/14-dom-xss-defense
+- Discord: submit in the trainer's Assignment 14 thread.
