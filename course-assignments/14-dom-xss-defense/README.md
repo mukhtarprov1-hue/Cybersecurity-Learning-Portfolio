@@ -41,6 +41,9 @@ The safe branch creates a PRE element, assigns the untrusted value through textC
     │   └── dom-xss.spec.js
     ├── package.json
     ├── playwright.config.js
+    ├── tools/
+    │   ├── verify-and-capture.ps1
+    │   └── capture-evidence.js
     ├── TASK_SPEC_AR.md
     ├── docs/
     │   ├── REPORT_AR.md
@@ -66,13 +69,15 @@ The test suite uses Playwright and Chromium. It covers page startup, safe litera
 
 Total: 4/4 CI jobs and 24/24 browser-test executions passed. The test suite runs Chromium in headless mode and checks the isolated event proof and safe rendering.
 
-## Local browser run (deferred)
+## Local workstation verification runner
 
-From this directory:
+After checking out the assignment branch, run the PowerShell 5.1-compatible verification script from the project directory:
 
-    node tests/server.js
+    powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\tools\verify-and-capture.ps1
 
-Open http://127.0.0.1:4173. Do not expose this training server to a network.
+The runner checks Node.js and the Git branch, installs the pinned Playwright dependency and Chromium, executes all six browser tests, captures five local Chromium screenshots, and generates an Arabic verification report, JSON summary, and SHA-256 manifest. It stages only files under Assignment 14, then commits and pushes them to the same feature branch. Use the NoPush switch to leave the evidence commit local.
+
+The standalone preview remains available with node tests/server.js at http://127.0.0.1:4173. Do not expose this training server to a network.
 
 ## Security notes
 
