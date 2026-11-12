@@ -24,6 +24,8 @@ $ServerProcess = $null
 $HttpClient = $null
 
 New-Item -ItemType Directory -Force -Path $Evidence, $Screenshots, (Split-Path -Parent $ReportPath) | Out-Null
+# Remove the previous failed-run marker so a successful retry cannot retain stale failure state.
+Remove-Item -LiteralPath (Join-Path $Evidence "failure.txt") -Force -ErrorAction SilentlyContinue
 
 function Write-Utf8File {
     param([string]$Path, [string]$Content)
@@ -258,6 +260,18 @@ try {
     $rejectHtmlPath = Join-Path $Evidence "http-spoofed-upload-response.html"
     Save-ApplicationResponse -Html $fake.Html -Path $rejectHtmlPath
 
+    # No more HTTP requests are needed. Stop PHP now so redirected log files
+    # are closed before evidence cleanup and hashing.
+    if ($HttpClient) {
+        $HttpClient.Dispose()
+        $HttpClient = $null
+    }
+    if ($ServerProcess -and -not $ServerProcess.HasExited) {
+        Stop-Process -Id $ServerProcess.Id -Force -ErrorAction SilentlyContinue
+        $ServerProcess.WaitForExit()
+    }
+    $ServerProcess = $null
+
     $aclBefore = "ACL not changed by script."
     $aclAfter = "NTFS ACL application was not requested."
     if ($ApplyPrivateNtfsAcl) {
@@ -367,8 +381,12 @@ Only synthetic samples were uploaded. The session CSRF token is redacted from sa
     }
     Write-Utf8File (Join-Path $Evidence "verification-summary.json") ($summary | ConvertTo-Json -Depth 4)
 
+    # Remove ephemeral fixtures and browser working files before hashing.
+    # The PHP server has already exited, so its redirected log handles are closed.
+
     $hashTargets = @()
-    $hashTargets += Get-ChildItem -LiteralPath $Evidence -File | Where-Object { $_.Name -ne "SHA256SUMS.txt" }
+    $hashTargets += Get-ChildItem -LiteralPath $Evidence -File |
+        Where-Object { $_.Name -notin @("SHA256SUMS.txt", "php-server-stdout.log", "php-server-stderr.log") }
     $hashTargets += Get-ChildItem -LiteralPath $Screenshots -File
     $hashLines = foreach ($item in ($hashTargets | Sort-Object FullName)) {
         $hash = Get-FileHash -LiteralPath $item.FullName -Algorithm SHA256
