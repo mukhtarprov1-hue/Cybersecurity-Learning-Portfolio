@@ -4,7 +4,7 @@
 **Implementation:** PHP 8.2+ · Fileinfo · move_uploaded_file() · HTML forms  
 **Delivery branch:** feat/assignment-12-secure-file-upload  
 **Hosted CI:** verified — 4/4 jobs passed (Windows/Ubuntu × PHP 8.2/8.5), run [43142698351](https://github.com/mukhtarprov1-hue/Cybersecurity-Learning-Portfolio/actions/runs/43142698351).  
-**Learner workstation verification/screenshots:** automated local run script provided; evidence is pending the learner's execution.
+**Learner workstation verification/screenshots:** completed on Windows with PHP 8.5.12 — syntax 3/3, policy tests 14/14, HTTP cases 2/2, screenshots 5/5, and NTFS ACL applied.
 
 ## Objective
 
@@ -127,7 +127,7 @@ The test runner creates temporary synthetic fixtures and removes them after exec
 
 The workflow is defined in .github/workflows/assignment-12-secure-upload.yml. [Run 43142698351](https://github.com/mukhtarprov1-hue/Cybersecurity-Learning-Portfolio/actions/runs/43142698351) completed successfully: all four Windows/Ubuntu × PHP 8.2/8.5 jobs passed Fileinfo setup, three PHP syntax checks, and all 14 automated tests.
 
-A separate HTTP integration check in the implementation environment accepted a genuine PNG and rejected PHP source renamed to JPG. Learner workstation verification and screenshots remain pending.
+The learner's Windows run also completed the two HTTP integration cases: a genuine synthetic PNG was accepted and stored outside public/, while PHP source renamed to JPG was rejected with HTTP 400. Five screenshots, raw outputs, verification summary, SHA-256 manifest, and local report were committed to this branch. The local report records the NTFS ACL change.
 
 ## Important limitations
 
