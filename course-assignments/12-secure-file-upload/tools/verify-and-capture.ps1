@@ -24,8 +24,10 @@ $ServerProcess = $null
 $HttpClient = $null
 
 New-Item -ItemType Directory -Force -Path $Evidence, $Screenshots, (Split-Path -Parent $ReportPath) | Out-Null
-# Remove the previous failed-run marker so a successful retry cannot retain stale failure state.
+# Remove stale status/report and abandoned browser profile from a previous failed run.
 Remove-Item -LiteralPath (Join-Path $Evidence "failure.txt") -Force -ErrorAction SilentlyContinue
+Remove-Item -LiteralPath $ReportPath -Force -ErrorAction SilentlyContinue
+Remove-Item -LiteralPath (Join-Path $Evidence "headless-browser-profile") -Recurse -Force -ErrorAction SilentlyContinue
 
 function Write-Utf8File {
     param([string]$Path, [string]$Content)
@@ -442,6 +444,8 @@ Only synthetic samples were uploaded. The session CSRF token is redacted from sa
     }
 }
 catch {
+    # A failed run must not leave behind an old or partial PASS report.
+    Remove-Item -LiteralPath $ReportPath -Force -ErrorAction SilentlyContinue
     $failure = "ASSIGNMENT 12 VERIFICATION FAILED" + [Environment]::NewLine + "Time: $(Get-Date -Format o)" + [Environment]::NewLine + "Error: $($_.Exception.Message)"
     Write-Utf8File (Join-Path $Evidence "failure.txt") $failure
     Write-Host $failure -ForegroundColor Red
