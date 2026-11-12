@@ -1,156 +1,153 @@
 # Assignment 10 — Secure HTTP Request Handler & REST API (PHP)
 
-A security-focused educational REST API that demonstrates real HTTP request handling, strict JSON parsing, method routing, bearer-token authorization, structured responses, safe local persistence, and audit events.
+A security-focused educational REST API that demonstrates real HTTP request handling, strict JSON parsing, method routing, bearer-token authorization, structured responses, and safe local persistence. The HMAC-chained audit trail is a later optional development and remains locally unverified; it is not part of the trainer's core acceptance requirements.
 
 ## Why this version stands out
 
-- **Real CRUD API:** `GET`, `POST`, `PUT`, and `DELETE` operate on a resource collection rather than printing fixed examples.
-- **Layered design:** separate HTTP application, repository, audit logger, response model, and router.
-- **Defensive request parsing:** `php://input`, `getallheaders()`, JSON object validation, UTF-8 checks, allow-listed fields, and a 64 KiB body limit.
-- **Authentication:** state-changing requests require an `Authorization: Bearer ...` token. `hash_equals()` is used for constant-time comparison. If `API_TOKEN` is not configured, writes fail closed with HTTP 503.
-- **HTTP correctness:** meaningful status codes, `Allow`, `Location`, `WWW-Authenticate`, and empty 204 responses.
-- **Security headers:** `nosniff`, `DENY`, `no-store`, `no-referrer`, and same-origin resource policy.
-- **Request observability:** a unique `X-Request-ID` is returned and a JSON Lines audit record is written without storing credentials or request bodies.
-- **Safer persistence:** UUIDv4 IDs, `flock()` for concurrent access, JSON validation, and temp-file replacement.
-- **CORS allow-list:** browser origins are reflected only when they exactly match `API_ALLOWED_ORIGIN`.
-- **Automated tests and CI:** 23 API/application tests and a Windows/Ubuntu × PHP 8.2/8.5 workflow.
+- **Real CRUD API:** GET, POST, PUT, and DELETE operate on a resource collection rather than printing fixed examples.
+- **Layered design:** separate HTTP application, repository, audit-chain, audit logger, response model, verifier, and router.
+- **Defensive request parsing:** php://input, getallheaders(), JSON object validation, UTF-8 checks, allow-listed fields, and a 64 KiB body limit.
+- **Authentication:** state-changing requests require an Authorization Bearer token. hash_equals() is used for constant-time comparison. If API_TOKEN is not configured, writes fail closed with HTTP 503.
+- **HTTP correctness:** meaningful status codes, Allow, Location, WWW-Authenticate, and empty 204 responses.
+- **Security headers:** nosniff, DENY, no-store, no-referrer, and same-origin resource policy.
+- **Request observability:** unique X-Request-ID values link responses to audit events without storing credentials or request bodies. The later HMAC-chain writer is optional and best-effort; without AUDIT_HMAC_KEY its failure is written to the server log while the core API response remains available.
+- **Later optional development — HMAC audit chain:** code and nine integrity tests are retained in this branch. CI passes, but the learner's local end-to-end validation is still pending. This enhancement is not counted as a completed trainer requirement.
+- **Audit append protection:** the logger verifies the existing chain before appending and refuses to extend an invalid chain.
+- **Safer persistence:** UUIDv4 IDs, flock() for concurrent access, JSON validation, and temporary-file replacement.
+- **CORS allow-list:** browser origins are reflected only when they exactly match API_ALLOWED_ORIGIN.
+- **Automated tests and CI:** 23 API/application tests plus a dedicated audit-integrity suite on Windows and Ubuntu with PHP 8.2 and 8.5.
 
 ## Requirements
 
-- PHP **8.2 or newer**.
-- PHP JSON extension (included in standard PHP distributions).
+- PHP 8.2 or newer.
+- PHP JSON and Hash extensions.
 - No Composer packages or third-party PHP libraries are required.
-- Recommended current stable line for this assignment: PHP 8.5.12. Do not use PHP 8.6 release candidates for the submission environment.
+- Recommended classroom runtime: PHP 8.5.12.
 
-Check your installation:
+Check the installation:
 
     php -v
     php -m
 
-If PowerShell says `php` is not recognized and XAMPP is installed, check `C:\xampp\php\php.exe -v`; you can run the commands with that full executable path or add `C:\xampp\php` to your Windows PATH. Prefer a current supported PHP build over an old bundled version.
-
 ## Project structure
 
     10-php-rest-api/
-    ├── public/index.php             # HTTP entry point and response emitter
-    ├── public/.htaccess             # Apache hardening hints
-    ├── router.php                   # PHP built-in server router
+    ├── public/
+    │   ├── index.php
+    │   └── .htaccess
     ├── src/
-    │   ├── ApiApplication.php       # Routing, validation, auth, HTTP semantics
+    │   ├── ApiApplication.php
     │   ├── ApiException.php
     │   ├── ApiResponse.php
-    │   ├── ItemRepository.php       # Locked JSON persistence
-    │   ├── AuditLogger.php          # JSONL audit trail
+    │   ├── ItemRepository.php
+    │   ├── AuditChain.php
+    │   ├── AuditLogger.php
     │   └── bootstrap.php
-    ├── storage/                     # Runtime data and audit logs; outside public/
-    ├── tests/run.php                # Dependency-free automated test suite
-    ├── scripts/demo.ps1             # PowerShell CRUD demonstration
-    ├── docs/                        # Arabic report, API contract, security, test plan
-    └── .github/workflows/           # PHP 8.2/8.5 on Windows and Ubuntu
+    ├── tools/
+    │   └── audit_verify.php
+    ├── tests/
+    │   ├── run.php
+    │   └── audit_integrity.php
+    ├── scripts/
+    │   ├── demo.ps1
+    │   ├── register-index.ps1
+    │   └── load-audit-key.ps1
+    ├── storage/                  # Runtime data and audit chain; outside public/
+    ├── docs/                     # API, architecture, threat model, audit format, reports
+    └── router.php
 
-## 1. Start the local API on Windows PowerShell
+## Optional later development — load the HMAC audit key (not required for the trainer's core task)
 
-Open PowerShell in the assignment directory. In **server window 1**, set a local training token and start PHP's built-in server bound to loopback only:
+In Windows PowerShell, from this directory:
 
+    .\scripts\load-audit-key.ps1
+
+This step activates the optional HMAC audit-chain development only. It generates a 256-bit random key once, stores it outside the repository in the current Windows user's profile, and loads it into the current PowerShell process without printing the secret. The core REST API does not require this step to run its HTTP and CRUD functions.
+
+Keep the same key for the lifetime of the audit chain. Back it up securely. If the key is lost or replaced, earlier records cannot be verified with the new key.
+
+## 2. Start the local API
+
+In server window 1:
+
+    .\scripts\load-audit-key.ps1
     $env:API_TOKEN = 'Replace-This-With-A-Long-Unique-Local-Training-Token'
     $env:API_ALLOWED_ORIGIN = 'http://localhost:3000'
     php -S 127.0.0.1:8080 router.php
 
-Keep this terminal open. The API listens only on your own computer, not on the LAN.
+Keep the server bound to 127.0.0.1 for this classroom demonstration. Do not expose the PHP built-in server to a public or untrusted network.
 
-## 2. Test the health endpoint
+## 3. Test the health endpoint and CRUD operations
 
-In **client window 2**:
+In client window 2:
 
+    $env:API_TOKEN = 'Replace-This-With-A-Long-Unique-Local-Training-Token'
     Invoke-RestMethod -Method Get -Uri 'http://127.0.0.1:8080/api/health'
 
-## 3. Exercise all four required methods
-
-Set the same token in client window 2:
-
-    $token = 'Replace-This-With-A-Long-Unique-Local-Training-Token'
-    $headers = @{ Authorization = "Bearer $token" }
-
-**GET — list items**
-
-    Invoke-RestMethod -Method Get -Uri 'http://127.0.0.1:8080/api/items'
-
-**POST — create an item**
-
-    $body = @{ title = 'FIM Review'; description = 'Review a protected file baseline'; priority = 'high' } | ConvertTo-Json
-    $created = Invoke-RestMethod -Method Post -Uri 'http://127.0.0.1:8080/api/items' -Headers $headers -ContentType 'application/json' -Body $body
-    $id = $created.data.id
-    $id
-
-**GET — retrieve the created item**
-
-    Invoke-RestMethod -Method Get -Uri "http://127.0.0.1:8080/api/items/$id"
-
-**PUT — replace/update the item**
-
-    $update = @{ title = 'FIM Review Updated'; description = 'Reviewed and documented'; priority = 'normal' } | ConvertTo-Json
-    Invoke-RestMethod -Method Put -Uri "http://127.0.0.1:8080/api/items/$id" -Headers $headers -ContentType 'application/json' -Body $update
-
-**DELETE — remove the item**
-
-    Invoke-WebRequest -Method Delete -Uri "http://127.0.0.1:8080/api/items/$id" -Headers $headers
-
-DELETE returns HTTP 204 with no response body, as expected by HTTP semantics.
-
-You can also run the prepared PowerShell demonstration script after starting the server:
+Run the complete CRUD example:
 
     .\scripts\demo.ps1
 
-The script reads the API token from the `API_TOKEN` environment variable. Set it in the client terminal before running the script.
+The script reads API_TOKEN from the client PowerShell environment. It exercises GET, POST, GET-by-ID, PUT, and DELETE. DELETE is expected to return HTTP 204 with no body.
 
-## 4. Run automated tests
+## Optional HMAC development verification — still in progress locally
 
-    php -l public/index.php
-    php -l router.php
+In client window 2, load the same HMAC key and verify the audit file:
+
+    .\scripts\load-audit-key.ps1
+    php tools/audit_verify.php
+
+Expected result after API requests:
+
+    AUDIT CHAIN: VALID
+    Events verified: <number>
+
+To verify another file:
+
+    php tools/audit_verify.php storage/audit-chain.jsonl
+
+The verification command exits with status 0 for a valid chain, 1 for an integrity failure, and 2 for a verifier/configuration error.
+
+## 5. Run automated tests
+
+Run the original API/application suite:
+
     php tests/run.php
 
-The test runner is dependency-free and exercises CRUD, JSON parsing, validation, authentication, CORS, request IDs, security headers, body limits, and HTTP status behavior.
+Run the dedicated audit-integrity suite:
 
-## 5. Useful HTTP behavior to demonstrate
+    php tests/audit_integrity.php
 
-| Scenario | Expected status |
-|---|---:|
-| Health / successful GET | 200 |
-| Successful POST | 201 + `Location` |
-| Successful PUT | 200 |
-| Successful DELETE | 204, empty body |
-| Malformed JSON | 400 |
-| Missing/invalid bearer token | 401 |
-| Missing API token configuration | 503 |
-| Unsupported HTTP method | 405 + `Allow` |
-| Unknown route/resource | 404 |
-| Wrong content type | 415 |
-| Invalid resource fields | 422 |
-| Body above limit | 413 |
+The optional audit suite contains nine cases for valid chaining, sequence and previous-HMAC links, event modification, interior deletion, reordering, append refusal after tampering, wrong-key rejection, minimum key length, and metadata-only logging. GitHub Actions has passed these tests, but the local Windows end-to-end run and screenshots for this optional enhancement are not yet complete.
 
-## 6. Runtime files
+## Optional HMAC audit-chain format and security properties (development in progress)
 
-Runtime state is created under `storage/`:
+Audit events are written as JSON Lines to storage/audit-chain.jsonl. The HMAC key is supplied through AUDIT_HMAC_KEY and is not stored in the repository or in the event records.
 
-- `items.json` — current resource data.
-- `items.lock` — inter-process lock file.
-- `audit.jsonl` — request metadata (timestamp, request ID, method, path, status, client IP).
+The event chain uses a genesis value of 64 zeroes. Each subsequent event signs its canonical metadata plus the previous event's HMAC.
 
-Do not commit runtime data, audit logs, or real API tokens. They are ignored by `.gitignore`.
+See:
+
+- docs/AUDIT_CHAIN_FORMAT.md
+- docs/THREAT_MODEL.md
+- docs/SECURITY_CONTROLS.md
+- docs/API_CONTRACT.md
+
+## Important security limitations
+
+- This is a classroom API, not a production deployment blueprint. PHP's built-in server is for local development only.
+- A shared bearer token is not a user identity system or fine-grained authorization.
+- The local JSON store is not a transactional database.
+- HMAC chaining is tamper-evident, not tamper-proof. A party able to truncate the final records and control the only log copy can remove a valid suffix without breaking the remaining chain. Detecting this requires an independently protected checkpoint or remote append-only collector.
+- Key compromise permits an attacker to forge new valid-looking records. Keep the key private and separate from the log.
+- Changing the HMAC key makes old records unverifiable unless the old key is retained.
+- CORS is a browser policy, not authentication.
+- Production systems should use TLS, managed secrets, a dedicated identity provider, protected remote logging, backups, and a transactional database.
 
 ## Add the assignment to the portfolio index
 
-After extracting this package into the repository root, run from this directory:
+Run:
 
     .\scripts\register-index.ps1
 
-The script inserts the Assignment 10 row after Assignment 09 in `course-assignments/README.md`; it does not duplicate the row if already present.
-
-## Security and scope notes
-
-- This is a classroom API, not a production deployment blueprint. The PHP built-in server is for local development only.
-- Keep `API_TOKEN` secret; never put it in Git, screenshots, or request logs.
-- The example uses a single shared bearer token. A real system should use a proper identity provider, token rotation, per-user authorization, HTTPS, and secret management.
-- CORS is a browser policy, not authentication. The bearer token remains required for write operations.
-- JSON file storage is useful for learning; a production service should use a database with transactions and backups.
-- Audit records intentionally exclude Authorization headers and request bodies.
+The script inserts the Assignment 10 row after Assignment 09 without duplicating it.

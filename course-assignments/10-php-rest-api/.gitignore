@@ -3,6 +3,9 @@
 storage/items.json
 storage/items.lock
 storage/audit.jsonl
+storage/audit.jsonl.lock
+storage/audit-chain.jsonl
+storage/audit-chain.jsonl.lock
 storage/*.bak
 storage/.items-*
 .phpunit.cache/

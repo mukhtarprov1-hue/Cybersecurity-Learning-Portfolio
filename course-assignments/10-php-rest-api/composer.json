@@ -1,13 +1,16 @@
 {
   "name": "cybersecurity-learning/assignment-10-php-rest-api",
-  "description": "Security-focused educational REST API for HTTP methods and JSON request handling.",
+  "description": "Security-focused educational REST API with HMAC-chained tamper-evident audit logging.",
   "type": "project",
   "require": {
     "php": ">=8.2",
-    "ext-json": "*"
+    "ext-json": "*",
+    "ext-hash": "*"
   },
   "scripts": {
     "test": "php tests/run.php",
+    "test:audit": "php tests/audit_integrity.php",
+    "verify:audit": "php tools/audit_verify.php",
     "serve": "php -S 127.0.0.1:8080 router.php"
   }
 }

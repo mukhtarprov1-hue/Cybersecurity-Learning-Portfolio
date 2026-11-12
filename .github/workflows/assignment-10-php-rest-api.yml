@@ -2,7 +2,7 @@ name: Assignment 10 - PHP REST API
 
 on:
   push:
-    branches: [main]
+    branches: [main, 'feat/**']
     paths:
       - 'course-assignments/10-php-rest-api/**'
       - '.github/workflows/assignment-10-php-rest-api.yml'
@@ -41,3 +41,5 @@ jobs:
         run: find . -name '*.php' -print0 | xargs -0 -n1 php -l
       - name: Run API tests
         run: php tests/run.php
+      - name: Run tamper-evident audit-chain tests
+        run: php tests/audit_integrity.php

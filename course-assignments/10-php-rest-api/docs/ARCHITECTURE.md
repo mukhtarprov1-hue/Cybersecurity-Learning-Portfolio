@@ -1,18 +1,34 @@
 # Architecture Overview
 
-```mermaid
-flowchart TD
-    C[HTTP Client / PowerShell] --> R[router.php]
-    R --> P[public/index.php]
-    P --> H[Read Method + Headers + JSON Body]
-    H --> A[ApiApplication]
-    A --> V[Validation + Bearer Auth + HTTP Routing]
-    V --> S[ItemRepository]
-    S --> D[(storage/items.json)]
-    A --> J[JSON Response + Request ID]
-    P --> L[AuditLogger]
-    L --> G[(storage/audit.jsonl)]
-    J --> C
-```
+The request path is separated from the persistence and audit paths.
 
-The public directory is the only web document root. Runtime storage and source classes remain outside it. The local built-in server router sends API paths to the front controller.
+    HTTP Client
+        |
+        v
+    router.php
+        |
+        v
+    public/index.php
+        |
+        +----> ApiApplication
+        |          |
+        |          +----> Validation / Bearer Auth / HTTP routing
+        |          |
+        |          +----> ItemRepository ----> storage/items.json
+        |
+        +----> AuditLogger
+                    |
+                    v
+                AuditChain
+                    |
+                    v
+           storage/audit-chain.jsonl
+                    |
+                    v
+          tools/audit_verify.php
+
+The only web document root is public/. Source classes, runtime storage, the HMAC key, and command-line verification tools remain outside the public document root.
+
+Each audit event contains a monotonically increasing sequence and the HMAC of the previous event. The verifier recomputes every record using the separately supplied AUDIT_HMAC_KEY.
+
+The audit chain detects content changes, insertion, reordering, and deletion of interior records. It cannot prove that a valid final suffix was not removed unless the latest sequence and HMAC are independently anchored outside the log's trust boundary.
