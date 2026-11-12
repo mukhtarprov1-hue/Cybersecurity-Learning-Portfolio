@@ -1,6 +1,6 @@
 # Assignment 10 — Secure HTTP Request Handler & REST API (PHP)
 
-A security-focused educational REST API that demonstrates real HTTP request handling, strict JSON parsing, method routing, bearer-token authorization, structured responses, safe local persistence, and HMAC-chained audit events.
+A security-focused educational REST API that demonstrates real HTTP request handling, strict JSON parsing, method routing, bearer-token authorization, structured responses, and safe local persistence. The HMAC-chained audit trail is a later optional development and remains locally unverified; it is not part of the trainer's core acceptance requirements.
 
 ## Why this version stands out
 
@@ -11,7 +11,7 @@ A security-focused educational REST API that demonstrates real HTTP request hand
 - **HTTP correctness:** meaningful status codes, Allow, Location, WWW-Authenticate, and empty 204 responses.
 - **Security headers:** nosniff, DENY, no-store, no-referrer, and same-origin resource policy.
 - **Request observability:** unique X-Request-ID values link responses to audit events without storing credentials or request bodies.
-- **Tamper-evident audit chain:** each JSONL event includes a sequence number, previous-record HMAC, and HMAC-SHA256 calculated over canonical event metadata. Verification detects modification, reordering, insertion, and interior deletion.
+- **Later optional development — HMAC audit chain:** code and nine integrity tests are retained in this branch. CI passes, but the learner's local end-to-end validation is still pending. This enhancement is not counted as a completed trainer requirement.
 - **Audit append protection:** the logger verifies the existing chain before appending and refuses to extend an invalid chain.
 - **Safer persistence:** UUIDv4 IDs, flock() for concurrent access, JSON validation, and temporary-file replacement.
 - **CORS allow-list:** browser origins are reflected only when they exactly match API_ALLOWED_ORIGIN.
@@ -56,13 +56,13 @@ Check the installation:
     ├── docs/                     # API, architecture, threat model, audit format, reports
     └── router.php
 
-## 1. Load or generate the local audit key
+## Optional later development — load the HMAC audit key (not required for the trainer's core task)
 
 In Windows PowerShell, from this directory:
 
     .\scripts\load-audit-key.ps1
 
-The script generates a 256-bit random HMAC key once, stores it outside the repository in the current Windows user's profile, and loads it into the current PowerShell process without printing the secret.
+This step activates the optional HMAC audit-chain development only. It generates a 256-bit random key once, stores it outside the repository in the current Windows user's profile, and loads it into the current PowerShell process without printing the secret. The core REST API does not require this step to run its HTTP and CRUD functions.
 
 Keep the same key for the lifetime of the audit chain. Back it up securely. If the key is lost or replaced, earlier records cannot be verified with the new key.
 
@@ -90,7 +90,7 @@ Run the complete CRUD example:
 
 The script reads API_TOKEN from the client PowerShell environment. It exercises GET, POST, GET-by-ID, PUT, and DELETE. DELETE is expected to return HTTP 204 with no body.
 
-## 4. Verify the audit chain
+## Optional HMAC development verification — still in progress locally
 
 In client window 2, load the same HMAC key and verify the audit file:
 
@@ -118,7 +118,7 @@ Run the dedicated audit-integrity suite:
 
     php tests/audit_integrity.php
 
-The audit suite checks valid chaining, sequence and previous-HMAC links, event modification, interior deletion, reordering, append refusal after tampering, wrong-key rejection, minimum key length, and metadata-only logging.
+The optional audit suite contains nine cases for valid chaining, sequence and previous-HMAC links, event modification, interior deletion, reordering, append refusal after tampering, wrong-key rejection, minimum key length, and metadata-only logging. GitHub Actions has passed these tests, but the local Windows end-to-end run and screenshots for this optional enhancement are not yet complete.
 
 ## 6. Audit record and security properties
 
