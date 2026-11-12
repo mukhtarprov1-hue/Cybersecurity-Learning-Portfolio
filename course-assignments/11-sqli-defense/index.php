@@ -24,7 +24,7 @@ $errorMessage = null;
 $results = [];
 $username = '';
 $mode = 'safe';
-$submitted = ($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST';
+$submitted = array_key_exists('username', $_GET);
 
 try {
     $pdo = Database::create();
@@ -34,8 +34,8 @@ try {
 }
 
 if ($submitted && $pdo instanceof PDO) {
-    $rawUsername = $_POST['username'] ?? '';
-    $rawMode = $_POST['mode'] ?? 'safe';
+    $rawUsername = $_GET['username'] ?? '';
+    $rawMode = $_GET['mode'] ?? 'safe';
 
     $username = is_string($rawUsername) ? $rawUsername : '';
     $mode = is_string($rawMode) && in_array($rawMode, ['safe', 'unsafe'], true)
@@ -104,7 +104,7 @@ $modeLabel = $mode === 'unsafe'
 
     <section class="panel">
         <h2>اختبار البحث عن مستخدم</h2>
-        <form method="post" action="">
+        <form method="get" action="">
             <label for="username">اسم المستخدم</label>
             <input
                 id="username"

@@ -6,7 +6,7 @@
 
 ## Objective
 
-A small, self-contained PHP web demonstration comparing two ways to search a demo users table:
+A small, self-contained PHP web demonstration reading the search term from `$_GET['username']` and comparing two ways to search a demo users table:
 
 - **Unsafe mode:** concatenates the supplied username into SQL so the instructor can observe how SQL injection changes the query logic.
 - **Safe mode:** uses PDO `prepare()`, a named parameter, and `execute()` so the supplied value remains data rather than SQL code.
