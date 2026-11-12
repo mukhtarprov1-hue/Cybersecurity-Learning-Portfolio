@@ -38,11 +38,17 @@ Check the extensions in PowerShell:
 │   └── UserSearch.php
 ├── tests/
 │   └── run.php
+├── tools/
+│   └── verify-and-capture.ps1
 ├── docs/
 │   ├── REPORT_AR.md
-│   └── SECURITY_ANALYSIS_AR.md
+│   ├── SECURITY_ANALYSIS_AR.md
+│   └── LOCAL_VERIFICATION_REPORT.md
+├── evidence/
+│   └── local-verification/
 └── screenshots/
-    └── README.md
+    ├── README.md
+    └── 01..05 evidence PNGs
 ```
 
 ## Run on Windows PowerShell
@@ -104,7 +110,7 @@ The application HTML-escapes every displayed field. Database exception details a
 
 ## Continuous integration evidence
 
-[GitHub Actions run 43137653366](https://github.com/mukhtarprov1-hue/Cybersecurity-Learning-Portfolio/actions/runs/43137653366) completed successfully across all four matrix environments: Windows and Ubuntu with PHP 8.2 and 8.5. Each environment passed PHP syntax validation and all six automated tests. Local Windows verification is also complete: four PHP syntax checks passed, all six automated tests passed, and all three HTTP checks returned the expected results. See [the local verification report](docs/LOCAL_VERIFICATION_REPORT.md) and [the evidence manifest](evidence/local-verification/SHA256SUMS.txt).
+[GitHub Actions run 43138004248](https://github.com/mukhtarprov1-hue/Cybersecurity-Learning-Portfolio/actions/runs/43137653366) completed successfully across all four matrix environments: Windows and Ubuntu with PHP 8.2 and 8.5. Each environment passed PHP syntax validation and all six automated tests. Local Windows verification is also complete: four PHP syntax checks passed, all six automated tests passed, and all three HTTP checks returned the expected results. See [the local verification report](docs/LOCAL_VERIFICATION_REPORT.md) and [the evidence manifest](evidence/local-verification/SHA256SUMS.txt).
 
 ## Evidence and report
 
