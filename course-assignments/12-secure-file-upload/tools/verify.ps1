@@ -77,7 +77,7 @@ try {
         }
         Write-Utf8File (Join-Path $Evidence "php-lint.txt") ($lintLines -join [Environment]::NewLine)
 
-        $testOutput = @(& $PhpPath ".\tests\run.php" 2>&1)
+        $testOutput = @(& $PhpPath @PhpExtraArgs ".\tests\run.php" 2>&1)
         $testExitCode = $LASTEXITCODE
         $testText = $testOutput -join [Environment]::NewLine
         Write-Utf8File (Join-Path $Evidence "automated-tests.txt") $testText
