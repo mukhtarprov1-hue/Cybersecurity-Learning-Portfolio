@@ -1,12 +1,12 @@
 # Test Plan and Results — Assignment 10
 
-## Automated suite
+## Original API/application suite
 
 Run:
 
     php tests/run.php
 
-The dependency-free suite contains 23 tests:
+The dependency-free suite contains 23 tests covering:
 
 1. Health route returns JSON 200.
 2. Empty collection returns 200.
@@ -32,62 +32,59 @@ The dependency-free suite contains 23 tests:
 22. Invalid bearer token returns 401.
 23. PUT on collection returns 405.
 
+## Tamper-evident audit-chain suite
+
+Run:
+
+    php tests/audit_integrity.php
+
+The dedicated suite contains 9 tests for:
+
+1. Empty chain validation.
+2. Valid multi-event chain and previous-HMAC links.
+3. Modified event detection.
+4. Interior event deletion detection.
+5. Event reordering detection.
+6. Refusal to append to a tampered chain.
+7. Wrong-key verification failure.
+8. Rejection of keys shorter than 32 bytes.
+9. Metadata-only audit logging.
+
 ## Development environment result
 
 - Runtime: PHP 8.4.24 (Linux build container).
-- PHP syntax lint: all project PHP files passed.
-- Automated suite: 23 passed, 0 failed.
-- HTTP integration smoke test against the PHP built-in server: GET health (200), POST create (201), GET item (200), PUT update (200), DELETE (204), unsupported PATCH (405), missing token (401), and malformed JSON (400) all returned the expected status.
-- Audit JSONL file was created outside the public document root.
+- Original API/application suite: 23 passed, 0 failed.
+- HTTP integration smoke test: GET health (200), POST create (201), GET item (200), PUT update (200), DELETE (204), unsupported PATCH (405), missing token (401), and malformed JSON (400) returned expected statuses.
+- The HMAC audit-chain implementation is introduced in the feature branch; its dedicated Windows and CI execution must be confirmed before merging.
 
-This is build-container validation, not a claim that the learner's Windows machine has been tested. Re-run the commands locally before recording Windows results.
-
-## Learner execution record
-
-**Status: PENDING WINDOWS VERIFICATION.**
-
-After running on the learner's Windows machine, update this section with:
-
-- `php -v` output.
-- `php tests/run.php` summary.
-- Actual HTTP response screenshots for GET, POST, PUT and DELETE.
-- Invalid JSON / 401 / 405 evidence where available.
-- GitHub Actions run URL and final matrix status.
-
-## Windows Local Verification — 2026-11-12
+## Learner Windows execution record — original API version
 
 - Runtime: PHP 8.5.12 (NTS, Visual C++ 2022 x64).
 - PHP syntax validation: 9 PHP files passed with no syntax errors.
-- Automated test suite: 23 passed, 0 failed.
-- HTTP health endpoint: GET /api/health returned HTTP 200.
-- CRUD smoke test completed successfully against 127.0.0.1:8080:
+- Original API/application suite: 23 passed, 0 failed.
+- Health endpoint: GET /api/health returned HTTP 200.
+- CRUD demonstration against 127.0.0.1:8080 completed successfully:
   - GET collection: HTTP 200
   - POST create: HTTP 201
   - GET resource: HTTP 200
   - PUT update: HTTP 200
   - DELETE resource: HTTP 204
-- Server binding: 127.0.0.1 only (local loopback).
-- Overall result: PASS.
+- Server binding: 127.0.0.1 only.
+- Evidence: six Windows screenshots were captured for the original API version.
 
+## Feature-branch verification — pending
 
-## Windows Local Verification — 2026-11-12
+Do not mark the audit-chain enhancement as verified until the following are run on the feature branch:
 
-- Runtime: PHP 8.5.12 (NTS, Visual C++ 2022 x64).
-- PHP syntax validation: all assignment PHP files passed with no syntax errors.
-- Automated test suite: 23 passed, 0 failed.
-- Health endpoint: GET /api/health returned HTTP 200.
-- CRUD demonstration: GET collection, POST create, GET resource, PUT update, and DELETE resource completed successfully; DELETE returned HTTP 204.
-- Server binding: 127.0.0.1 (local loopback only).
-- Evidence: screenshots are stored in the screenshots/ directory.
-- Overall result: PASS.
+    php -l src/AuditChain.php
+    php -l src/AuditLogger.php
+    php -l tools/audit_verify.php
+    php -l tests/audit_integrity.php
+    php tests/run.php
+    php tests/audit_integrity.php
 
-## Windows Local Verification — 2026-11-12
+Then start the API with AUDIT_HMAC_KEY loaded, issue several requests, and run:
 
-- Runtime: PHP 8.5.12 (NTS, Visual C++ 2022 x64).
-- PHP syntax validation: all assignment PHP files passed with no syntax errors.
-- Automated test suite: 23 passed, 0 failed.
-- Health endpoint: GET /api/health returned HTTP 200.
-- CRUD demonstration: GET collection, POST create, GET resource, PUT update, and DELETE resource completed successfully; DELETE returned HTTP 204.
-- Server binding: 127.0.0.1 (local loopback only).
-- Evidence: screenshots are stored in the screenshots/ directory.
-- Overall result: PASS.
+    php tools/audit_verify.php
+
+Record the actual test totals and screenshots only after those commands pass.
