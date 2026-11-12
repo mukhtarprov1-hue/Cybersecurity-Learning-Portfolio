@@ -57,6 +57,7 @@ function Get-FreeTcpPort {
     try {
         $listener = [System.Net.Sockets.TcpListener]::new([System.Net.IPAddress]::Loopback, $PreferredPort)
         $listener.Start()
+        $listener.Stop()
         return $PreferredPort
     } catch {
         if ($listener) { $listener.Stop() }
