@@ -11,7 +11,7 @@ A small, self-contained PHP web demonstration reading the search term from `$_GE
 - **Unsafe mode:** concatenates the supplied username into SQL so the instructor can observe how SQL injection changes the query logic.
 - **Safe mode:** uses PDO `prepare()`, a named parameter, and `execute()` so the supplied value remains data rather than SQL code.
 
-The application uses `sqlite::memory:`. Every request creates and seeds a fresh temporary database; no MySQL server, persistent database file, real accounts, or external service is required.
+The application reads the search field through `$_GET['username']` to match the supplied task brief. Search values therefore appear in the browser address bar; do not enter passwords, tokens, or private information. It uses `sqlite::memory:`: every request creates and seeds a fresh temporary database, so no MySQL server, persistent database file, real accounts, or external service is required.
 
 > **Safety boundary:** The vulnerable query exists solely as a local training demonstration against synthetic in-memory records. Do not deploy it, connect it to a real database, or use it with real user data. The safe prepared-statement example is the implementation to retain.
 
