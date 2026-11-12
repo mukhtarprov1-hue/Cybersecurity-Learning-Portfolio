@@ -354,7 +354,7 @@ foreach ($requestedRoot in $normalizedRoots) {
         $scanErrors.Add([pscustomobject]@{ Repository = $label; Error = $err })
     }
 
-    $assignmentRows = Get-AssignmentInventory -RepositoryPath $gitRoot -RepositoryLabel $label -Files $inventory.Files
+    $assignmentRows = @(Get-AssignmentInventory -RepositoryPath $gitRoot -RepositoryLabel $label -Files $inventory.Files)
     foreach ($assignment in $assignmentRows) { $assignments.Add($assignment) }
 
     $repositories.Add([pscustomobject]@{
