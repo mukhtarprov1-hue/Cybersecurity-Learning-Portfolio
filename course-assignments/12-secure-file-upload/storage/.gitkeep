@@ -1,0 +1,1 @@
+Private uploaded files are created at runtime under storage/private/ and must not be committed.
