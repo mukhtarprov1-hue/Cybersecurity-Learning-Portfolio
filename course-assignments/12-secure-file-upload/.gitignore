@@ -1,6 +1,5 @@
 /storage/private/*
 !/storage/private/.gitkeep
-/storage/private/.*
 /evidence/*.log
 /evidence/*.json
 .phpunit.cache/
