@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="مختبر تعليمي يوضح DOM-based XSS والفرق بين innerHTML وtextContent مع عزل التنفيذ غير الآمن داخل iframe sandbox.">
+  <meta name="theme-color" content="#111827">
+  <title>DOM-XSS Defense Lab | Assignment 14</title>
+  <link rel="stylesheet" href="/assets/style.css">
+  <script src="/assets/app.js" defer></script>
+</head>
+<body>
+  <main class="shell">
+    <header class="hero">
+      <div class="eyebrow">CYBERSECURITY LEARNING PORTFOLIO · WEB &amp; JAVASCRIPT</div>
+      <h1>مختبر التفاعل مع DOM والوقاية من DOM-XSS</h1>
+      <p class="lead">قارن بين إدراج HTML غير الموثوق عبر <code>innerHTML</code> ومعالجته كنص عبر <code>textContent</code>، وشاهد إثباتاً تعليمياً معزولاً للتنفيذ.</p>
+      <div class="meta-row">
+        <span class="tag">Assignment 14</span>
+        <span class="tag">Client-side JavaScript</span>
+        <span class="tag tag-safe">Safe-by-default output</span>
+      </div>
+    </header>
+
+    <section class="panel" aria-labelledby="input-title">
+      <div class="section-heading">
+        <span class="step">01</span>
+        <div>
+          <h2 id="input-title">مدخل المستخدم</h2>
+          <p>استخدم الحمولة التعليمية المقترحة أو أدخل نصاً تجريبياً خاصاً بك.</p>
+        </div>
+      </div>
+      <label for="payload-input">Untrusted input / HTML payload</label>
+      <textarea id="payload-input" rows="4" spellcheck="false" autocomplete="off" aria-describedby="payload-help"></textarea>
+      <div class="field-footer">
+        <p id="payload-help" class="hint">الحمولة الافتراضية ترسل علامة إثبات فقط إلى الصفحة الأم؛ لا تعرض نافذة منبثقة ولا تحاول قراءة الكوكيز.</p>
+        <button id="load-sample" class="button button-quiet" type="button">تحميل الحمولة التجريبية</button>
+      </div>
+      <div class="actions">
+        <button id="run-unsafe" class="button button-danger" type="button">تشغيل العرض غير الآمن (innerHTML)</button>
+        <button id="run-safe" class="button button-safe" type="button">تشغيل العرض الآمن (textContent)</button>
+        <button id="clear-results" class="button button-quiet" type="button">مسح النتائج</button>
+      </div>
+    </section>
+
+    <section class="result-grid" aria-label="نتائج المقارنة">
+      <article class="panel result-card">
+        <div class="section-heading">
+          <span class="step step-danger">02A</span>
+          <div>
+            <h2>المسار غير الآمن</h2>
+            <p><code>element.innerHTML = userInput</code></p>
+          </div>
+        </div>
+        <div class="warning-box">
+          <strong>Unsafe sink — معزول عمداً</strong>
+          <p>يتم إدراج الحمولة باستخدام innerHTML داخل iframe ذي أصل فريد وsandbox يسمح بالسكريبت فقط، مع CSP تمنع اتصالات الشبكة. لا يستطيع الإطار قراءة DOM الصفحة الأم أو كوكيزها.</p>
+        </div>
+        <div id="unsafe-status" class="status status-neutral" role="status" aria-live="polite">لم يتم تشغيل الحمولة بعد.</div>
+        <div class="sandbox-frame">
+          <iframe id="unsafe-frame" title="معاينة DOM-XSS داخل إطار معزول" sandbox="allow-scripts" referrerpolicy="no-referrer"></iframe>
+        </div>
+        <p class="micro-note">الإثبات المتوقع: تنفيذ معالج الحدث داخل الإطار وإرسال رسالة DOM_XSS_PROOF فقط. لا تُنفّذ الحمولة في DOM الصفحة الرئيسية.</p>
+      </article>
+
+      <article class="panel result-card">
+        <div class="section-heading">
+          <span class="step step-safe">02B</span>
+          <div>
+            <h2>المسار الآمن</h2>
+            <p><code>element.textContent = userInput</code></p>
+          </div>
+        </div>
+        <div class="success-box">
+          <strong>Safe sink — نص فقط</strong>
+          <p>يتم إنشاء عنصر باستخدام createElement، وإسناد المدخل إلى textContent، ثم إضافته باستخدام appendChild. لا يتم تفسير HTML أو تنفيذ JavaScript.</p>
+        </div>
+        <div id="safe-status" class="status status-neutral" role="status" aria-live="polite">لم يتم تشغيل العرض الآمن بعد.</div>
+        <div id="safe-result" class="safe-output" aria-label="الناتج الآمن">
+          <p class="placeholder">سيظهر مدخل المستخدم هنا كنص حرفي.</p>
+        </div>
+        <p class="micro-note">النتيجة المتوقعة: ظهور علامات HTML والسمات كنص عادي دون إنشاء عناصر أو تشغيل أحداث.</p>
+      </article>
+    </section>
+
+    <section class="panel">
+      <div class="section-heading">
+        <span class="step">03</span>
+        <div>
+          <h2>التحقق الأمني المباشر</h2>
+          <p>المختبر يعرض حالة كل نتيجة على حدة، ولا يعتمد على شكل الصفحة وحده.</p>
+        </div>
+      </div>
+      <div class="check-list">
+        <div><span class="check-icon">✓</span><span>الناتج الآمن يبقي المدخل نصاً ولا ينشئ عناصر HTML من الحمولة.</span></div>
+        <div><span class="check-icon">✓</span><span>الاختبار غير الآمن معزول داخل iframe sandbox دون allow-same-origin.</span></div>
+        <div><span class="check-icon">✓</span><span>يُحظر تحميل الصور من الشبكة داخل الإطار، وتُسمح صورة data محلية فقط لأغراض الاختبار.</span></div>
+        <div><span class="check-icon">✓</span><span>لا توجد حمولة تقرأ cookies أو localStorage أو ترسل بيانات إلى خادم خارجي.</span></div>
+      </div>
+      <div id="overall-status" class="overall-status" role="status" aria-live="polite">جاهز للاختبار — اختر أحد مساري العرض.</div>
+    </section>
+
+    <section class="panel compact">
+      <h2>المبدأ الأمني</h2>
+      <pre><code>// Unsafe: parses attacker-controlled markup
+target.innerHTML = untrustedInput;
+
+// Safe: creates a text node, not executable markup
+const output = document.createElement('pre');
+output.textContent = untrustedInput;
+safeContainer.appendChild(output);</code></pre>
+      <p class="hint">ملاحظة: innerHTML ليس خطيراً بذاته عند التعامل مع HTML موثوق ومُعقّم بشكل صحيح؛ الخطر هو إدراج بيانات غير موثوقة دون ترميز أو تعقيم مناسب. الأفضل للنصوص العادية استخدام textContent.</p>
+    </section>
+
+    <footer>مختبر تعليمي معزول — لا تستخدم مدخلات حساسة. يوضح هذا المشروع نوعاً محدداً من DOM-XSS ولا يمثل بديلاً عن مراجعة أمنية شاملة.</footer>
+  </main>
+</body>
+</html>

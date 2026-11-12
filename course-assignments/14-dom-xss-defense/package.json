@@ -1,0 +1,13 @@
+{
+  "name": "assignment-14-dom-xss-defense",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Isolated DOM-XSS training lab demonstrating unsafe innerHTML and safe textContent rendering.",
+  "scripts": {
+    "test": "playwright test",
+    "test:report": "playwright test --reporter=line"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.56.1"
+  }
+}
