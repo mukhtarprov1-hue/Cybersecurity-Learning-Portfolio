@@ -254,7 +254,7 @@ try {
     $HttpClient = [System.Net.Http.HttpClient]::new($handler)
     $HttpClient.Timeout = [TimeSpan]::FromSeconds(20)
 
-    $home = $null
+    $homeResponse = $null
     $ready = $false
     for ($attempt=0; $attempt -lt 30; $attempt++) {
         if ($ServerProcess.HasExited) {
@@ -262,21 +262,21 @@ try {
             throw "PHP server exited before readiness. $diagnostic"
         }
         try {
-            $home = Invoke-HttpRequest -Client $HttpClient -Uri $baseUri
-            if ($home.Status -eq 200 -and $home.Body -match 'name="csrf_token"') { $ready = $true; break }
+            $homeResponse = Invoke-HttpRequest -Client $HttpClient -Uri $baseUri
+            if ($homeResponse.Status -eq 200 -and $homeResponse.Body -match 'name="csrf_token"') { $ready = $true; break }
         } catch { Start-Sleep -Milliseconds 300 }
     }
     if (-not $ready) { throw "Local PHP server did not return HTTP 200 with a CSRF token." }
 
-    $sessionHeader = Get-CookieHeaderLine $home.SetCookies "CYBERSESSID"
-    $safeHeader = Get-CookieHeaderLine $home.SetCookies "DEMO_SAFE"
-    $unsafeHeader = Get-CookieHeaderLine $home.SetCookies "DEMO_UNSAFE"
+    $sessionHeader = Get-CookieHeaderLine $homeResponse.SetCookies "CYBERSESSID"
+    $safeHeader = Get-CookieHeaderLine $homeResponse.SetCookies "DEMO_SAFE"
+    $unsafeHeader = Get-CookieHeaderLine $homeResponse.SetCookies "DEMO_UNSAFE"
     if (-not (Has-CookieFlag $sessionHeader "HttpOnly") -or -not (Has-CookieFlag $sessionHeader "Secure") -or $sessionHeader -notmatch "(?i)SameSite=Strict") { throw "CYBERSESSID lacks HttpOnly, Secure, or SameSite=Strict." }
     if (-not (Has-CookieFlag $safeHeader "HttpOnly") -or -not (Has-CookieFlag $safeHeader "Secure") -or $safeHeader -notmatch "(?i)SameSite=Strict") { throw "DEMO_SAFE lacks HttpOnly, Secure, or SameSite=Strict." }
     if ((Has-CookieFlag $unsafeHeader "HttpOnly") -or (Has-CookieFlag $unsafeHeader "Secure") -or $unsafeHeader -notmatch "(?i)SameSite=Lax") { throw "DEMO_UNSAFE attributes differ from the expected comparison cookie." }
-    $oldSessionId = Get-CookieValue $home.SetCookies "CYBERSESSID"
+    $oldSessionId = Get-CookieValue $homeResponse.SetCookies "CYBERSESSID"
     if ([string]::IsNullOrWhiteSpace($oldSessionId)) { throw "CYBERSESSID was not issued." }
-    $csrf = Get-CsrfToken $home.Body
+    $csrf = Get-CsrfToken $homeResponse.Body
 
     $csrfReject = Invoke-HttpRequest -Client $HttpClient -Uri ($baseUri+"login.php") -Method "POST" -CookieHeader ("CYBERSESSID="+$oldSessionId) -FormBody "action=login"
     if ($csrfReject.Status -ne 403) { throw "Missing CSRF token should return HTTP 403, got $($csrfReject.Status)." }
@@ -310,7 +310,7 @@ try {
     if ($afterLogout.Status -ne 303) { throw "Dashboard remained accessible after logout (HTTP $($afterLogout.Status))." }
 
     $cookieEvidence = @(
-        "GET / -> HTTP $($home.Status)",
+        "GET / -> HTTP $($homeResponse.Status)",
         (Get-CookieAttributesSafe $sessionHeader),
         (Get-CookieAttributesSafe $safeHeader),
         (Get-CookieAttributesSafe $unsafeHeader),
@@ -334,6 +334,7 @@ try {
     $browser = Find-Browser
     if (-not $browser) { throw "Microsoft Edge or Google Chrome was not found." }
     $BrowserProfile = Join-Path $Evidence "browser-profile"
+    Remove-Item -LiteralPath $BrowserProfile -Recurse -Force -ErrorAction SilentlyContinue
     New-Item -ItemType Directory -Force -Path $BrowserProfile | Out-Null
     $dumpOut = Join-Path $Evidence "cookie-probe-dom.txt"
     $dumpErr = Join-Path $Evidence "cookie-probe-browser.stderr.log"
