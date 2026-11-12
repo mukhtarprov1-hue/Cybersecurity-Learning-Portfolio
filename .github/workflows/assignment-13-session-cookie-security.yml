@@ -1,0 +1,56 @@
+name: Assignment 13 - Session & Cookie Security
+
+on:
+  push:
+    paths:
+      - 'course-assignments/13-session-cookie-security/**'
+      - '.github/workflows/assignment-13-session-cookie-security.yml'
+  pull_request:
+    paths:
+      - 'course-assignments/13-session-cookie-security/**'
+      - '.github/workflows/assignment-13-session-cookie-security.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  session-cookie-tests:
+    name: PHP \${{ matrix.php }} on \${{ matrix.os }}
+    runs-on: \${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        php: ['8.2', '8.5']
+    defaults:
+      run:
+        working-directory: course-assignments/13-session-cookie-security
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: \${{ matrix.php }}
+          coverage: none
+      - name: Show runtime and session extension
+        shell: bash
+        run: |
+          php -v
+          php -m | grep -i '^session$'
+      - name: Check PHP syntax
+        shell: bash
+        run: |
+          php -l src/SessionSecurity.php
+          php -l src/bootstrap.php
+          php -l public/index.php
+          php -l public/login.php
+          php -l public/dashboard.php
+          php -l public/logout.php
+          php -l tests/run.php
+          php -l tests/http_integration.php
+      - name: Run policy tests
+        run: php tests/run.php
+      - name: Run real HTTP integration tests
+        run: php tests/http_integration.php
