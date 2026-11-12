@@ -20,8 +20,19 @@ function Invoke-NativeCommand {
 
     Write-Host ''
     Write-Host ('==> ' + $Label) -ForegroundColor Cyan
-    $output = & $FilePath @Arguments 2>&1
-    $exitCode = $LASTEXITCODE
+    # Windows PowerShell 5.1 can promote redirected native stderr (for example,
+    # Node.js 26 DEP0205 deprecation warnings) to a terminating error when the
+    # script-wide ErrorActionPreference is Stop. Capture native stderr as output,
+    # then decide success exclusively from the executable's exit code.
+    $previousErrorActionPreference = $ErrorActionPreference
+    try {
+        $ErrorActionPreference = 'Continue'
+        $output = & $FilePath @Arguments 2>&1
+        $exitCode = $LASTEXITCODE
+    }
+    finally {
+        $ErrorActionPreference = $previousErrorActionPreference
+    }
     $text = (($output | ForEach-Object { $_.ToString() }) -join [Environment]::NewLine)
     if (-not [string]::IsNullOrWhiteSpace($text)) {
         Write-Host $text
