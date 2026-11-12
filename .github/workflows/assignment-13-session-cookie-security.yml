@@ -16,8 +16,8 @@ permissions:
 
 jobs:
   session-cookie-tests:
-    name: PHP \${{ matrix.php }} on \${{ matrix.os }}
-    runs-on: \${{ matrix.os }}
+    name: PHP ${{ matrix.php }} on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
@@ -32,7 +32,7 @@ jobs:
       - name: Set up PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: \${{ matrix.php }}
+          php-version: ${{ matrix.php }}
           coverage: none
       - name: Show runtime and session extension
         shell: bash
