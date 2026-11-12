@@ -4,7 +4,7 @@
 **Language:** PHP 8.2+  
 **Branch:** feat/assignment-13-session-cookie-security  
 **Hosted CI:** verified — 4/4 jobs passed on Windows and Ubuntu using PHP 8.2 and 8.5. [Run 43150758696](https://github.com/mukhtarprov1-hue/Cybersecurity-Learning-Portfolio/actions/runs/43150758696).  
-**Learner workstation evidence:** deferred until the GitHub-first submission of all assignments is complete.
+**Learner workstation evidence:** local verification automation is provided in tools/verify-and-capture.ps1; actual workstation evidence is pending execution.
 
 ## Objective
 
@@ -60,6 +60,8 @@ The app sends X-Content-Type-Options: nosniff, X-Frame-Options: DENY, Referrer-P
     ├── tests/
     │   ├── run.php
     │   └── http_integration.php
+    ├── tools/
+    │   └── verify-and-capture.ps1
     ├── docs/
     │   ├── REPORT_AR.md
     │   ├── SECURITY_ANALYSIS_AR.md
@@ -80,13 +82,22 @@ PHP 8.2+ with the session extension. No Composer packages are required.
 
 The policy suite has 15 tests. The HTTP integration suite starts a loopback-only PHP server and has 11 tests, including exact Set-Cookie attributes, CSRF rejection, session ID rotation, cross-page persistence, logout, and dashboard access denial after logout.
 
-## Local browser review (deferred until the GitHub-first submission phase is complete)
+## Local workstation verification and screenshots
 
-Start the local server with the public directory as the document root:
+From Windows PowerShell 5.1, update the Assignment 13 branch and run the unified script:
 
-    & $php -S 127.0.0.1:8083 -t .\public
+    cd F:\Cybersecurity-Learning-Portfolio
+    git switch feat/assignment-13-session-cookie-security
+    git pull --ff-only origin feat/assignment-13-session-cookie-security
+    cd .\course-assignments\13-session-cookie-security
+    $php = "F:\Tools\PHP\8.5.12\php.exe"
+    powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\tools\verify-and-capture.ps1 -PhpPath $php
 
-Open http://localhost:8083 (or use a local HTTPS endpoint). Secure is enabled by default; a browser may refuse to persist Secure cookies on a plain HTTP IP origin. Do not turn off Secure for real deployments. For a strictly isolated non-production HTTP-only lab experiment, APP_SESSION_SECURE=0 can be set before starting PHP, but the Set-Cookie header will then not satisfy the Secure-cookie acceptance criterion.
+The script performs eight PHP syntax checks, all 15 policy tests, and all 11 real HTTP integration tests. It starts an isolated local server with Secure cookies enabled, verifies actual Set-Cookie attributes, checks CSRF rejection, tests login/session-ID rotation/dashboard/logout, launches Edge or Chrome to verify that document.cookie exposes DEMO_UNSAFE but not DEMO_SAFE or CYBERSESSID, captures five PNG screenshots, creates a local verification report and SHA-256 manifest, then commits and pushes the report and screenshots to this branch.
+
+Session identifiers and CSRF tokens are never included in saved evidence. A temporary session directory is restricted with NTFS ACLs and removed after execution. The demo login remains a simulation, not real credential authentication.
+
+The script uses only local synthetic/demo data. To generate evidence without pushing it immediately, add the -NoPush switch.
 
 ## Acceptance mapping
 
