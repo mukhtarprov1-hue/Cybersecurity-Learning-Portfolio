@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>نظام رفع الملفات الآمن | التكليف 12</title>
+    <style>
+        :root { color-scheme: light; font-family: Tahoma, Arial, sans-serif; }
+        body { margin: 0; background: #f3f6fa; color: #172033; }
+        main { width: min(760px, calc(100% - 32px)); margin: 48px auto; }
+        .panel { background: #fff; border: 1px solid #dce4ef; border-radius: 16px; padding: 28px; box-shadow: 0 12px 34px rgb(22 35 58 / 7%); }
+        h1 { margin-top: 0; font-size: 1.65rem; }
+        p, li { line-height: 1.8; }
+        .hint { color: #526078; }
+        label { display: block; font-weight: 700; margin: 20px 0 8px; }
+        input[type=file] { display: block; width: 100%; padding: 14px; border: 1px dashed #9aabc2; border-radius: 10px; background: #f8fafc; box-sizing: border-box; }
+        button { margin-top: 18px; border: 0; background: #173e70; color: #fff; padding: 12px 22px; border-radius: 9px; font-size: 1rem; cursor: pointer; }
+        .notice { margin-top: 20px; padding: 14px 16px; border-radius: 10px; border: 1px solid; }
+        .error { color: #842029; background: #fff1f1; border-color: #f0b8bd; }
+        .success { color: #155b38; background: #effbf4; border-color: #a9dfbf; }
+        code { direction: ltr; unicode-bidi: plaintext; overflow-wrap: anywhere; }
+        .layers { background: #f6f8fc; padding: 14px 20px; border-radius: 10px; }
+        footer { margin-top: 18px; color: #66738a; font-size: .9rem; }
+    </style>
+</head>
+<body>
+<main>
+    <section class="panel">
+        <h1>نظام رفع الملفات الآمن</h1>
+        <p class="hint">التكليف الثاني عشر — مسار البرمجة للأمن السيبراني / Web &amp; PHP</p>
+        <p>ارفع ملفاً تعليمياً من الأنواع المسموحة. يفحص الخادم الملف قبل نقله إلى مساحة تخزين خاصة خارج مجلد الويب.</p>
+
+        <ul class="layers">
+            <li>الحد الأقصى للحجم: <strong>2 MiB</strong>.</li>
+            <li>قائمة الامتدادات المسموحة: <strong>PDF, PNG, JPG, JPEG</strong>.</li>
+            <li>فحص MIME الفعلي باستخدام PHP Fileinfo.</li>
+            <li>التحقق من توقيع الملف وبنية الصور وأبعادها.</li>
+            <li>اسم عشوائي باستخدام <code>bin2hex(random_bytes(16))</code>.</li>
+            <li>تخزين خاص مع منع تنفيذ/عرض الملفات من هذا التطبيق.</li>
+        </ul>
+
+                    <div class="notice error" role="alert">المحتوى الفعلي لا يطابق الامتداد المعلن؛ تم رفض الملف.</div>
+        
+        
+        <form method="post" enctype="multipart/form-data">
+            <input type="hidden" name="csrf_token" value="[REDACTED]">
+            <label for="file_uploaded">اختر ملفاً (PDF / PNG / JPG)</label>
+            <input id="file_uploaded" name="file_uploaded" type="file" accept=".pdf,.png,.jpg,.jpeg,application/pdf,image/png,image/jpeg" required>
+            <button type="submit">فحص ورفع الملف</button>
+        </form>
+        <footer>ملاحظة: هذا نموذج تدريبي محلي. لا ترفع ملفات شخصية أو سرية.</footer>
+    </section>
+</main>
+</body>
+</html>

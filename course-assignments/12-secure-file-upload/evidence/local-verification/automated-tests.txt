@@ -1,0 +1,16 @@
+[PASS] Valid PNG passes extension, MIME, signature, and dimensions checks
+[PASS] Valid JPEG passes extension, MIME, and image-structure checks
+[PASS] PDF with expected header, MIME, and EOF marker is accepted
+[PASS] PHP web-shell renamed to JPG is rejected by MIME validation
+[PASS] Executable PHP extension is not allow-listed
+[PASS] PNG bytes disguised with JPG extension are rejected
+[PASS] Oversized file is rejected before MIME processing
+[PASS] Empty file is rejected
+[PASS] Client-reported size must match actual temporary file size
+[PASS] Path traversal text is not used as the stored filename
+[PASS] Stored names use 128-bit random identifiers
+[PASS] Private storage is outside the public web root
+[PASS] A local temporary path cannot bypass the HTTP upload-source check
+[PASS] PDF without EOF marker is rejected
+
+Tests: 14 | Passed: 14 | Failed: 0

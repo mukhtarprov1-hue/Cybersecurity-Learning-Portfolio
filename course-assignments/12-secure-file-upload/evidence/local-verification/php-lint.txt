@@ -1,0 +1,6 @@
+> php -l .\public\index.php
+No syntax errors detected in .\public\index.php
+> php -l .\src\SecureUploadService.php
+No syntax errors detected in .\src\SecureUploadService.php
+> php -l .\tests\run.php
+No syntax errors detected in .\tests\run.php
