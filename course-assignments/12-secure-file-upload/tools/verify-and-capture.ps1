@@ -85,7 +85,7 @@ function Get-CsrfToken {
 
 function Invoke-HttpUpload {
     param([object]$Client, [string]$Uri, [string]$Token, [string]$Path, [string]$Name, [string]$Mime)
-    $form = New-Object System.Net.Http.MultipartFormDataContent
+    $form = [System.Net.Http.MultipartFormDataContent]::new()
     $response = $null
     $filePart = $null
     try {
@@ -195,10 +195,10 @@ try {
     $ServerProcess = Start-Process -FilePath $PhpPath -ArgumentList ($quotedServerArgs -join " ") -WorkingDirectory $ProjectRoot -RedirectStandardOutput $stdoutPath -RedirectStandardError $stderrPath -WindowStyle Hidden -PassThru
 
     Add-Type -AssemblyName System.Net.Http
-    $handler = New-Object System.Net.Http.HttpClientHandler
+    $handler = [System.Net.Http.HttpClientHandler]::new()
     $handler.CookieContainer = New-Object System.Net.CookieContainer
     $handler.UseCookies = $true
-    $HttpClient = New-Object System.Net.Http.HttpClient($handler)
+    $HttpClient = [System.Net.Http.HttpClient]::new($handler)
     $HttpClient.Timeout = [TimeSpan]::FromSeconds(20)
 
     $page = $null
