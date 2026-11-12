@@ -64,9 +64,11 @@ The GitHub Actions workflow compiles with strict warnings and exercises accepted
 │   ├── 10-php-rest-api/
 │   ├── 11-sqli-defense/
 │   │   ├── docs/
+│   │   ├── evidence/local-verification/
 │   │   ├── screenshots/
 │   │   ├── src/
 │   │   ├── tests/
+│   │   ├── tools/
 │   │   ├── index.php
 │   │   └── README.md
 │   └── README.md
