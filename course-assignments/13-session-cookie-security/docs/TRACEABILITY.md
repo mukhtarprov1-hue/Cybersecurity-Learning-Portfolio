@@ -14,6 +14,6 @@
 
 ## Verification status
 
-- Build environment: PHP 8.4.24; 8 PHP syntax checks passed; 15 unit/policy tests and 11 HTTP integration tests passed.
-- Hosted Windows/Ubuntu × PHP 8.2/8.5: pending first workflow run for this branch.
-- Learner workstation and original screenshots: intentionally pending; GitHub-first delivery is being used before the local phase.
+- Build environment: PHP 8.4.24; 8 PHP syntax checks, 15 policy tests, and 11 HTTP integration tests passed.
+- Hosted CI run 43150758696: all four jobs succeeded (Windows/Ubuntu × PHP 8.2/8.5); each passed syntax checks, 15 unit tests, and 11 HTTP integration tests.
+- Learner workstation and original screenshots: intentionally pending until the GitHub-first send-all-assignments phase is complete.
