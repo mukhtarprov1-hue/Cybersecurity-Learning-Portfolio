@@ -1,5 +1,6 @@
 /storage/private/*
 !/storage/private/.gitkeep
+/evidence/local-verification/*
 /evidence/*.log
 /evidence/*.json
 .phpunit.cache/
