@@ -1,0 +1,45 @@
+name: Assignment 14 - DOM XSS Defense
+
+on:
+  push:
+    paths:
+      - 'course-assignments/14-dom-xss-defense/**'
+      - '.github/workflows/assignment-14-dom-xss-defense.yml'
+  pull_request:
+    paths:
+      - 'course-assignments/14-dom-xss-defense/**'
+      - '.github/workflows/assignment-14-dom-xss-defense.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  browser-tests:
+    name: Node ${{ matrix.node }} on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        node: ['20', '22']
+    defaults:
+      run:
+        working-directory: course-assignments/14-dom-xss-defense
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+      - name: Install test dependency
+        run: npm install --no-audit --no-fund
+      - name: Install Chromium and Linux dependencies
+        if: runner.os == 'Linux'
+        run: npx playwright install --with-deps chromium
+      - name: Install Chromium
+        if: runner.os == 'Windows'
+        run: npx playwright install chromium
+      - name: Run browser-based DOM-XSS tests
+        run: npm test
