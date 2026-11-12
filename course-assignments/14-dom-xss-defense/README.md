@@ -4,7 +4,7 @@
 **Implementation:** HTML5 · CSS · Vanilla JavaScript · Playwright  
 **Branch:** feat/assignment-14-dom-xss-defense  
 **Hosted CI:** verified — 4/4 jobs passed on Windows and Ubuntu with Node.js 20 and 22. [Run 43151669403](https://github.com/mukhtarprov1-hue/Cybersecurity-Learning-Portfolio/actions/runs/43151669403).  
-**Learner workstation evidence:** deferred until the GitHub-first submission phase is complete.
+**Learner workstation evidence:** PASS — local Playwright tests 6/6, runtime checks PASS, and five Chromium screenshots committed under screenshots/local-verification/.
 
 ## Objective
 

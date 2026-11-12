@@ -1,0 +1,19 @@
+﻿
+> assignment-14-dom-xss-defense@1.0.0 test
+> playwright test --reporter=line
+
+(node:38068) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+Running 6 tests using 1 worker
+
+[1A[2K(node:36548) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+[1A[2K[1/6] tests\dom-xss.spec.js:11:1 ΓÇ║ lab loads with required input and both rendering controls
+[1A[2K[2/6] tests\dom-xss.spec.js:18:1 ΓÇ║ safe rendering treats the payload as literal text and creates no HTML element
+[1A[2K[3/6] tests\dom-xss.spec.js:26:1 ΓÇ║ unsafe innerHTML sink executes only inside a sandboxed unique-origin iframe
+[1A[2K[4/6] tests\dom-xss.spec.js:41:1 ΓÇ║ safe and unsafe paths remain independent when executed in sequence
+[1A[2K[5/6] tests\dom-xss.spec.js:53:1 ΓÇ║ clear button resets the output and proof state
+[1A[2K[6/6] tests\dom-xss.spec.js:62:1 ΓÇ║ ordinary user text is rendered literally by the safe sink
+[1A[2K  6 passed (11.9s)

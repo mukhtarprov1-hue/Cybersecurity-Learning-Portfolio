@@ -1,0 +1,32 @@
+{
+  "assignment": 14,
+  "local_status": "PASS",
+  "captured_at_utc": "2026-11-12T12:06:32.025Z",
+  "runtime": {
+    "node": "v26.7.0",
+    "npm": "11.5.1",
+    "playwright": "1.56.1",
+    "browser": "Playwright Chromium (headless)"
+  },
+  "tests": {
+    "passed": 6,
+    "failed": 0
+  },
+  "checks": {
+    "safe_text_rendering": "PASS",
+    "safe_output_has_no_img_element": "PASS",
+    "isolated_innerhtml_event_proof": "PASS",
+    "iframe_sandbox": "allow-scripts",
+    "allow_same_origin_absent": true,
+    "main_document_injected_images": 0,
+    "reset": "PASS",
+    "browser_page_errors": 0
+  },
+  "screenshots": [
+    "01-dom-xss-lab-interface.png",
+    "02-safe-textcontent-result.png",
+    "03-isolated-innerhtml-proof.png",
+    "04-safe-unsafe-comparison.png",
+    "05-reset-state.png"
+  ]
+}
