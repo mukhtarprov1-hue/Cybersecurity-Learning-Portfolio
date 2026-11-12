@@ -124,7 +124,7 @@ $php = "F:\Tools\PHP\8.5.12\php.exe"
 
 ## 10. نتائج CI المستضافة
 
-تم التحقق من التشغيل المستضاف عبر GitHub Actions run `43133416122`، وكانت النتيجة **نجاح 4/4 وظائف**:
+تم التحقق من التشغيل المستضاف عبر GitHub Actions run `43133658634`، وكانت النتيجة **نجاح 4/4 وظائف**:
 
 | النظام | إصدار PHP | فحص الصياغة | الاختبارات |
 |---|---:|---|---:|
@@ -133,7 +133,7 @@ $php = "F:\Tools\PHP\8.5.12\php.exe"
 | Windows | 8.2 | ناجح | 6/6 |
 | Windows | 8.5.12 | ناجح | 6/6 |
 
-رابط التشغيل: https://github.com/mukhtarprov1-hue/Cybersecurity-Learning-Portfolio/actions/runs/43133416122
+رابط التشغيل: https://github.com/mukhtarprov1-hue/Cybersecurity-Learning-Portfolio/actions/runs/43133658634
 
 هذا إثبات لبيئة GitHub Actions وليس دليلاً على تنفيذ المتعلم محلياً. ما زال تشغيل الواجهة على جهاز Windows وإضافة لقطات الشاشة الأصلية مطلوبين.
 
