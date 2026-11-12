@@ -141,21 +141,42 @@ try {
     if (-not (Test-Path -LiteralPath (Join-Path $PublicDirectory "index.php"))) { throw "public/index.php was not found." }
 
     $script:PhpExe = $PhpPath
-    $script:PhpExtraArgs = @()
-    $moduleOutput = @(& $PhpPath -m 2>&1)
-    if ($LASTEXITCODE -ne 0) { throw "Unable to enumerate PHP extensions." }
+    $phpRoot = Split-Path -Parent (Resolve-Path -LiteralPath $PhpPath).Path
+    $extensionDirectory = Join-Path $phpRoot "ext"
+    $fileinfoDll = Join-Path $extensionDirectory "php_fileinfo.dll"
+
+    if (-not (Test-Path -LiteralPath $extensionDirectory -PathType Container)) {
+        throw "PHP extension directory does not exist: $extensionDirectory"
+    }
+
+    # The selected php.ini may contain a stale extension_dir such as C:\php\ext.
+    # Override it for this process only; never modify the user's php.ini.
+    $script:PhpExtraArgs = @("-d", "extension_dir=$extensionDirectory")
+    $moduleOutput = @(& $PhpPath @script:PhpExtraArgs -m 2>&1)
+    $moduleExitCode = $LASTEXITCODE
     $moduleText = $moduleOutput -join [Environment]::NewLine
-    $fileinfoMode = "Loaded from php.ini / PHP build"
-    if ($moduleText -notmatch "(?im)^fileinfo$") {
-        $phpRoot = Split-Path -Parent (Resolve-Path -LiteralPath $PhpPath).Path
-        $extensionDirectory = Join-Path $phpRoot "ext"
-        $fileinfoDll = Join-Path $extensionDirectory "php_fileinfo.dll"
-        if (-not (Test-Path -LiteralPath $fileinfoDll -PathType Leaf)) { throw "Fileinfo is disabled and php_fileinfo.dll is missing from $extensionDirectory." }
-        $script:PhpExtraArgs = @("-d", "extension_dir=$extensionDirectory", "-d", "extension=php_fileinfo.dll")
+    if ($moduleExitCode -ne 0) {
+        throw "Unable to enumerate PHP extensions after setting extension_dir to '$extensionDirectory'. PHP output: $moduleText"
+    }
+
+    $fileinfoMode = "Loaded from php.ini / PHP build with corrected runtime extension_dir"
+    if ($moduleText -notmatch "(?im)^\s*fileinfo\s*$") {
+        if (-not (Test-Path -LiteralPath $fileinfoDll -PathType Leaf)) {
+            throw "Fileinfo is disabled and php_fileinfo.dll is missing from '$extensionDirectory'."
+        }
+
+        # Use the absolute DLL path. This avoids relying on an incorrect extension_dir
+        # stored in php.ini and is passed to every later PHP command in this run.
+        $script:PhpExtraArgs += @("-d", "extension=$fileinfoDll")
         $moduleOutput = @(& $PhpPath @script:PhpExtraArgs -m 2>&1)
-        if ($LASTEXITCODE -ne 0 -or (($moduleOutput -join [Environment]::NewLine) -notmatch "(?im)^fileinfo$")) { throw "Unable to load the matching PHP Fileinfo DLL." }
+        $loadExitCode = $LASTEXITCODE
         $moduleText = $moduleOutput -join [Environment]::NewLine
-        $fileinfoMode = "Temporarily loaded from ext\php_fileinfo.dll; php.ini unchanged"
+
+        if ($loadExitCode -ne 0 -or $moduleText -notmatch "(?im)^\s*fileinfo\s*$") {
+            throw "Unable to load PHP Fileinfo from '$fileinfoDll' (exit code $loadExitCode). PHP output: $moduleText"
+        }
+
+        $fileinfoMode = "Temporarily loaded from '$fileinfoDll'; php.ini unchanged"
     }
 
     $runtime = Invoke-Php -Arguments @("-v") -Description "PHP version check"
