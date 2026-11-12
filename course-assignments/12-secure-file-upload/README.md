@@ -3,7 +3,8 @@
 **Course:** Cybersecurity Programming — Web & PHP  
 **Implementation:** PHP 8.2+ · Fileinfo · move_uploaded_file() · HTML forms  
 **Delivery branch:** feat/assignment-12-secure-file-upload  
-**Local/hosted verification:** pending learner execution and GitHub Actions run for this branch.
+**Hosted CI:** verified — 4/4 jobs passed (Windows/Ubuntu × PHP 8.2/8.5), run [43142698351](https://github.com/mukhtarprov1-hue/Cybersecurity-Learning-Portfolio/actions/runs/43142698351).  
+**Learner workstation verification/screenshots:** pending.
 
 ## Objective
 
@@ -120,7 +121,9 @@ The test runner creates temporary synthetic fixtures and removes them after exec
 
 ## Continuous integration
 
-The workflow is defined in .github/workflows/assignment-12-secure-upload.yml and runs PHP syntax checks plus the test suite on Windows and Ubuntu with PHP 8.2 and 8.5. The workflow must show a successful run before this README is updated to say CI is verified.
+The workflow is defined in .github/workflows/assignment-12-secure-upload.yml. [Run 43142698351](https://github.com/mukhtarprov1-hue/Cybersecurity-Learning-Portfolio/actions/runs/43142698351) completed successfully: all four Windows/Ubuntu × PHP 8.2/8.5 jobs passed Fileinfo setup, three PHP syntax checks, and all 14 automated tests.
+
+A separate HTTP integration check in the implementation environment accepted a genuine PNG and rejected PHP source renamed to JPG. Learner workstation verification and screenshots remain pending.
 
 ## Important limitations
 
@@ -129,6 +132,11 @@ The workflow is defined in .github/workflows/assignment-12-secure-upload.yml and
 - The app does not publish a file-serving endpoint. If downloads are added later, they must use authorization, Content-Disposition: attachment, safe response MIME, nosniff, and a separately reviewed download controller.
 - The PHP built-in server is for local coursework only. A production deployment needs web-server limits, HTTPS, malware scanning, monitoring, quotas, rate limits, and carefully managed operating-system ACLs.
 - POSIX permission bits are applied on Linux/macOS. On Windows, use NTFS ACLs to grant access only to the PHP service account and authorized administrators.
+
+## Submission route
+
+- [Discord thread for Assignment 12](https://discord.com/channels/838962253855588402/1570091983563661484)
+- [Pull Request #3](https://github.com/mukhtarprov1-hue/Cybersecurity-Learning-Portfolio/pull/3)
 
 ## Reports and evidence
 
