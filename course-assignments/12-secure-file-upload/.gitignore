@@ -4,3 +4,4 @@
 /evidence/*.log
 /evidence/*.json
 .phpunit.cache/
+/evidence/local-verification/*.log
