@@ -4,7 +4,7 @@
 **Implementation:** PHP 8.2+ · Fileinfo · move_uploaded_file() · HTML forms  
 **Delivery branch:** feat/assignment-12-secure-file-upload  
 **Hosted CI:** verified — 4/4 jobs passed (Windows/Ubuntu × PHP 8.2/8.5), run [43142698351](https://github.com/mukhtarprov1-hue/Cybersecurity-Learning-Portfolio/actions/runs/43142698351).  
-**Learner workstation verification/screenshots:** pending.
+**Learner workstation verification/screenshots:** automated local run script provided; evidence is pending the learner's execution.
 
 ## Objective
 
@@ -36,7 +36,8 @@ The app is intentionally small and dependency-free. It demonstrates defence in d
     ├── tests/
     │   └── run.php                 # 14 dependency-free policy tests
     ├── tools/
-    │   └── verify.ps1              # local PHP lint/test/evidence collection
+    │   ├── verify.ps1              # basic local PHP lint/test checks
+    │   └── verify-and-capture.ps1   # HTTP upload tests, screenshots, report, hashes, and Git push
     ├── docs/
     │   ├── REPORT_AR.md
     │   ├── TRACEABILITY.md
@@ -71,21 +72,24 @@ Also confirm upload_max_filesize is at least 2M and post_max_size is larger than
 
 ## Run on Windows PowerShell
 
-From the assignment directory:
+First, update the local branch from GitHub, then run the unified verification script from the assignment directory:
 
-    cd F:\Cybersecurity-Learning-Portfolio\course-assignments\12-secure-file-upload
+    cd F:\Cybersecurity-Learning-Portfolio
+    git switch feat/assignment-12-secure-file-upload
+    git pull --ff-only origin feat/assignment-12-secure-file-upload
+    cd .\course-assignments\12-secure-file-upload
     $php = "F:\Tools\PHP\8.5.12\php.exe"
+    powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\tools\verify-and-capture.ps1 -PhpPath $php -ApplyPrivateNtfsAcl
 
-    & $php -l .\public\index.php
-    & $php -l .\src\SecureUploadService.php
-    & $php -l .\tests\run.php
-    & $php .\tests\run.php
+The script checks PHP and Fileinfo, runs the three syntax checks and 14 policy tests, starts a temporary local PHP server, sends a genuine synthetic PNG upload and a PHP-as-JPG spoofing attempt over HTTP, verifies private storage and the NTFS ACL, captures five PNG screenshots through installed Edge/Chrome headless mode, writes a local verification report and SHA-256 manifest, then commits and pushes only the generated Assignment 12 evidence to this branch. It uses synthetic samples only and does not upload any personal files. It refuses to run from a different branch or when unrelated changes are already staged.
 
-Start the local server using public/ as the only document root:
+The script automatically chooses a free localhost port if 8082 is occupied and does not modify php.ini. To run without pushing the evidence to GitHub, append the -NoPush switch.
+
+Manual alternative: start the local server using public/ as the only document root:
 
     & $php -S 127.0.0.1:8082 -t .\public
 
-Open http://127.0.0.1:8082. Stop the server with Ctrl+C.
+Then open http://127.0.0.1:8082 and stop the server with Ctrl+C.
 
 Try these cases:
 
