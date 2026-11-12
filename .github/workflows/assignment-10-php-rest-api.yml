@@ -41,3 +41,5 @@ jobs:
         run: find . -name '*.php' -print0 | xargs -0 -n1 php -l
       - name: Run API tests
         run: php tests/run.php
+      - name: Run tamper-evident audit-chain tests
+        run: php tests/audit_integrity.php
