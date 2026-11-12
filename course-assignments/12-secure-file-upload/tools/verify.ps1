@@ -22,17 +22,39 @@ try {
 
     Push-Location $ProjectRoot
     try {
-        $runtime = @(& $PhpPath -v 2>&1)
-        if ($LASTEXITCODE -ne 0) { throw "Unable to read PHP runtime version." }
-        $ini = @(& $PhpPath --ini 2>&1)
-        if ($LASTEXITCODE -ne 0) { throw "Unable to read PHP configuration." }
+        # Prefer the loaded php.ini configuration. If Fileinfo is missing,
+        # load the matching PHP DLL temporarily for this script only; php.ini is not modified.
+        $PhpExtraArgs = @()
         $modules = @(& $PhpPath -m 2>&1)
         if ($LASTEXITCODE -ne 0) { throw "Unable to enumerate PHP extensions." }
-
         $moduleText = $modules -join [Environment]::NewLine
+        $fileinfoLoadMode = "Loaded from php.ini / PHP build"
+
         if ($moduleText -notmatch "(?im)^fileinfo$") {
-            throw "PHP Fileinfo extension is not enabled in the selected runtime."
+            $phpRoot = Split-Path -Parent (Resolve-Path -LiteralPath $PhpPath).Path
+            $extensionDirectory = Join-Path $phpRoot "ext"
+            $fileinfoDll = Join-Path $extensionDirectory "php_fileinfo.dll"
+
+            if (-not (Test-Path -LiteralPath $fileinfoDll -PathType Leaf)) {
+                throw "Fileinfo is not enabled and php_fileinfo.dll was not found at '$fileinfoDll'. Enable extension=fileinfo in the loaded php.ini or install the matching PHP extension package."
+            }
+
+            $PhpExtraArgs = @("-d", "extension_dir=$extensionDirectory", "-d", "extension=php_fileinfo.dll")
+            $modules = @(& $PhpPath @PhpExtraArgs -m 2>&1)
+            if ($LASTEXITCODE -ne 0) {
+                throw "The PHP Fileinfo DLL exists but could not be loaded. Review the PHP startup warnings and confirm the DLL matches this PHP build."
+            }
+            $moduleText = $modules -join [Environment]::NewLine
+            if ($moduleText -notmatch "(?im)^fileinfo$") {
+                throw "Attempted temporary Fileinfo loading, but PHP did not report the fileinfo module."
+            }
+            $fileinfoLoadMode = "Temporarily loaded from ext\\php_fileinfo.dll; php.ini was not modified"
         }
+
+        $runtime = @(& $PhpPath @PhpExtraArgs -v 2>&1)
+        if ($LASTEXITCODE -ne 0) { throw "Unable to read PHP runtime version." }
+        $ini = @(& $PhpPath @PhpExtraArgs --ini 2>&1)
+        if ($LASTEXITCODE -ne 0) { throw "Unable to read PHP configuration." }
 
         Write-Utf8File (Join-Path $Evidence "php-version.txt") ($runtime -join [Environment]::NewLine)
         Write-Utf8File (Join-Path $Evidence "php-ini.txt") ($ini -join [Environment]::NewLine)
@@ -45,7 +67,7 @@ try {
         )
         $lintLines = New-Object System.Collections.Generic.List[string]
         foreach ($file in $lintFiles) {
-            $output = @(& $PhpPath -l $file 2>&1)
+            $output = @(& $PhpPath @PhpExtraArgs -l $file 2>&1)
             $exitCode = $LASTEXITCODE
             $lintLines.Add(("> php -l {0}" -f $file))
             foreach ($line in $output) { $lintLines.Add([string]$line) }
@@ -72,6 +94,7 @@ try {
             operating_system = [System.Environment]::OSVersion.VersionString
             php_runtime = $phpVersion
             fileinfo_enabled = $true
+            fileinfo_load_mode = $fileinfoLoadMode
             php_syntax_checks = "3/3 passed"
             automated_tests = "14/14 passed"
             browser_http_upload = "Not performed by this script; perform the manual browser cases in README.md."
@@ -88,13 +111,13 @@ try {
 - **Timestamp (local):** $timestamp
 - **Operating system:** $([System.Environment]::OSVersion.VersionString)
 - **PHP runtime:** $phpVersion
-- **Fileinfo:** enabled
+- **Fileinfo:** enabled ($fileinfoLoadMode)
 - **PHP syntax checks:** 3/3 passed
 - **Automated tests:** 14/14 passed
 
 ## Scope
 
-The verification script checked the selected PHP runtime, Fileinfo availability, PHP syntax for the three project files, and the complete synthetic-fixture test suite.
+The verification script checked the selected PHP runtime, Fileinfo availability (loading the matching php_fileinfo.dll temporarily when it is present but not enabled in php.ini), PHP syntax for the three project files, and the complete synthetic-fixture test suite. No php.ini file is modified by this script.
 
 The script does not claim a browser upload was performed. Complete the manual valid-file and spoofed-file HTTP cases in README.md and capture the original screenshots listed in screenshots/README.md before marking the submission evidence complete.
 
