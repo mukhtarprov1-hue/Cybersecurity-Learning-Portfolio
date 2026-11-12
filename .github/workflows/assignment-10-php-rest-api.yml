@@ -2,7 +2,7 @@ name: Assignment 10 - PHP REST API
 
 on:
   push:
-    branches: [main]
+    branches: [main, 'feat/**']
     paths:
       - 'course-assignments/10-php-rest-api/**'
       - '.github/workflows/assignment-10-php-rest-api.yml'
