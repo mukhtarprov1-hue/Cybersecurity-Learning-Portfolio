@@ -2,7 +2,7 @@
 
 **Track:** Cybersecurity Programming — Web & PHP  
 **Implementation:** PHP 8.2+ · PDO · SQLite in-memory database  
-**Status:** Implementation prepared; local Windows execution and screenshots are pending.
+**Status:** CI verified (4/4 matrix jobs); learner-side Windows execution and screenshots are pending.
 
 ## Objective
 
@@ -101,6 +101,10 @@ The application HTML-escapes every displayed field. Database exception details a
 | Use `prepare()` and `execute()` | Named parameter `:username` | Source review and automated tests |
 | Prevent error/schema disclosure | Generic browser error; details go to server log | Manual error-path review |
 | Show result data safely | `htmlspecialchars()` via `e()` | Source review and browser test |
+
+## Continuous integration evidence
+
+[GitHub Actions run 43133416122](https://github.com/mukhtarprov1-hue/Cybersecurity-Learning-Portfolio/actions/runs/43133416122) completed successfully across all four matrix environments: Windows and Ubuntu with PHP 8.2 and 8.5. Each environment passed PHP syntax validation and all six automated tests. This hosted CI result does not replace the learner's local browser demonstration and original screenshots.
 
 ## Evidence and report
 
