@@ -79,7 +79,7 @@ try {
     Push-Location $AssignmentRoot
     try {
         Invoke-NativeCommand -FilePath $npmCommand.Source -Arguments @('install', '--no-audit', '--no-fund', '--package-lock=false') -Label 'Install pinned Playwright dependency' | Out-Null
-        Invoke-NativeCommand -FilePath $npxCommand.Source -Arguments @('playwright', 'install', 'chromium') -Label 'Install Playwright Chromium' | Out-Null
+        Invoke-NativeCommand -FilePath $npxCommand.Source -Arguments @('playwright', 'install', '--only-shell', 'chromium') -Label 'Install Playwright Chromium' | Out-Null
 
         $testOutput = Invoke-NativeCommand -FilePath $npmCommand.Source -Arguments @('test', '--', '--reporter=line') -Label 'Run Playwright browser tests'
         if ($testOutput -notmatch '6 passed') {
