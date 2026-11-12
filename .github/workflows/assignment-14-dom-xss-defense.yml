@@ -41,5 +41,16 @@ jobs:
       - name: Install Chromium
         if: runner.os == 'Windows'
         run: npx playwright install chromium
+      - name: Validate local Chromium evidence runner syntax
+        run: node --check tools/capture-evidence.js
+      - name: Validate PowerShell evidence runner syntax
+        if: runner.os == 'Windows'
+        shell: powershell
+        run: |
+          $runner = Join-Path $env:GITHUB_WORKSPACE 'course-assignments/14-dom-xss-defense/tools/verify-and-capture.ps1'
+          $tokens = $null
+          $errors = $null
+          [System.Management.Automation.Language.Parser]::ParseFile($runner, [ref]$tokens, [ref]$errors) | Out-Null
+          if ($errors.Count -gt 0) { $errors | Format-List *; throw 'PowerShell verification runner contains syntax errors.' }
       - name: Run browser-based DOM-XSS tests
         run: npm test
