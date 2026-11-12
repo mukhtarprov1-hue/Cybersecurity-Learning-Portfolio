@@ -1,0 +1,54 @@
+name: Assignment 12 - Secure File Upload
+
+on:
+  push:
+    paths:
+      - 'course-assignments/12-secure-file-upload/**'
+      - '.github/workflows/assignment-12-secure-upload.yml'
+  pull_request:
+    paths:
+      - 'course-assignments/12-secure-file-upload/**'
+      - '.github/workflows/assignment-12-secure-upload.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  php-tests:
+    name: PHP ${{ matrix.php }} on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        php: ['8.2', '8.5']
+    defaults:
+      run:
+        working-directory: course-assignments/12-secure-file-upload
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up PHP with Fileinfo
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: fileinfo
+          coverage: none
+
+      - name: Show runtime and Fileinfo
+        shell: bash
+        run: |
+          php -v
+          php -m | grep -i '^fileinfo$'
+
+      - name: Check PHP syntax
+        shell: bash
+        run: |
+          php -l public/index.php
+          php -l src/SecureUploadService.php
+          php -l tests/run.php
+
+      - name: Run secure upload tests
+        run: php tests/run.php
