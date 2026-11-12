@@ -32,13 +32,13 @@ The dependency-free suite contains 23 tests covering:
 22. Invalid bearer token returns 401.
 23. PUT on collection returns 405.
 
-## Tamper-evident audit-chain suite
+## Later optional HMAC audit-chain suite
 
 Run:
 
     php tests/audit_integrity.php
 
-The dedicated suite contains 9 tests for:
+The dedicated suite contains 9 isolated tests for:
 
 1. Empty chain validation.
 2. Valid multi-event chain and previous-HMAC links.
@@ -50,14 +50,16 @@ The dedicated suite contains 9 tests for:
 8. Rejection of keys shorter than 32 bytes.
 9. Metadata-only audit logging.
 
-## Development environment result
+## Development environment result — GitHub Actions
 
 - Runtime: PHP 8.4.24 (Linux build container).
 - Original API/application suite: 23 passed, 0 failed.
 - HTTP integration smoke test: GET health (200), POST create (201), GET item (200), PUT update (200), DELETE (204), unsupported PATCH (405), missing token (401), and malformed JSON (400) returned expected statuses.
-- The HMAC audit-chain is a later optional enhancement. Its nine-test suite passed in the GitHub Actions Windows/Ubuntu × PHP 8.2/8.5 matrix; the learner's local Windows end-to-end validation remains pending.
+- The optional HMAC suite also passed in the GitHub Actions Windows/Ubuntu × PHP 8.2/8.5 matrix.
 
 ## Learner Windows execution record — original API version
+
+Historical local run:
 
 - Runtime: PHP 8.5.12 (NTS, Visual C++ 2022 x64).
 - PHP syntax validation: 9 PHP files passed with no syntax errors.
@@ -72,14 +74,28 @@ The dedicated suite contains 9 tests for:
 - Server binding: 127.0.0.1 only.
 - Evidence: six Windows screenshots were captured for the original API version.
 
-## Later optional HMAC enhancement — CI passed, local completion pending
+## Latest learner Windows verification — 2026-11-12
+
+Executed from the correct project directory using PHP 8.5.12:
+
+- PHP syntax validation across all PHP files in the assignment (excluding vendor): **12/12 passed**.
+- Original API/application suite: **23/23 passed, 0 failed**; process exit code 0.
+- Optional HMAC isolated integrity suite: **9/9 passed, 0 failed**; process exit code 0.
+- Assignment 10 Worktree status after the tests: clean.
+- The tests use isolated temporary fixtures. The HMAC test suite does not by itself validate key loading, API-generated events in the real storage log, or the standalone verifier against that live log.
+
+## Later optional HMAC enhancement — still in progress locally
 
 The HMAC audit-chain enhancement is later optional development and is not part of the trainer's original core acceptance scope.
 
-- The dedicated suite contains nine integrity tests.
-- GitHub Actions passed the nine-test suite in the Windows/Ubuntu × PHP 8.2/8.5 matrix.
-- The learner's Windows end-to-end verification of key loading, real API events, independent chain verification, and evidence capture remains pending.
-- Do not claim the optional HMAC enhancement is locally complete until all of those steps are run and recorded.
+The nine isolated integrity tests have now been run successfully on the learner's Windows workstation as well as in CI. However, the full local end-to-end verification of the optional enhancement is still pending:
 
-The original API requirement remains locally verified as recorded above: nine PHP syntax checks, 23/23 core tests, and successful Health/CRUD HTTP calls.
+1. Load the external HMAC key using scripts/load-audit-key.ps1 without exposing the key.
+2. Run the API and generate real events in storage/audit-chain.jsonl.
+3. Run tools/audit_verify.php against that real log and confirm its result.
+4. Capture and document local evidence for the complete workflow.
+5. Preserve the stated security limitations; the chain is tamper-evident, not tamper-proof.
 
+**Do not describe the optional HMAC enhancement as locally complete until the end-to-end steps above have been executed and recorded.** Its source files and tests remain intentionally retained in the branch.
+
+The original REST API requirements are locally verified: the latest run passed 12/12 PHP syntax checks and 23/23 core tests, with the earlier local HTTP CRUD demonstration recorded above.
