@@ -1,21 +1,38 @@
 # Requirements Traceability — Assignment 10
 
-| Requirement / enhancement | Implementation | Evidence |
+## A. Trainer's requested core requirements — complete
+
+| Trainer requirement | Implementation | Evidence/test |
 |---|---|---|
-| JSON response content type | ApiResponse and public entry point | tests/run.php |
-| Read request method and URI | public/index.php | HTTP CRUD demo |
-| Read request headers | getallheaders() and server fallback | authentication/CORS tests |
-| Parse JSON request body | ApiApplication | malformed JSON and validation tests |
-| GET, POST, PUT, DELETE | ApiApplication resource routes | CRUD tests and demo.ps1 |
-| Correct HTTP status codes | ApiException and ApiResponse | API contract and tests |
-| Bearer authentication | authorizeMutation() with hash_equals() | missing/invalid token tests |
-| Request size and field validation | body limit and allow-list schema | 413 and 422 tests |
-| CORS and security headers | baseHeaders(), corsHeaders() | CORS/security tests |
-| Safe JSON persistence | ItemRepository with flock() and temp replacement | repository tests |
-| Request correlation and audit | X-Request-ID and AuditLogger | request ID test |
-| HMAC-chained audit events | AuditChain with HMAC-SHA256 | tests/audit_integrity.php |
-| Detect modified audit records | independent full-chain verification | tamper test |
-| Detect interior deletion/reordering | sequence + previous-HMAC linkage | deletion/reorder tests |
-| Refuse append after tampering | append verifies chain under exclusive lock | append-refusal test |
-| Keep HMAC key outside source repository | load-audit-key.ps1 and environment variable | key-management documentation |
-| Threats and residual risks documented | THREAT_MODEL.md and AUDIT_CHAIN_FORMAT.md | architecture/security review |
+| JSON response content type | public/index.php response emitter | HTTP response headers |
+| Read request method | `$_SERVER['REQUEST_METHOD']` | GET/POST/PUT/DELETE integration demo |
+| Read incoming headers | `getallheaders()` with Authorization fallback | Bearer token tests |
+| Read body from php://input | public/index.php bounded stream read | JSON integration requests |
+| Parse JSON | `json_decode(..., JSON_THROW_ON_ERROR)` | malformed JSON test |
+| Distinguish HTTP methods | ApiApplication route/method allow-lists | 405 + Allow tests |
+| Correct HTTP status | response model and exception mapping | CRUD/status tests |
+| Pretty JSON output | JSON_PRETTY_PRINT and JSON_UNESCAPED_UNICODE | CLI/API response inspection |
+| Authorization header handling | Bearer authentication for writes | missing/invalid token tests |
+
+### Recorded local verification for the core task
+
+- PHP 8.5.12 on Windows.
+- PHP syntax: 9/9 passed.
+- Core API suite: 23/23 passed.
+- Health and CRUD HTTP statuses: 200, 201, 200, 200, and 204 as expected.
+- Server bound to 127.0.0.1 only.
+
+See `docs/TEST_RESULTS.md` and `docs/REPORT_AR.md`.
+
+## B. Later optional development — HMAC audit chain (incomplete locally)
+
+| Enhancement | Implementation | Current status |
+|---|---|---|
+| HMAC-SHA256 chained metadata events | AuditChain.php / AuditLogger.php | Retained in branch; optional development |
+| Independent chain verification | tools/audit_verify.php | Code present; local end-to-end check pending |
+| Tamper/interior deletion/reorder tests | tests/audit_integrity.php | Nine tests pass in CI; local run pending |
+| External key handling | scripts/load-audit-key.ps1 | Code present; key stays outside Git |
+
+The HMAC audit-chain work was added after the original trainer requirements. It is not required to mark the REST API task complete. Do not delete these files, but do not describe the enhancement as locally complete until the key-loading, live-event generation, independent verification, and local test evidence are all captured.
+
+See `docs/DEVELOPMENT_STATUS_AR.md` for the detailed status and safe handling of runtime audit files.
