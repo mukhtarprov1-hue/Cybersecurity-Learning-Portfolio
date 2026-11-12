@@ -1,0 +1,18 @@
+Private storage: F:\Cybersecurity-Learning-Portfolio\course-assignments\12-secure-file-upload\storage\private
+Generated name: fff933159d8d877398017c288fbeeff9.png
+Size bytes: 68
+SHA-256: 279adf59590296ee460f8255805b33e46f484f263ab49f13b758a21b14ef3933
+
+ACL before:
+F:\Cybersecurity-Learning-Portfolio\course-assignments\12-secure-file-upload\storage\private NT AUTHORITY\SYSTEM:(OI)(CI)(F)
+                                                                                             BUILTIN\Administrators:(OI)(CI)(F)
+                                                                                             DESKTOP-A4QJ71H\mukhtar:(OI)(CI)(F)
+
+Successfully processed 1 files; Failed processing 0 files
+
+ACL after:
+F:\Cybersecurity-Learning-Portfolio\course-assignments\12-secure-file-upload\storage\private NT AUTHORITY\SYSTEM:(OI)(CI)(F)
+                                                                                             BUILTIN\Administrators:(OI)(CI)(F)
+                                                                                             DESKTOP-A4QJ71H\mukhtar:(OI)(CI)(F)
+
+Successfully processed 1 files; Failed processing 0 files

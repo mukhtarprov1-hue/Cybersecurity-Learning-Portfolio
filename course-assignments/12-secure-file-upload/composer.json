@@ -1,0 +1,13 @@
+{
+  "name": "cybersecurity-learning/assignment-12-secure-file-upload",
+  "description": "Educational PHP secure file upload demonstrating defence in depth.",
+  "type": "project",
+  "require": {
+    "php": ">=8.2",
+    "ext-fileinfo": "*"
+  },
+  "scripts": {
+    "test": "php tests/run.php",
+    "serve": "php -S 127.0.0.1:8082 -t public"
+  }
+}
