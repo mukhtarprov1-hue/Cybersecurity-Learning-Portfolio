@@ -39,6 +39,18 @@ final class SessionSecurity
         ini_set('session.use_trans_sid','0');
         ini_set('session.cookie_httponly','1');
         ini_set('session.cookie_secure',self::secureCookiesEnabled()?'1':'0');
+
+        // Optional deployment/test override; validate the directory before session_start().
+        $configuredSavePath=getenv('APP_SESSION_SAVE_PATH');
+        if (is_string($configuredSavePath) && $configuredSavePath !== '') {
+            if (!is_dir($configuredSavePath) || !is_writable($configuredSavePath)) {
+                throw new RuntimeException('Configured session save path must exist and be writable.');
+            }
+            if (session_save_path($configuredSavePath) === false) {
+                throw new RuntimeException('Unable to apply the configured session save path.');
+            }
+        }
+
         session_set_cookie_params(self::sessionCookieOptions(self::secureCookiesEnabled()));
         if (!session_start()) throw new RuntimeException('Unable to start the secure session.');
         if (!isset($_SESSION['csrf_token']) || !is_string($_SESSION['csrf_token'])) $_SESSION['csrf_token']=bin2hex(random_bytes(32));
