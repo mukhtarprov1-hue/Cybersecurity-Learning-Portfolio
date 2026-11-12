@@ -72,19 +72,14 @@ The dedicated suite contains 9 tests for:
 - Server binding: 127.0.0.1 only.
 - Evidence: six Windows screenshots were captured for the original API version.
 
-## Feature-branch verification — pending
+## Later optional HMAC enhancement — CI passed, local completion pending
 
-Do not mark the audit-chain enhancement as verified until the following are run on the feature branch:
+The HMAC audit-chain enhancement is later optional development and is not part of the trainer's original core acceptance scope.
 
-    php -l src/AuditChain.php
-    php -l src/AuditLogger.php
-    php -l tools/audit_verify.php
-    php -l tests/audit_integrity.php
-    php tests/run.php
-    php tests/audit_integrity.php
+- The dedicated suite contains nine integrity tests.
+- GitHub Actions passed the nine-test suite in the Windows/Ubuntu × PHP 8.2/8.5 matrix.
+- The learner's Windows end-to-end verification of key loading, real API events, independent chain verification, and evidence capture remains pending.
+- Do not claim the optional HMAC enhancement is locally complete until all of those steps are run and recorded.
 
-Then start the API with AUDIT_HMAC_KEY loaded, issue several requests, and run:
+The original API requirement remains locally verified as recorded above: nine PHP syntax checks, 23/23 core tests, and successful Health/CRUD HTTP calls.
 
-    php tools/audit_verify.php
-
-Record the actual test totals and screenshots only after those commands pass.
