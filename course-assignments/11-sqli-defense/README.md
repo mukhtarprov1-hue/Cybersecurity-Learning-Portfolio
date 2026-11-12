@@ -2,7 +2,7 @@
 
 **Track:** Cybersecurity Programming — Web & PHP  
 **Implementation:** PHP 8.2+ · PDO · SQLite in-memory database  
-**Status:** CI verified (4/4 matrix jobs); learner-side Windows execution and screenshots are pending.
+**Status:** Locally verified on Windows (PHP 8.5.12): 6/6 tests, 3/3 HTTP checks, and five evidence images. GitHub Actions: 4/4 matrix jobs passed.
 
 ## Objective
 
@@ -104,7 +104,7 @@ The application HTML-escapes every displayed field. Database exception details a
 
 ## Continuous integration evidence
 
-[GitHub Actions run 43133658634](https://github.com/mukhtarprov1-hue/Cybersecurity-Learning-Portfolio/actions/runs/43133658634) completed successfully across all four matrix environments: Windows and Ubuntu with PHP 8.2 and 8.5. Each environment passed PHP syntax validation and all six automated tests. This hosted CI result does not replace the learner's local browser demonstration and original screenshots.
+[GitHub Actions run 43137653366](https://github.com/mukhtarprov1-hue/Cybersecurity-Learning-Portfolio/actions/runs/43137653366) completed successfully across all four matrix environments: Windows and Ubuntu with PHP 8.2 and 8.5. Each environment passed PHP syntax validation and all six automated tests. Local Windows verification is also complete: four PHP syntax checks passed, all six automated tests passed, and all three HTTP checks returned the expected results. See [the local verification report](docs/LOCAL_VERIFICATION_REPORT.md) and [the evidence manifest](evidence/local-verification/SHA256SUMS.txt).
 
 ## Evidence and report
 
@@ -112,7 +112,7 @@ The application HTML-escapes every displayed field. Database exception details a
 - [Security comparison and threat analysis](docs/SECURITY_ANALYSIS_AR.md)
 - [Screenshot capture checklist](screenshots/README.md)
 
-The screenshot directory is intentionally not populated with simulated or fabricated evidence. Add genuine captures after running the application on the Windows workstation.
+Five evidence images are included. Images 02–04 are browser captures from the local application; images 01 and 05 are rendered views of the actual captured PHP runtime and test command output, not direct desktop captures of the PowerShell window. The raw command output is retained in the evidence directory.
 
 ## Limitations
 
