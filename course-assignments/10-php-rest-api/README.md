@@ -10,7 +10,7 @@ A security-focused educational REST API that demonstrates real HTTP request hand
 - **Authentication:** state-changing requests require an Authorization Bearer token. hash_equals() is used for constant-time comparison. If API_TOKEN is not configured, writes fail closed with HTTP 503.
 - **HTTP correctness:** meaningful status codes, Allow, Location, WWW-Authenticate, and empty 204 responses.
 - **Security headers:** nosniff, DENY, no-store, no-referrer, and same-origin resource policy.
-- **Request observability:** unique X-Request-ID values link responses to audit events without storing credentials or request bodies.
+- **Request observability:** unique X-Request-ID values link responses to audit events without storing credentials or request bodies. The later HMAC-chain writer is optional and best-effort; without AUDIT_HMAC_KEY its failure is written to the server log while the core API response remains available.
 - **Later optional development — HMAC audit chain:** code and nine integrity tests are retained in this branch. CI passes, but the learner's local end-to-end validation is still pending. This enhancement is not counted as a completed trainer requirement.
 - **Audit append protection:** the logger verifies the existing chain before appending and refuses to extend an invalid chain.
 - **Safer persistence:** UUIDv4 IDs, flock() for concurrent access, JSON validation, and temporary-file replacement.
@@ -120,7 +120,7 @@ Run the dedicated audit-integrity suite:
 
 The optional audit suite contains nine cases for valid chaining, sequence and previous-HMAC links, event modification, interior deletion, reordering, append refusal after tampering, wrong-key rejection, minimum key length, and metadata-only logging. GitHub Actions has passed these tests, but the local Windows end-to-end run and screenshots for this optional enhancement are not yet complete.
 
-## 6. Audit record and security properties
+## Optional HMAC audit-chain format and security properties (development in progress)
 
 Audit events are written as JSON Lines to storage/audit-chain.jsonl. The HMAC key is supplied through AUDIT_HMAC_KEY and is not stored in the repository or in the event records.
 
