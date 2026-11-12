@@ -3,7 +3,8 @@
 **Course:** Cybersecurity Programming — Web & PHP  
 **Language:** PHP 8.2+  
 **Branch:** feat/assignment-13-session-cookie-security  
-**Status:** Source and tests are implemented; hosted GitHub Actions and learner-workstation evidence are pending until the branch workflow completes and the learner later performs the local stage.
+**Hosted CI:** verified — 4/4 jobs passed on Windows and Ubuntu using PHP 8.2 and 8.5. [Run 43150758696](https://github.com/mukhtarprov1-hue/Cybersecurity-Learning-Portfolio/actions/runs/43150758696).  
+**Learner workstation evidence:** deferred until the GitHub-first submission of all assignments is complete.
 
 ## Objective
 
@@ -101,6 +102,16 @@ Open http://localhost:8083 (or use a local HTTPS endpoint). Secure is enabled by
 | CSRF control | 256-bit session token and hash_equals() | Missing token returns HTTP 403 |
 | Compare protected/unprotected cookies | DEMO_SAFE vs DEMO_UNSAFE plus document.cookie probe | Unit and HTTP header assertions; manual browser evidence pending |
 
+## CI result
+
+GitHub Actions run 43150758696 completed successfully:
+- Windows + PHP 8.2 — PASS
+- Windows + PHP 8.5 — PASS
+- Ubuntu + PHP 8.2 — PASS
+- Ubuntu + PHP 8.5 — PASS
+
+Each job passed eight PHP syntax checks, 15 policy/unit tests, and 11 real HTTP integration tests.
+
 ## Important limitations
 
 - The login action is explicitly a simulation, not real authentication. A production service must authenticate credentials against a proper identity store and apply password hashing, account controls, and authorization.
@@ -109,10 +120,8 @@ Open http://localhost:8083 (or use a local HTTPS endpoint). Secure is enabled by
 - Secure requires HTTPS in production. The PHP built-in server is not an HTTPS production server.
 - Session timeouts, MFA, central revocation, monitoring, and concurrent-session policies are future hardening work.
 
-## CI
-
-The workflow .github/workflows/assignment-13-session-cookie-security.yml checks PHP syntax, 15 unit tests, and 11 HTTP integration tests on Windows and Ubuntu with PHP 8.2 and 8.5.
-
 ## Submission
 
-The Discord thread for Assignment 13 is in the Cybersecurity Camp server. Use the instructor's specific Assignment 13 thread when submitting.
+- Pull Request #4: https://github.com/mukhtarprov1-hue/Cybersecurity-Learning-Portfolio/pull/4
+- Project page: https://github.com/mukhtarprov1-hue/Cybersecurity-Learning-Portfolio/tree/feat/assignment-13-session-cookie-security/course-assignments/13-session-cookie-security
+- Discord: send in the trainer's Assignment 13 thread.
