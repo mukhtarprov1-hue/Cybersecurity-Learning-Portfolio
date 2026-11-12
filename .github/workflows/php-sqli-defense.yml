@@ -1,0 +1,51 @@
+name: Assignment 11 - SQLi Defense
+
+on:
+  push:
+    paths:
+      - 'course-assignments/11-sqli-defense/**'
+      - '.github/workflows/php-sqli-defense.yml'
+  pull_request:
+    paths:
+      - 'course-assignments/11-sqli-defense/**'
+      - '.github/workflows/php-sqli-defense.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  php-tests:
+    name: PHP ${{ matrix.php }} on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        php: ['8.2', '8.5']
+    defaults:
+      run:
+        working-directory: course-assignments/11-sqli-defense
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up PHP with SQLite PDO
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: pdo_sqlite, sqlite3
+          coverage: none
+
+      - name: Show runtime
+        run: php -v
+
+      - name: Check PHP syntax
+        run: |
+          php -l index.php
+          php -l src/Database.php
+          php -l src/UserSearch.php
+          php -l tests/run.php
+
+      - name: Run SQLi defense tests
+        run: php tests/run.php

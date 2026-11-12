@@ -1,0 +1,23 @@
+﻿[
+    {
+        "Case":  "Safe normal search",
+        "Status":  200,
+        "Expected":  1,
+        "Actual":  1,
+        "Result":  "PASS"
+    },
+    {
+        "Case":  "Unsafe SQLi demonstration",
+        "Status":  200,
+        "Expected":  5,
+        "Actual":  5,
+        "Result":  "PASS"
+    },
+    {
+        "Case":  "Safe SQLi blocked",
+        "Status":  200,
+        "Expected":  0,
+        "Actual":  0,
+        "Result":  "PASS"
+    }
+]

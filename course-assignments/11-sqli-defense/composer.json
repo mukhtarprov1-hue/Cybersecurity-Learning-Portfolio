@@ -1,0 +1,14 @@
+{
+  "name": "mukhtarprov1-hue/assignment-11-sqli-defense",
+  "description": "PHP PDO and SQLite demonstration of SQL injection and prepared-statement defense",
+  "type": "project",
+  "require": {
+    "php": "^8.2",
+    "ext-pdo": "*",
+    "ext-pdo_sqlite": "*"
+  },
+  "scripts": {
+    "test": "php tests/run.php",
+    "serve": "php -S 127.0.0.1:8081 -t ."
+  }
+}

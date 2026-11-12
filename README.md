@@ -16,9 +16,11 @@ A public, curated portfolio of cybersecurity learning projects. The goal is to s
 
 ## Public course assignments
 
-The instructor-accessible collection is organized under [course-assignments/](course-assignments/README.md). It includes the completed **Assignment 01 — Password Checker in C** and **Assignment 03 — Hexadecimal Viewer in C**, with source code, build instructions, tests, Arabic documentation, and execution evidence.
+The instructor-accessible collection is organized under [course-assignments/](course-assignments/README.md). It includes the public C, Python, and PHP assignments, including **Assignment 10 — Secure PHP REST API** and **Assignment 11 — SQL Injection Defense**, with source code, reproducible tests, Arabic documentation, and execution evidence.
 
 [Open all public assignments](course-assignments/README.md)
+
+[Assignment 11 — SQLi Defense](course-assignments/11-sqli-defense/README.md)
 
 [Hex Viewer source](course-assignments/03-hexadecimal-viewer/hex_viewer.c) · [Arabic report](course-assignments/03-hexadecimal-viewer/docs/REPORT_AR.md) · [Execution screenshots](course-assignments/03-hexadecimal-viewer/screenshots/)
 
@@ -59,6 +61,16 @@ The GitHub Actions workflow compiles with strict warnings and exercises accepted
 │   │   ├── screenshots/
 │   │   ├── tests/
 │   │   └── hex_viewer.c
+│   ├── 10-php-rest-api/
+│   ├── 11-sqli-defense/
+│   │   ├── docs/
+│   │   ├── evidence/local-verification/
+│   │   ├── screenshots/
+│   │   ├── src/
+│   │   ├── tests/
+│   │   ├── tools/
+│   │   ├── index.php
+│   │   └── README.md
 │   └── README.md
 ├── projects/
 │   └── password-checker-c/
