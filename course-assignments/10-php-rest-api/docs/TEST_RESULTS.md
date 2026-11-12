@@ -55,7 +55,7 @@ The dedicated suite contains 9 tests for:
 - Runtime: PHP 8.4.24 (Linux build container).
 - Original API/application suite: 23 passed, 0 failed.
 - HTTP integration smoke test: GET health (200), POST create (201), GET item (200), PUT update (200), DELETE (204), unsupported PATCH (405), missing token (401), and malformed JSON (400) returned expected statuses.
-- The HMAC audit-chain implementation is introduced in the feature branch; its dedicated Windows and CI execution must be confirmed before merging.
+- The HMAC audit-chain is a later optional enhancement. Its nine-test suite passed in the GitHub Actions Windows/Ubuntu × PHP 8.2/8.5 matrix; the learner's local Windows end-to-end validation remains pending.
 
 ## Learner Windows execution record — original API version
 
