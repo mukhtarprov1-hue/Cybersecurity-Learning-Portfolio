@@ -139,7 +139,7 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\tools\verify-and-captu
 | Ubuntu | 8.5 | ناجح | 6/6 |
 
 رابط التشغيل:  
-https://github.com/mukhtarprov1-hue/Cybersecurity-Learning-Portfolio/actions/runs/43137653366
+https://github.com/mukhtarprov1-hue/Cybersecurity-Learning-Portfolio/actions/runs/43138004248
 
 **النتيجة: 4/4 وظائف ناجحة.** هذا تحقق مستضاف مستقل عن التحقق المحلي المذكور أعلاه.
 
