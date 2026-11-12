@@ -11,6 +11,13 @@
 | Stable browser console | Initialization guard and Playwright pageerror monitoring | Browser test |
 | Reset behavior | Clear-results control | Clear/reset test |
 
-## Verification state
+## Hosted verification — GitHub Actions run 43151669403
 
-Hosted CI results will be recorded after the first successful run. Learner workstation execution and original screenshots are deferred to the GitHub-first submission phase and must not be inferred from CI.
+- Windows + Node.js 20: SUCCESS, 6/6 browser tests.
+- Windows + Node.js 22: SUCCESS, 6/6 browser tests.
+- Ubuntu 24.04 + Node.js 20: SUCCESS, 6/6 browser tests.
+- Ubuntu 24.04 + Node.js 22: SUCCESS, 6/6 browser tests.
+
+Total: 4/4 jobs and 24/24 browser-test executions passed.
+
+Learner workstation execution and original screenshots are intentionally deferred to the GitHub-first submission phase and must not be inferred from CI.
