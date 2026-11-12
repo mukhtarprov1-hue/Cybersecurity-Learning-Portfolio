@@ -50,6 +50,26 @@ jobs:
           php -l public/logout.php
           php -l tests/run.php
           php -l tests/http_integration.php
+      - name: Validate local PowerShell automation syntax
+        if: runner.os == 'Windows'
+        shell: powershell
+        run: |
+          $tokens = $null
+          $parseErrors = $null
+          [System.Management.Automation.Language.Parser]::ParseFile(
+            (Resolve-Path 'tools/verify-and-capture.ps1').Path,
+            [ref]$tokens,
+            [ref]$parseErrors
+          ) | Out-Null
+          if ($parseErrors.Count -gt 0) {
+            $parseErrors | ForEach-Object {
+              Write-Host $_.Message
+              Write-Host $_.Extent.Text
+            }
+            exit 1
+          }
+          Write-Host 'PowerShell 5.1 parser: no syntax errors.'
+
       - name: Run policy tests
         run: php tests/run.php
       - name: Run real HTTP integration tests
