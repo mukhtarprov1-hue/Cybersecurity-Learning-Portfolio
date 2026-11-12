@@ -383,6 +383,9 @@ Only synthetic samples were uploaded. The session CSRF token is redacted from sa
 
     # Remove ephemeral fixtures and browser working files before hashing.
     # The PHP server has already exited, so its redirected log handles are closed.
+    Remove-Item -LiteralPath $validPng, $fakeJpg -Force -ErrorAction SilentlyContinue
+    Remove-Item -LiteralPath (Join-Path $Evidence "headless-browser-profile") -Recurse -Force -ErrorAction SilentlyContinue
+    Remove-Item -LiteralPath $runtimePage, $storagePage, $testsPage -Force -ErrorAction SilentlyContinue
 
     $hashTargets = @()
     $hashTargets += Get-ChildItem -LiteralPath $Evidence -File |
@@ -394,10 +397,6 @@ Only synthetic samples were uploaded. The session CSRF token is redacted from sa
         "{0}  {1}" -f $hash.Hash.ToLowerInvariant(), $relative
     }
     Write-Utf8File (Join-Path $Evidence "SHA256SUMS.txt") ($hashLines -join [Environment]::NewLine)
-
-    Remove-Item -LiteralPath $validPng, $fakeJpg -Force -ErrorAction SilentlyContinue
-    Remove-Item -LiteralPath (Join-Path $Evidence "headless-browser-profile") -Recurse -Force -ErrorAction SilentlyContinue
-    Remove-Item -LiteralPath $runtimePage, $storagePage, $testsPage -Force -ErrorAction SilentlyContinue
 
     Write-Host ""
     Write-Host "ASSIGNMENT 12 LOCAL VERIFICATION: PASS" -ForegroundColor Green
