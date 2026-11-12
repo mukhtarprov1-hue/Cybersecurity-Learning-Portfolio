@@ -1,0 +1,18 @@
+{
+    "assignment":  13,
+    "result":  "PASS",
+    "timestamp_local":  "2026-11-12T13:25:48+03:00",
+    "php_runtime":  "PHP 8.5.12 (cli) (built: Oct 26 2026 09:51:07) (NTS Visual C++ 2022 x64)",
+    "syntax_checks":  "8/8 passed",
+    "policy_tests":  "15/15 passed",
+    "http_integration_tests":  "11/11 passed",
+    "session_cookie_flags":  "HttpOnly; Secure; SameSite=Strict",
+    "demo_cookie_comparison":  "DEMO_UNSAFE visible; DEMO_SAFE and CYBERSESSID hidden from document.cookie",
+    "csrf_missing_token":  "HTTP 403",
+    "session_id_rotation":  "PASS; raw values redacted",
+    "authenticated_dashboard":  "HTTP 200",
+    "logout":  "HTTP 303; cookie expired",
+    "dashboard_after_logout":  "HTTP 303 redirect",
+    "screenshots":  "5/5 captured",
+    "branch":  "feat/assignment-13-session-cookie-security"
+}
